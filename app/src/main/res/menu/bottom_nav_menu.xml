@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_timeline"
+        android:enabled="true"
+        android:icon="@drawable/baseline_insights_24"
+        android:title="@string/timeline"/>
+    <item
+        android:id="@+id/nav_stats"
+        android:enabled="true"
+        android:icon="@drawable/baseline_calendar_month_24"
+        android:title="@string/statistics"/>
+
+    <item
+        android:id="@+id/nav_project"
+        android:enabled="true"
+        android:icon="@drawable/baseline_business_24"
+        android:title="@string/project"/>
+    <item
+        android:id="@+id/nav_settings"
+        android:enabled="true"
+        android:icon="@drawable/baseline_settings_24"
+        android:title="@string/settings"/>
+
+</menu>
