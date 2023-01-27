@@ -1,4 +1,4 @@
-package com.qdd.dao
+package com.qdd.data
 
 import androidx.room.Dao
 

@@ -13,8 +13,9 @@
     <string name="default_day">01</string>
     <string name="default_month">日/1月 2023</string>
     <string name="icon_of_spending_or_saving">支出或收入的图标</string>
-    <string name="category">类别</string>
-    <string name="comments">备注</string>
+    <string name="category">原材料->钢板</string>
+    <string name="comments">超长长长长长长长长长长的备注，甚至需要换行</string>
     <string name="title_home">首页</string>
     <string name="title_notifications">通知</string>
+    <string name="formatted_date">dd日/MM月 yyyy HH:mm</string>
 </resources>

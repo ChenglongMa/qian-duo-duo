@@ -1,4 +1,4 @@
-package com.qdd.dao
+package com.qdd.data
 
 import android.content.Context
 import androidx.room.Database
@@ -6,15 +6,21 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.qdd.model.Category
 import com.qdd.model.Project
 import com.qdd.model.Timeline
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.sql.Date
 
 //TODO: https://developer.android.com/codelabs/android-room-with-a-view-kotlin?hl=zh-cn#8
 @Database(entities = [Timeline::class, Project::class], version = 1)
 @TypeConverters(Converters::class)
-abstract class AppDatabase: RoomDatabase() {
+abstract class AppDatabase : RoomDatabase() {
     abstract fun timelineDao(): TimelineDao
+    abstract fun projectDao(): ProjectDao
+    abstract fun categoryDao(): CategoryDao
 
     companion object {
         @Volatile
@@ -30,11 +36,8 @@ abstract class AppDatabase: RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     AppDatabase::class.java,
-                    "gs_database"
-                )
-                    // Wipes and rebuilds instead of migrating if no Migration object.
-                    // Migration is not part of this codelab.
-                    .fallbackToDestructiveMigration()
+                    "QDD.db"
+                ).fallbackToDestructiveMigration()
                     .addCallback(TimelineDatabaseCallback(scope))
                     .build()
                 INSTANCE = instance
@@ -54,11 +57,11 @@ abstract class AppDatabase: RoomDatabase() {
                 // If you want to keep the data through app restarts,
                 // comment out the following line.
 
-//                INSTANCE?.let { database ->
-//                    scope.launch(Dispatchers.IO) {
-//                        populateDatabase(database.timelineDao())
-//                    }
-//                }
+                INSTANCE?.let { database ->
+                    scope.launch(Dispatchers.IO) {
+                        populateDatabase(database.timelineDao())
+                    }
+                }
             }
         }
 
@@ -71,10 +74,24 @@ abstract class AppDatabase: RoomDatabase() {
             // Not needed if you only populate on creation.
             timelineDao.deleteAll()
 
-//            var timeline = Timeline()
-//            timelineDao.insert(timeline)
-//            timeline = Timeline()
-//            timelineDao.insert(timeline)
+            var timeline = Timeline(
+                project = Project(name = "项目1"),
+                category = Category("原材料->钢材"),
+                comments = "备注：购买钢板等。",
+                money = 120.00,
+                isPayment = true,
+                date = Date(System.currentTimeMillis())
+            )
+            timelineDao.insert(timeline)
+            timeline = Timeline(
+                project = Project(name = "项目2"),
+                category = Category("预付款"),
+                comments = "备注：收老王的",
+                money = 100_00.50,
+                isPayment = false,
+                date = Date(System.currentTimeMillis())
+            )
+            timelineDao.insert(timeline)
         }
     }
 }

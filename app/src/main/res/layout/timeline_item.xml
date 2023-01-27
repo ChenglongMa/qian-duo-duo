@@ -1,91 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:clickable="true"
-    android:layout_marginBottom="4dp"
-    android:focusable="true">
-    <androidx.constraintlayout.widget.ConstraintLayout
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.text.format.DateFormat" />
+
+        <variable
+            name="timeline"
+            type="com.qdd.model.Timeline" />
+    </data>
+
+
+    <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:clickable="true"
+        android:focusable="true"
+        app:cardCornerRadius="0dp"
+        app:strokeWidth="0dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
 
-        <TextView
-            android:id="@+id/txt_day"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:text="@string/default_day"
-            android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/txt_day"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="4dp"
+                android:text="@{DateFormat.format(@string/formatted_date, timeline.date).subSequence(0,2)}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/txt_month"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            android:text="@string/default_month"
-            android:textAppearance="@style/TextAppearance.Material3.LabelLarge"
-            android:textColor="@color/material_on_background_disabled"
-            app:layout_constraintBottom_toBottomOf="@id/txt_day"
-            app:layout_constraintStart_toEndOf="@id/txt_day" />
+            <TextView
+                android:id="@+id/txt_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:text="@{DateFormat.format(@string/formatted_date, timeline.date).subSequence(2,18)}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textColor="@color/material_on_background_disabled"
+                app:layout_constraintBottom_toBottomOf="@id/txt_day"
+                app:layout_constraintStart_toEndOf="@id/txt_day" />
 
-        <TextView
-            android:id="@+id/txt_project"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:text="@string/default_project"
-            android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
-            app:layout_constraintBottom_toBottomOf="@id/txt_day"
-            app:layout_constraintEnd_toEndOf="parent" />
+<!--            <TextView-->
+<!--                android:id="@+id/txt_time"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="4dp"-->
+<!--                android:text="@{DateFormat.format(@string/formatted_date, timeline.date).subSequence(13,18)}"-->
+<!--                android:textAppearance="@style/TextAppearance.AppCompat.Small"-->
+<!--                android:textColor="@color/material_on_background_disabled"-->
+<!--                app:layout_constraintBottom_toBottomOf="@id/txt_day"-->
+<!--                app:layout_constraintStart_toEndOf="@id/txt_month" />-->
 
-        <ImageView
-            android:id="@+id/img_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
-            android:contentDescription="@string/icon_of_spending_or_saving"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/txt_day"
-            app:srcCompat="@drawable/baseline_call_made" />
+            <TextView
+                android:id="@+id/txt_project"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="@{timeline.project.name}"
+                android:textAlignment="viewEnd"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@id/txt_day"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toEndOf="@+id/txt_month" />
 
-        <TextView
-            android:id="@+id/txt_category"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/category"
-            android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
-            app:layout_constraintStart_toEndOf="@+id/img_icon"
-            app:layout_constraintTop_toTopOf="@+id/img_icon" />
+            <ImageView
+                android:id="@+id/img_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                android:contentDescription="@string/icon_of_spending_or_saving"
+                android:src="@{timeline.payment? @drawable/baseline_call_made : @drawable/baseline_call_received}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/txt_day" />
 
-        <TextView
-            android:id="@+id/txt_comments"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@{timeline.comments}"
-            android:textColor="@color/material_on_background_disabled"
-            app:layout_constraintStart_toStartOf="@+id/txt_category"
-            app:layout_constraintTop_toBottomOf="@+id/txt_category" />
+            <TextView
+                android:id="@+id/txt_category"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text="@{timeline.category.name}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                app:layout_constraintEnd_toStartOf="@+id/txt_money"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/img_icon"
+                app:layout_constraintTop_toTopOf="@+id/img_icon" />
 
-        <TextView
-            android:id="@+id/txt_money"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:text="@string/value_money"
-            android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
-            android:textColor="@color/pay"
-            app:layout_constraintBottom_toBottomOf="@+id/img_icon"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/img_icon" />
+            <TextView
+                android:id="@+id/txt_comments"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@{timeline.comments}"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textColor="@color/material_on_background_disabled"
+                app:layout_constraintEnd_toEndOf="@+id/txt_category"
+                app:layout_constraintStart_toStartOf="@+id/txt_category"
+                app:layout_constraintTop_toBottomOf="@+id/txt_category" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</com.google.android.material.card.MaterialCardView>
+            <TextView
+                android:id="@+id/txt_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:text='@{String.format("%.2f", timeline.money)}'
+                android:textAppearance="@style/TextAppearance.AppCompat.Large"
+                android:textColor="@color/pay"
+                app:layout_constraintBottom_toBottomOf="@+id/img_icon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/img_icon" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+</layout>

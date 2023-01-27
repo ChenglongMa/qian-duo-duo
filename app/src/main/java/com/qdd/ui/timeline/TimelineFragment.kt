@@ -6,66 +6,75 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.qdd.databinding.FragmentTimelineBinding
-import com.qdd.databinding.TimelineItemBinding
+import com.qdd.model.Category
+import com.qdd.model.Project
 import com.qdd.model.Timeline
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.sql.Date
 
-class TimelineFragment : Fragment() {
-    private var _binding: FragmentTimelineBinding? = null
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
+@AndroidEntryPoint
+class TimelineFragment : Fragment() {
+    private val viewModel: TimelineViewModel by viewModels()
+
+    private lateinit var binding: FragmentTimelineBinding
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentTimelineBinding.inflate(inflater, container, false)
+        binding = FragmentTimelineBinding.inflate(inflater, container, false).apply {
+            lifecycleOwner = this@TimelineFragment
+        }
 
         (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
+        val adapter = TimelineAdapter{timeline -> adapterOnClick(timeline) }
 
-
-        val timelines = arrayListOf(
-            Timeline(1, 1, Date(12341234), "Default Category", "Paid bill", 1200_000.00, true),
-            Timeline(2, 1, Date(12345673), "Category", "Paid bill 2", 1_000.00, true),
-            Timeline(3, 1, Date(12343333), "Category2", "Salary", 100.00, false),
+        binding.timelineList.apply {
+            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+            this.adapter = adapter
+        }
+        viewModel.allTimelines.observe(viewLifecycleOwner) {
+            adapter.submitList(it as MutableList<Timeline>)
+        }
+        var timeline = Timeline(
+            project = Project(name = "项目1"),
+            category = Category("原材料->钢材"),
+            comments = "备注：购买钢板等。",
+            money = 120.00,
+            isPayment = true,
+            date = Date(System.currentTimeMillis())
         )
-        binding.timelineList.adapter = TimelineAdapter(timelines)
+//        viewModel.insert(timeline)
+        timeline = Timeline(
+            project = Project(name = "项目2"),
+            category = Category("预付款"),
+            comments = "备注：收老王",
+            money = 100_00.50,
+            isPayment = false,
+            date = Date(System.currentTimeMillis())
+        )
+//        viewModel.insert(timeline)
 
+        binding.fabAddOne.setOnClickListener {
+            addOneOnClick()
+        }
         return binding.root
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    private fun addOneOnClick() {
+        TODO("Not yet implemented")
     }
 
-    internal class TimelineAdapter(private val dataset: List<Timeline>) :
-        RecyclerView.Adapter<TimelineAdapter.ViewHolder>() {
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            return ViewHolder(
-                TimelineItemBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false
-                )
-            )
-        }
-
-        override fun getItemCount() = dataset.size
-
-
-        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-//            holder.view.timeline = dataset[position]
-            // TODO
-            holder.view.txtProject.text = "测试用"
-            holder.view.txtComments.text = dataset[position].comments
-        }
-
-        inner class ViewHolder(var view: TimelineItemBinding) : RecyclerView.ViewHolder(view.root)
+    private fun adapterOnClick(timeline: Timeline) {
+        TODO("Not yet implemented, open details fragment")
     }
 }
