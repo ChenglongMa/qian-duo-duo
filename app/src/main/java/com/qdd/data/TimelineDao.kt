@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface TimelineDao {
-    @Query("SELECT * FROM timeline ORDER BY date ASC")
+    @Query("SELECT * FROM timeline ORDER BY date DESC")
     fun getTimelines(): Flow<List<Timeline>>
 
 //    @Transaction

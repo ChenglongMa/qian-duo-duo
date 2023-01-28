@@ -65,7 +65,16 @@ class TimelineFragment : Fragment() {
 //        viewModel.insert(timeline)
 
         binding.fabAddOne.setOnClickListener {
-            addOneOnClick()
+            val timeline = Timeline(
+                project = Project(name = "项目1"),
+                category = Category("原材料->钢材"),
+                comments = "备注：购买钢板等。",
+                money = 120.00,
+                isPayment = true,
+                date = Date(System.currentTimeMillis())
+            )
+        viewModel.insert(timeline)
+//            addOneOnClick()
         }
         return binding.root
     }

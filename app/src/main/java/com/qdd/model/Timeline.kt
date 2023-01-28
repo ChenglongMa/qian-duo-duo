@@ -30,6 +30,4 @@ data class Timeline(
     @Ignore
     val attachment: Bitmap? = null
 
-    @Ignore
-    val dateString = DateFormat.format("dd日/MM月 yyyy hh:mm", date)
 }
