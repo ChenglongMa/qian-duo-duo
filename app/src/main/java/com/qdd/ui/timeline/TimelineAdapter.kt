@@ -6,13 +6,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.qdd.databinding.TimelineItemBinding
-import com.qdd.model.Timeline
+import com.qdd.model.TimelineWithX
 
-class TimelineAdapter(private val onClick: (Timeline) -> Unit) :
-    ListAdapter<Timeline, TimelineAdapter.ViewHolder>(TimelineDiffCallback) {
-    inner class ViewHolder(var view: TimelineItemBinding, private val onClick: (Timeline) -> Unit) :
+class TimelineAdapter(private val onClick: (TimelineWithX) -> Unit) :
+    ListAdapter<TimelineWithX, TimelineAdapter.ViewHolder>(TimelineDiffCallback) {
+    inner class ViewHolder(var view: TimelineItemBinding, private val onClick: (TimelineWithX) -> Unit) :
         RecyclerView.ViewHolder(view.root) {
-        private var currentTimeline: Timeline? = null
+        private var currentTimeline: TimelineWithX? = null
 
         init {
             view.root.setOnClickListener {
@@ -20,7 +20,7 @@ class TimelineAdapter(private val onClick: (Timeline) -> Unit) :
             }
         }
 
-        fun bind(timeline: Timeline) {
+        fun bind(timeline: TimelineWithX) {
             currentTimeline = timeline
             view.timeline = timeline
         }
@@ -41,16 +41,16 @@ class TimelineAdapter(private val onClick: (Timeline) -> Unit) :
     }
 }
 
-object TimelineDiffCallback : DiffUtil.ItemCallback<Timeline>() {
-    override fun areItemsTheSame(oldItem: Timeline, newItem: Timeline): Boolean =
-        oldItem.id == newItem.id
+object TimelineDiffCallback : DiffUtil.ItemCallback<TimelineWithX>() {
+    override fun areItemsTheSame(oldItem: TimelineWithX, newItem: TimelineWithX): Boolean =
+        oldItem.timeline.id == newItem.timeline.id
 
-    override fun areContentsTheSame(oldItem: Timeline, newItem: Timeline): Boolean =
-        oldItem.id == newItem.id
+    override fun areContentsTheSame(oldItem: TimelineWithX, newItem: TimelineWithX): Boolean =
+        oldItem.timeline.id == newItem.timeline.id
 
 }
 
-class TimelineAdapter2(private val dataset: List<Timeline>) :
+class TimelineAdapter2(private val dataset: List<TimelineWithX>) :
     RecyclerView.Adapter<TimelineAdapter2.ViewHolder>() {
     inner class ViewHolder(var view: TimelineItemBinding) : RecyclerView.ViewHolder(view.root)
 
