@@ -1,19 +1,19 @@
 package com.qdd
 
 import android.content.Context
+import android.database.sqlite.SQLiteConstraintException
 import android.util.Log
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
-import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.qdd.data.AppDatabase
+import com.qdd.data.CategoryDao
+import com.qdd.data.ProjectDao
 import com.qdd.data.TimelineDao
-import com.qdd.model.Category
 import com.qdd.model.Project
 import com.qdd.model.Timeline
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
-import org.hamcrest.CoreMatchers.equalTo
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -23,8 +23,11 @@ import java.sql.Date
 
 @RunWith(AndroidJUnit4::class)
 class DatabaseTest {
-    private lateinit var dao: TimelineDao
+    private lateinit var timelineDao: TimelineDao
+    private lateinit var projectDao: ProjectDao
+    private lateinit var categoryDao: CategoryDao
     private lateinit var db: AppDatabase
+    private val TAG = "DatabaseTest"
 
     @Before
     fun createDb() {
@@ -32,7 +35,9 @@ class DatabaseTest {
         db = Room.inMemoryDatabaseBuilder(
             context, AppDatabase::class.java
         ).build()
-        dao = db.timelineDao()
+        timelineDao = db.timelineDao()
+        projectDao = db.projectDao()
+        categoryDao = db.categoryDao()
     }
 
     @After
@@ -45,30 +50,39 @@ class DatabaseTest {
     @Test
     @Throws(Exception::class)
     fun writeTimelineAndReadInList() = runTest {
-        var timeline = Timeline(
-            project = Project(name = "项目1"),
-            category = Category("原材料->钢材"),
-            comments = "备注：购买钢板等。",
-            money = 120.00,
-            isPayment = true,
-            date = Date(System.currentTimeMillis())
-        )
-        dao.insert(timeline)
-        timeline = Timeline(
-            project = Project(name = "项目2"),
-            category = Category("预付款"),
-            comments = "备注：收老王",
-            money = 100_00.50,
-            isPayment = false,
-            date = Date(System.currentTimeMillis())
-        )
-        dao.insert(timeline)
-        Log.d("TAG", "writeTimelineAndReadInList: ${dao.getTimelines()}")
+
 //        val user: Timeline = TestUtil.createTimeline(3).apply {
 //            setName("george")
 //        }
 //        dao.insert(user)
 //        val byName = dao.findTimelinesByName("george")
 //        assertThat(byName.get(0), equalTo(user))
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun insertProject() = runTest {
+        val projectName = "TEST PROJECT"
+        var projectDb = projectDao.getProjectByName(projectName)
+        assert(projectDb == null)
+        var res = projectDao.insert(Project(name = projectName))
+        Log.d(TAG, "insertProject: insert result $res")
+        res = projectDao.insert(Project(name = projectName))
+        Log.d(TAG, "insertProject: insert result2 $res")
+        projectDb = projectDao.getProjectByName(projectName)
+        Log.d(TAG, "insertProject: query result $projectDb")
+        projectDb?.name?.equals(projectName)?.let { assert(it) }
+    }
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test(expected = SQLiteConstraintException::class)
+    fun insertTimelineWithInvalidProject()= runTest {
+        timelineDao.insert(
+            Timeline(
+                projectName = "INVALID PROJECT",
+                categoryName = "INVALID CATEGORY",
+                money = 100.00,
+                date = Date(System.currentTimeMillis())
+            )
+        )
     }
 }

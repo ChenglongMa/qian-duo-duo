@@ -1,33 +1,45 @@
 package com.qdd.model
 
 import android.graphics.Bitmap
-import android.text.format.DateFormat
 import androidx.room.*
 import java.sql.Date
 
 @Entity
-//    (
-//    foreignKeys = [
-//        ForeignKey(entity = Project::class, childColumns = ["projectId"], parentColumns = ["id"]),
-//        ForeignKey(entity = Category::class, childColumns = ["categoryId"], parentColumns = ["id"])
-//    ]
-//)
+    (
+    foreignKeys = [
+        ForeignKey(
+            entity = Project::class,
+            childColumns = ["projectName"],
+            parentColumns = ["name"]
+        ),
+        ForeignKey(
+            entity = Category::class,
+            childColumns = ["categoryName"],
+            parentColumns = ["name"]
+        )
+    ]
+)
 data class Timeline(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
-    @Embedded(prefix = "project_")
-    val project: Project,
-    @Embedded("category_")
-    val category: Category,
-//    val projectId: Long,
-
+    @ColumnInfo(index = true)
+    val projectName: String,
+    @ColumnInfo(index = true)
     val date: Date,
-//    val categoryId: Long,
-    val comments: String?,
-    val money: Double,
-    val isPayment: Boolean,
+    @ColumnInfo(index = true)
+    val categoryName: String,
+    val comments: String? = null,
+    val money: Double, //TODO: negative value is not allowed
 ) {
     @Ignore
     val attachment: Bitmap? = null
-
 }
+
+data class TimelineWithX(
+    @Embedded
+    val timeline: Timeline,
+    @Relation(parentColumn = "projectName", entityColumn = "name")
+    val project: Project,
+    @Relation(parentColumn = "categoryName", entityColumn = "name")
+    val category: Category
+)
