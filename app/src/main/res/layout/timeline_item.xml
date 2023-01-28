@@ -83,7 +83,7 @@
                 android:layout_marginTop="2dp"
                 android:layout_marginBottom="2dp"
                 android:contentDescription="@string/icon_of_spending_or_saving"
-                android:src="@{timeline.category.payment? @drawable/baseline_call_made : @drawable/baseline_call_received}"
+                android:src="@{timeline.category.income? @drawable/baseline_call_received : @drawable/baseline_call_made}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/txt_day" />
@@ -118,7 +118,7 @@
                 android:layout_marginEnd="8dp"
                 android:text='@{NumberFormat.getCurrencyInstance().format(timeline.timeline.money)}'
                 android:textAppearance="@style/TextAppearance.AppCompat.Large"
-                android:textColor="@{timeline.category.payment? @color/pay : @color/earn}"
+                android:textColor="@{timeline.category.income? @color/income : @color/expense}"
                 app:layout_constraintBottom_toBottomOf="@+id/img_icon"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/img_icon" />

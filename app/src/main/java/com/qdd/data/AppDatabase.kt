@@ -6,6 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.qdd.BuildConfig
 import com.qdd.model.Category
 import com.qdd.model.Project
 import com.qdd.model.Timeline
@@ -55,10 +56,11 @@ abstract class AppDatabase : RoomDatabase() {
                 super.onCreate(db)
                 // If you want to keep the data through app restarts,
                 // comment out the following line.
-
-                INSTANCE?.let { database ->
-                    scope.launch(Dispatchers.IO) {
-                        populateDatabase(database)
+                if (BuildConfig.DEBUG) {
+                    INSTANCE?.let { database ->
+                        scope.launch(Dispatchers.IO) {
+                            populateDatabase(database)
+                        }
                     }
                 }
             }
@@ -70,8 +72,8 @@ abstract class AppDatabase : RoomDatabase() {
 
             val categoryDao = appDatabase.categoryDao()
             categoryDao.insert(
-                Category(name = "原材料", isPayment = true),
-                Category(name = "预付款", isPayment = false)
+                Category(name = "原材料", isIncome = false),
+                Category(name = "预付款", isIncome = true)
             )
 
             val timelineDao = appDatabase.timelineDao()

@@ -25,9 +25,9 @@ data class Timeline(
     @ColumnInfo(index = true)
     val projectName: String,
     @ColumnInfo(index = true)
-    val date: Date,
-    @ColumnInfo(index = true)
     val categoryName: String,
+    @ColumnInfo(index = true)
+    val date: Date,
     val comments: String? = null,
     val money: Double, //TODO: negative value is not allowed
 ) {

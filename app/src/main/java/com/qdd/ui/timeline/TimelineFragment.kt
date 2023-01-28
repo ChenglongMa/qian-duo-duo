@@ -7,13 +7,12 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.material.snackbar.Snackbar
 import com.qdd.databinding.FragmentTimelineBinding
-import com.qdd.model.Timeline
 import com.qdd.model.TimelineWithX
 import dagger.hilt.android.AndroidEntryPoint
-import java.sql.Date
 
 
 @AndroidEntryPoint
@@ -43,21 +42,13 @@ class TimelineFragment : Fragment() {
         }
 
         binding.fabAddOne.setOnClickListener {
-//            val timeline = Timeline(
-//                projectName = 1,
-//                categoryId = 1,
-//                comments = "备注：购买钢板等。",
-//                money = 120.00,
-//                date = Date(System.currentTimeMillis())
-//            )
-//            viewModel.insert(timeline)
-//            addOneOnClick()
+            addOneOnClick()
         }
         return binding.root
     }
 
     private fun addOneOnClick() {
-        TODO("Not yet implemented")
+        findNavController().navigate(TimelineFragmentDirections.actionNavTimelineToAddOneActivity())
     }
 
     private fun adapterOnClick(timeline: TimelineWithX) {

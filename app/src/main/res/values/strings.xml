@@ -17,7 +17,7 @@
     <string name="icon_of_spending_or_saving">Icon of spending or saving</string>
     <string name="category">Category</string>
     <string name="comments">Comments</string>
-    <string name="value_money" translatable="false">100.00</string>
+    <string name="value_money" translatable="false">0.00</string>
     <string name="large_text" translatable="false">
         "Material is the metaphor.\n\n"
 
@@ -110,5 +110,7 @@
     <string name="default_time" translatable="false">10:25</string>
     <string name="formatted_date">dd MMM, yyyy HH:mm</string>
     <string name="formatted_money" translatable="false">#,###.00</string>
+    <string name="expense">Expense</string>
+    <string name="income">Income</string>
 
 </resources>

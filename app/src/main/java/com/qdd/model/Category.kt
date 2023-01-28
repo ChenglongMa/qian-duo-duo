@@ -1,13 +1,16 @@
 package com.qdd.model
 
-import androidx.room.*
+import androidx.room.Embedded
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.Relation
 
 @Entity//(indices = [Index(value = ["name"], unique = true)])
 data class Category(
     @PrimaryKey(autoGenerate = false)
     val name: String,
     val parentName: String? = null,
-    val isPayment: Boolean
+    val isIncome: Boolean
 )
 
 data class CategoryWithTimelines(

@@ -10,7 +10,10 @@ import com.qdd.model.TimelineWithX
 
 class TimelineAdapter(private val onClick: (TimelineWithX) -> Unit) :
     ListAdapter<TimelineWithX, TimelineAdapter.ViewHolder>(TimelineDiffCallback) {
-    inner class ViewHolder(var view: TimelineItemBinding, private val onClick: (TimelineWithX) -> Unit) :
+    inner class ViewHolder(
+        var view: TimelineItemBinding,
+        private val onClick: (TimelineWithX) -> Unit
+    ) :
         RecyclerView.ViewHolder(view.root) {
         private var currentTimeline: TimelineWithX? = null
 
@@ -26,15 +29,15 @@ class TimelineAdapter(private val onClick: (TimelineWithX) -> Unit) :
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
+        ViewHolder(
             TimelineItemBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
             ), onClick
         )
-    }
+
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(getItem(position))

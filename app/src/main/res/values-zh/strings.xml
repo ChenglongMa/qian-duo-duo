@@ -18,4 +18,6 @@
     <string name="title_home">首页</string>
     <string name="title_notifications">通知</string>
     <string name="formatted_date">dd日/MM月 yyyy HH:mm</string>
+    <string name="expense">支出</string>
+    <string name="income">收入</string>
 </resources>
