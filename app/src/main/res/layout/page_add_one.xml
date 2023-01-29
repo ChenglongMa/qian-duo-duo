@@ -70,7 +70,7 @@
             android:focusable="true"
             android:focusableInTouchMode="true"
             android:paddingTop="1dp"
-            app:keyBackground="@color/shrine_theme_light_primaryContainer"
+            app:keyBackground="@drawable/keyboard_background"
             app:keyTextColor="@android:color/black"
             app:keyTextSize="20dp"
             app:labelTextSize="15dp"
