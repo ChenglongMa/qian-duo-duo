@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.qdd.R
 import com.qdd.databinding.PageAddOneBinding
-import com.qdd.ui.widget.CustomKeyboard
+import com.qdd.ui.utils.AppKeyboard
 
 
 class ViewAdapter(private val activity: Activity, private val viewModel: AddOneViewModel) :
@@ -20,9 +20,9 @@ class ViewAdapter(private val activity: Activity, private val viewModel: AddOneV
             PageAddOneBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         )
         // Keyboard
-        val keyboard = CustomKeyboard(activity, R.xml.keyboard)
-        keyboard.registerKeyboardView(holder.view.keyboardView)
-        keyboard.registerEditText(holder.view.editableMoney, true)
+        val keyboard =
+            AppKeyboard(holder.view.editableMoney, holder.view.keyboardView, R.xml.keyboard)
+        keyboard.setup()
         return holder
     }
 

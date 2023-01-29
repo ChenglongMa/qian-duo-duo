@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Keyboard xmlns:app="http://schemas.android.com/apk/res-auto"
+<Keyboard xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     app:horizontalGap="1px"
-    app:keyHeight="50dp"
+    app:keyHeight="8%p"
     app:keyWidth="25%p"
     app:verticalGap="1px">
     <Row>
@@ -17,7 +18,8 @@
             app:keyLabel="9" />
         <Key
             app:codes="-5"
-            app:keyLabel="删除" />
+            app:isRepeatable="true"
+            app:keyIcon="@android:drawable/ic_input_delete" />
     </Row>
     <Row>
         <Key
@@ -31,9 +33,8 @@
             app:codes="54"
             app:keyLabel="6" />
         <Key
-            app:codes="-4"
-            app:keyHeight="150dp"
-            app:keyLabel="确定" />
+            app:codes="45"
+            app:keyLabel="-" />
     </Row>
     <Row>
         <Key
@@ -46,17 +47,24 @@
         <Key
             app:codes="51"
             app:keyLabel="3" />
+        <Key
+            app:codes="43"
+            app:keyLabel="+" />
     </Row>
     <Row>
+
         <Key
-            app:codes="-3"
+            app:codes="46"
             app:keyEdgeFlags="left"
-            app:keyLabel="清零" />
+            app:keyLabel="." />
         <Key
             app:codes="48"
             app:keyLabel="0" />
         <Key
-            app:codes="46"
-            app:keyLabel="." />
+            app:codes="-3"
+            app:keyLabel="清零" />
+        <Key
+            app:codes="-4"
+            app:keyLabel="确定" />
     </Row>
 </Keyboard>
