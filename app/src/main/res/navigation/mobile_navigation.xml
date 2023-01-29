@@ -9,7 +9,11 @@
         android:id="@+id/nav_timeline"
         android:name="com.qdd.ui.timeline.TimelineFragment"
         android:label="@string/timeline"
-        tools:layout="@layout/fragment_timeline" />
+        tools:layout="@layout/fragment_timeline">
+        <action
+            android:id="@+id/action_nav_timeline_to_addOneActivity"
+            app:destination="@id/addOneActivity" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_stats"
@@ -27,4 +31,9 @@
         android:name="com.qdd.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
+    <activity
+        android:id="@+id/addOneActivity"
+        android:name="com.qdd.ui.addone.AddOneActivity"
+        android:label="activity_add_one"
+        tools:layout="@layout/activity_add_one" />
 </navigation>

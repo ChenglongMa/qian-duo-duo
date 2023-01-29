@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Keyboard xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:horizontalGap="1px"
+    app:keyHeight="8%p"
+    app:keyWidth="25%p"
+    app:verticalGap="1px">
+    <Row>
+        <Key
+            app:codes="55"
+            app:keyEdgeFlags="left"
+            app:keyLabel="7" />
+        <Key
+            app:codes="56"
+            app:keyLabel="8" />
+        <Key
+            app:codes="57"
+            app:keyLabel="9" />
+        <Key
+            app:codes="-5"
+            app:isRepeatable="true"
+            app:keyIcon="@android:drawable/ic_input_delete" />
+    </Row>
+    <Row>
+        <Key
+            app:codes="52"
+            app:keyEdgeFlags="left"
+            app:keyLabel="4" />
+        <Key
+            app:codes="53"
+            app:keyLabel="5" />
+        <Key
+            app:codes="54"
+            app:keyLabel="6" />
+        <Key
+            app:codes="45"
+            app:keyLabel="-" />
+    </Row>
+    <Row>
+        <Key
+            app:codes="49"
+            app:keyEdgeFlags="left"
+            app:keyLabel="1" />
+        <Key
+            app:codes="50"
+            app:keyLabel="2" />
+        <Key
+            app:codes="51"
+            app:keyLabel="3" />
+        <Key
+            app:codes="43"
+            app:keyLabel="+" />
+    </Row>
+    <Row>
+
+        <Key
+            app:codes="46"
+            app:keyEdgeFlags="left"
+            app:keyLabel="." />
+        <Key
+            app:codes="48"
+            app:keyLabel="0" />
+        <Key
+            app:codes="-3"
+            app:keyLabel="清零" />
+        <Key
+            app:codes="-4"
+            app:keyLabel="确定" />
+    </Row>
+</Keyboard>
