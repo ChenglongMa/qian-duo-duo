@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -8,46 +9,77 @@
             type="com.qdd.ui.addone.AddOneViewModel" />
     </data>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="16dp">
-
-        <EditText
-            android:id="@+id/money"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@{viewModel.income? @color/income : @color/expense}"
-            android:ems="10"
-            android:hint="@string/value_money"
-            android:importantForAutofill="no"
-            android:inputType="numberDecimal"
-            android:textAppearance="@style/TextAppearance.AppCompat.Display2"
-            android:textColor="@{viewModel.income? @color/income : @color/expense}"
-            android:textColorHint="@{viewModel.income? @color/income : @color/expense}"
-            android:textCursorDrawable="@null"
-            android:textStyle="bold" />
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:id="@+id/linearLayout"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:padding="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <Button
-                android:id="@+id/button"
-                android:layout_width="wrap_content"
+            <EditText
+                android:id="@+id/editable_money"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Button" />
+                android:backgroundTint="@{viewModel.income? @color/income : @color/expense}"
+                android:ems="10"
+                android:hint="@string/value_money"
+                android:importantForAutofill="no"
+                android:inputType="numberDecimal"
+                android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+                android:textColor="@{viewModel.income? @color/income : @color/expense}"
+                android:textColorHint="@{viewModel.income? @color/income : @color/expense}"
+                android:textCursorDrawable="@null"
+                android:textStyle="bold" />
 
-            <Button
-                android:id="@+id/button2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Button" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Button" />
+
+                <Button
+                    android:id="@+id/button2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Button" />
+            </LinearLayout>
+
+
         </LinearLayout>
 
-    </LinearLayout>
+        <com.qdd.ui.widget.KeyboardView
+            android:id="@+id/keyboardView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+
+            app:keyBackground="@color/shrine_theme_light_primaryContainer"
+            app:keyTextColor="@android:color/black"
+            app:keyTextSize="20sp"
+            app:labelTextSize="15sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+            app:shadowColor="@android:color/transparent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

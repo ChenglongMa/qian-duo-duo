@@ -1,19 +1,30 @@
 package com.qdd.ui.addone
 
+import android.app.Activity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.qdd.R
 import com.qdd.databinding.PageAddOneBinding
+import com.qdd.ui.widget.CustomKeyboard
 
-class ViewAdapter(private val viewModel: AddOneViewModel) :
+
+class ViewAdapter(private val activity: Activity, private val viewModel: AddOneViewModel) :
     RecyclerView.Adapter<ViewAdapter.ViewHolder>() {
     private val itemCount = 2
 
     inner class ViewHolder(var view: PageAddOneBinding) : RecyclerView.ViewHolder(view.root)
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(
-        PageAddOneBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-    )
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val holder = ViewHolder(
+            PageAddOneBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        )
+        // Keyboard
+        val keyboard = CustomKeyboard(activity, R.xml.keyboard)
+        keyboard.registerKeyboardView(holder.view.keyboardView)
+        keyboard.registerEditText(holder.view.editableMoney, true)
+        return holder
+    }
 
     override fun getItemCount(): Int = itemCount
 

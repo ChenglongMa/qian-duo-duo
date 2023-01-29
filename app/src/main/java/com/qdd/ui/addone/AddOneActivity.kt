@@ -20,11 +20,10 @@ class AddOneActivity : AppCompatActivity() {
         binding = ActivityAddOneBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // Tab layout and View pager
         val tabTitle = arrayOf(getString(R.string.expense), getString(R.string.income))
-
         val viewPager = binding.pager
-        viewPager.adapter = ViewAdapter(viewModel)
-
+        viewPager.adapter = ViewAdapter(this@AddOneActivity, viewModel)
         val tabLayout = binding.tabLayout
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = tabTitle[position]
