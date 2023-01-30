@@ -11,7 +11,8 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:animateLayoutChanges="true">
 
         <LinearLayout
             android:id="@+id/linearLayout"
@@ -38,6 +39,13 @@
                 android:textColorHint="@{viewModel.income? @color/income : @color/expense}"
                 android:textCursorDrawable="@null"
                 android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/editTextDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="date" />
 
             <LinearLayout
                 android:layout_width="match_parent"

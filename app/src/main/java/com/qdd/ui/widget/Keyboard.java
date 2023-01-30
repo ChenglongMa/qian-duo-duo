@@ -908,14 +908,10 @@ public class Keyboard {
             boolean rightEdge = (edgeFlags & EDGE_RIGHT) > 0;
             boolean topEdge = (edgeFlags & EDGE_TOP) > 0;
             boolean bottomEdge = (edgeFlags & EDGE_BOTTOM) > 0;
-            if ((x >= this.x || (leftEdge && x <= this.x + this.width))
+            return (x >= this.x || (leftEdge && x <= this.x + this.width))
                     && (x < this.x + this.width || (rightEdge && x >= this.x))
                     && (y >= this.y || (topEdge && y <= this.y + this.height))
-                    && (y < this.y + this.height || (bottomEdge && y >= this.y))) {
-                return true;
-            } else {
-                return false;
-            }
+                    && (y < this.y + this.height || (bottomEdge && y >= this.y));
         }
 
         /**
