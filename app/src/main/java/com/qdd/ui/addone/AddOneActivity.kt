@@ -1,6 +1,9 @@
 package com.qdd.ui.addone
 
+import android.content.Context
 import android.os.Bundle
+import android.view.MotionEvent
+import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -28,5 +31,13 @@ class AddOneActivity : AppCompatActivity() {
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = tabTitle[position]
         }.attach()
+    }
+
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        currentFocus?.let {
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager?
+            imm?.apply { hideSoftInputFromWindow(it.windowToken, 0) }
+        }
+        return super.dispatchTouchEvent(ev)
     }
 }

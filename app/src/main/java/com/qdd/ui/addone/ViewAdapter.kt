@@ -21,7 +21,12 @@ class ViewAdapter(private val activity: Activity, private val viewModel: AddOneV
         )
         // Keyboard
         val keyboard =
-            AppKeyboard(holder.view.editableMoney, holder.view.keyboardView, R.xml.keyboard)
+            AppKeyboard(
+                holder.view.editableMoney,
+                holder.view.keyboardView,
+                R.xml.keyboard,
+                activity
+            )
         keyboard.setup()
         return holder
     }

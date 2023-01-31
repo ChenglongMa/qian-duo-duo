@@ -7,6 +7,8 @@
         <variable
             name="viewModel"
             type="com.qdd.ui.addone.AddOneViewModel" />
+
+        <import type="android.text.InputType" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -33,7 +35,8 @@
                 android:ems="10"
                 android:hint="@string/value_money"
                 android:importantForAutofill="no"
-                android:inputType="numberDecimal"
+                android:editable="false"
+                android:inputType="@{InputType.TYPE_NULL}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display2"
                 android:textColor="@{viewModel.income? @color/income : @color/expense}"
                 android:textColorHint="@{viewModel.income? @color/income : @color/expense}"

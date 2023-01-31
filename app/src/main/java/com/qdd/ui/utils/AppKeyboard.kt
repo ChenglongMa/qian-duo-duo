@@ -2,8 +2,12 @@ package com.qdd.ui.utils
 
 //import android.inputmethodservice.Keyboard
 //import android.inputmethodservice.KeyboardView
+
+import android.app.Activity
+import android.content.Context.INPUT_METHOD_SERVICE
 import android.text.InputType
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.annotation.XmlRes
 import com.qdd.R
@@ -14,7 +18,8 @@ import com.qdd.ui.widget.KeyboardView
 class AppKeyboard(
     private val editText: EditText,
     private val keyboardView: KeyboardView,
-    @XmlRes layoutResId: Int = R.xml.keyboard
+    @XmlRes layoutResId: Int = R.xml.keyboard,
+    private val activity: Activity
 ) :
     Keyboard(
         editText.context, layoutResId
@@ -37,6 +42,7 @@ class AppKeyboard(
                     hideKeyboard()
                 }
             }
+            showSoftInputOnFocus = false
             setOnClickListener { showKeyboard() }
         }
     }
@@ -47,6 +53,9 @@ class AppKeyboard(
 
     private fun hideKeyboard() {
         keyboardView.visibility = View.GONE
+        val inputMethodManager: InputMethodManager? =
+            activity.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager?
+        inputMethodManager?.hideSoftInputFromWindow(editText.windowToken, 0)
     }
 
     override fun onPress(primaryCode: Int) {
