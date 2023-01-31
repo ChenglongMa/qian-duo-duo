@@ -35,7 +35,6 @@
                 android:ems="10"
                 android:hint="@string/value_money"
                 android:importantForAutofill="no"
-                android:editable="false"
                 android:inputType="@{InputType.TYPE_NULL}"
                 android:textAppearance="@style/TextAppearance.AppCompat.Display2"
                 android:textColor="@{viewModel.income? @color/income : @color/expense}"
@@ -43,12 +42,193 @@
                 android:textCursorDrawable="@null"
                 android:textStyle="bold" />
 
-            <EditText
-                android:id="@+id/editTextDate"
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/layout_children_padding" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:inputType="date" />
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawablePadding="@dimen/drawable_padding"
+                    android:text="@string/project"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                    android:textColor="@android:color/darker_gray"
+                    app:drawableStartCompat="@drawable/baseline_business_24"
+                    app:drawableTint="@android:color/darker_gray" />
+
+                <TextView
+                    android:id="@+id/val_project"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="@dimen/layout_weight_right"
+                    android:text="@string/default_project"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:drawable/divider_horizontal_bright" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/layout_children_padding" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawablePadding="@dimen/drawable_padding"
+                    android:text="@string/category"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                    android:textColor="@android:color/darker_gray"
+                    app:drawableStartCompat="@drawable/outline_dashboard_24"
+                    app:drawableTint="@android:color/darker_gray" />
+
+                <TextView
+                    android:id="@+id/val_category"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="@dimen/layout_weight_right"
+                    android:text="@string/default_category"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:drawable/divider_horizontal_bright" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/layout_children_padding" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawablePadding="@dimen/drawable_padding"
+                    android:text="@string/datetime"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                    android:textColor="@android:color/darker_gray"
+                    app:drawableStartCompat="@drawable/outline_calendar_month_24"
+                    app:drawableTint="@android:color/darker_gray" />
+
+                <TextView
+                    android:id="@+id/val_datetime"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="@dimen/layout_weight_right"
+                    android:text="@string/default_datetime"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:drawable/divider_horizontal_bright" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/layout_children_padding" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawablePadding="@dimen/drawable_padding"
+                    android:text="@string/comments"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                    android:textColor="@android:color/darker_gray"
+                    app:drawableStartCompat="@drawable/outline_event_note_24"
+                    app:drawableTint="@android:color/darker_gray" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="@dimen/layout_weight_right"
+                    app:boxStrokeWidth="0dp"
+                    app:boxStrokeWidthFocused="0dp"
+                    app:endIconMode="clear_text"
+                    app:hintEnabled="false">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/val_comments"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:hint="@string/text_placeholder"
+                        android:text="@string/default_comments"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:drawable/divider_horizontal_bright" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/layout_children_padding" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawablePadding="@dimen/drawable_padding"
+                    android:text="@string/attachment"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                    android:textColor="@android:color/darker_gray"
+                    app:drawableStartCompat="@drawable/outline_photo_camera_24"
+                    app:drawableTint="@android:color/darker_gray" />
+
+                <TextView
+                    android:id="@+id/val_attachment"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="@dimen/layout_weight_right"
+                    android:hint="@string/prompt_upload_attachment"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:drawable/divider_horizontal_bright" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/layout_children_padding" />
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -72,6 +252,33 @@
 
 
         </LinearLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="128dp"
+            android:hint="@string/comments"
+            app:boxStrokeWidth="0dp"
+            app:boxStrokeWidthFocused="0dp"
+            app:endIconMode="clear_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:placeholderText="..."
+            app:prefixText="备注"
+            app:startIconCheckable="false"
+            app:startIconDrawable="@drawable/baseline_business_24">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/val_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:hint="@string/text_placeholder"
+                android:text="@string/default_comments"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+        </com.google.android.material.textfield.TextInputLayout>
         <!--TODO: Key background design-->
         <!--        <android.inputmethodservice.KeyboardView-->
         <!--            android:id="@+id/keyboardView"-->

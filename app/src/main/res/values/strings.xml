@@ -12,11 +12,13 @@
     <string name="timeline_title">Timeline</string>
     <string name="content_description_media">Header Image of Timeline page</string>
     <string name="default_project">Default Project</string>
+    <string name="default_category">Default Category</string>
     <string name="default_day">01</string>
     <string name="default_month">Jan 2023</string>
     <string name="icon_of_spending_or_saving">Icon of spending or saving</string>
     <string name="category">Category</string>
     <string name="comments">Comments</string>
+    <string name="default_comments">Very loooooooooooooooooong and looooooooooooooooooooong comments</string>
     <string name="value_money" translatable="false">0.00</string>
     <string name="large_text" translatable="false">
         "Material is the metaphor.\n\n"
@@ -112,5 +114,10 @@
     <string name="formatted_money" translatable="false">#,###.00</string>
     <string name="expense">Expense</string>
     <string name="income">Income</string>
+    <string name="datetime">Time</string>
+    <string name="default_datetime">01 Jan 2023 10:00</string>
+    <string name="attachment">Attachment</string>
+    <string name="prompt_upload_attachment">Upload a photo of this record</string>
+    <string name="text_placeholder" translatable="false">...</string>
 
 </resources>
