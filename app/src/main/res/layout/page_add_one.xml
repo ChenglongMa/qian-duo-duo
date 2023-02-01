@@ -8,6 +8,8 @@
             name="viewModel"
             type="com.qdd.ui.addone.AddOneViewModel" />
 
+        <import type="android.view.View" />
+
         <import type="android.text.InputType" />
     </data>
 
@@ -181,8 +183,8 @@
                     android:backgroundTint="@android:color/white"
                     android:hint="@string/text_placeholder"
                     android:importantForAutofill="no"
-                    android:text="@string/default_comments"
                     android:inputType="textMultiLine"
+                    android:text="@={viewModel.comments}"
                     android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
                 <ImageButton
@@ -192,7 +194,8 @@
                     android:layout_weight="1.2"
                     android:backgroundTint="?attr/colorPrimary"
                     android:contentDescription="@string/clear_comments"
-                    android:src="@drawable/outline_close_24" />
+                    android:src="@drawable/outline_close_24"
+                    android:visibility='@{viewModel.comments.length()==0 ? View.INVISIBLE : View.VISIBLE}' />
             </LinearLayout>
 
             <View

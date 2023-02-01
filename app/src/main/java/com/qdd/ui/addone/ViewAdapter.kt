@@ -1,5 +1,6 @@
 package com.qdd.ui.addone
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
@@ -16,6 +17,7 @@ class ViewAdapter(private val activity: FragmentActivity, private val viewModel:
 
     inner class ViewHolder(var view: PageAddOneBinding) : RecyclerView.ViewHolder(view.root) {
         init {
+            view.lifecycleOwner = activity
             // Keyboard
             val keyboard =
                 AppKeyboard(
@@ -29,11 +31,15 @@ class ViewAdapter(private val activity: FragmentActivity, private val viewModel:
             // Date picker
             val datePicker =
                 MaterialDatePicker.Builder.datePicker()
-                    .setTitleText("Select date")
+                    .setTitleText("Select date") //todo
                     .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
                     .build()
             view.valDatetime.setOnClickListener {
                 datePicker.show(activity.supportFragmentManager, "TAG[DatePicker]")
+            }
+
+            view.button.setOnClickListener {
+                Log.d("ViewAdapter", "comments: ${viewModel.comments.value}")
             }
         }
     }
