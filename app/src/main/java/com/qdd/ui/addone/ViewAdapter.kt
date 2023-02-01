@@ -31,7 +31,6 @@ class ViewAdapter(private val activity: FragmentActivity, private val viewModel:
             // Date picker
             val datePicker =
                 MaterialDatePicker.Builder.datePicker()
-                    .setTitleText("Select date") //todo
                     .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
                     .build()
             view.valDatetime.setOnClickListener {
