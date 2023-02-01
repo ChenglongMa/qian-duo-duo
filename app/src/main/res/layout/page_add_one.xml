@@ -11,6 +11,10 @@
         <import type="android.view.View" />
 
         <import type="android.text.InputType" />
+
+        <import type="android.text.format.DateFormat" />
+
+        <import type="android.icu.text.NumberFormat" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -137,7 +141,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="@dimen/layout_weight_right"
-                    android:text="@string/default_datetime"
+                    android:text='@{viewModel.date == null ? "" : DateFormat.format(@string/displayed_date, viewModel.date)}'
                     android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
                 <ImageButton

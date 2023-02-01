@@ -37,6 +37,10 @@ class ViewAdapter(private val activity: FragmentActivity, private val viewModel:
                 datePicker.show(activity.supportFragmentManager, "TAG[DatePicker]")
             }
 
+            view.resetDate.setOnClickListener {
+                viewModel.updateDateToToday()
+            }
+
             view.button.setOnClickListener {
                 Log.d("ViewAdapter", "comments: ${viewModel.comments.value}")
             }
@@ -51,6 +55,7 @@ class ViewAdapter(private val activity: FragmentActivity, private val viewModel:
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         viewModel.isIncome.value = position == 1 // 0: expense 1: income
+        viewModel.updateDateToToday()
         holder.view.viewModel = viewModel
     }
 }

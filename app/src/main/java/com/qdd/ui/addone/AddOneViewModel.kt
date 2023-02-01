@@ -16,7 +16,7 @@ class AddOneViewModel @Inject constructor(private val repository: TimelineReposi
     ViewModel() {
     var projectName: MutableLiveData<String> = MutableLiveData()
     var categoryName: MutableLiveData<String> = MutableLiveData()
-    val date: MutableLiveData<Date> = MutableLiveData()
+    val date: MutableLiveData<Date> = MutableLiveData(Date(System.currentTimeMillis()))
     val money: MutableLiveData<Double> = MutableLiveData()
     val comments: MutableLiveData<String> = MutableLiveData()
     val isIncome: MutableLiveData<Boolean> = MutableLiveData()
@@ -27,5 +27,9 @@ class AddOneViewModel @Inject constructor(private val repository: TimelineReposi
 
     fun insert(timeline: TimelineWithX) = viewModelScope.launch {
         repository.insert(timeline)
+    }
+
+    fun updateDateToToday() {
+        date.value = Date(System.currentTimeMillis())
     }
 }

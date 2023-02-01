@@ -111,6 +111,7 @@
     </string>
     <string name="default_time" translatable="false">10:25</string>
     <string name="formatted_date">dd MMM, yyyy HH:mm</string>
+    <string name="displayed_date">@string/formatted_date</string>
     <string name="formatted_money" translatable="false">#,###.00</string>
     <string name="expense">Expense</string>
     <string name="income">Income</string>

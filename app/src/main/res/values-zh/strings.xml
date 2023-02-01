@@ -29,5 +29,6 @@
     <string name="delete">删除</string>
     <string name="reset_date_description">重置为当前时间</string>
     <string name="clear_comments">清空备注内容</string>
+    <string name="displayed_date">yyyy年MM月dd日 HH:mm</string>
 
 </resources>
