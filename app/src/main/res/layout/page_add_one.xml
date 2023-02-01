@@ -154,7 +154,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="0dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:drawablePadding="@dimen/drawable_padding"
@@ -164,25 +164,16 @@
                     app:drawableStartCompat="@drawable/outline_event_note_24"
                     app:drawableTint="@android:color/darker_gray" />
 
-                <com.google.android.material.textfield.TextInputLayout
+                <EditText
+                    android:id="@+id/val_comments"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="@dimen/layout_weight_right"
-                    app:boxStrokeWidth="0dp"
-                    app:boxStrokeWidthFocused="0dp"
-                    app:endIconMode="clear_text"
-                    app:hintEnabled="false">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/val_comments"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-
-                        android:hint="@string/text_placeholder"
-                        android:text="@string/default_comments"
-                        android:textAppearance="@style/TextAppearance.AppCompat.Title" />
-
-                </com.google.android.material.textfield.TextInputLayout>
+                    android:backgroundTint="@android:color/white"
+                    android:hint="@string/text_placeholder"
+                    android:importantForAutofill="no"
+                    android:text="@string/default_comments"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
             </LinearLayout>
 
@@ -253,35 +244,6 @@
 
         </LinearLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginBottom="128dp"
-            android:hint="@string/datetime"
-            app:boxStrokeWidth="0dp"
-            app:boxStrokeWidthFocused="0dp"
-            app:endIconMode="clear_text"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:placeholderText="..."
-            app:startIconCheckable="false"
-            app:startIconDrawable="@drawable/outline_calendar_month_24">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-            <!--            <com.google.android.material.textfield.TextInputEditText-->
-            <!--                android:id="@+id/val_text"-->
-            <!--                android:layout_width="match_parent"-->
-            <!--                android:layout_height="wrap_content"-->
-
-            <!--                android:hint="@string/text_placeholder"-->
-            <!--                android:text="@string/default_comments"-->
-            <!--                android:textAppearance="@style/TextAppearance.AppCompat.Title" />-->
-
-        </com.google.android.material.textfield.TextInputLayout>
         <!--TODO: Key background design-->
         <!--        <android.inputmethodservice.KeyboardView-->
         <!--            android:id="@+id/keyboardView"-->
@@ -310,7 +272,7 @@
             android:paddingTop="1dp"
             app:keyBackground="@drawable/keyboard_background"
             app:keyTextColor="@android:color/black"
-            app:keyTextSize="20dp"
+            app:keyTextSize="20sp"
             app:labelTextSize="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
