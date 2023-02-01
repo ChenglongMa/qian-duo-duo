@@ -132,9 +132,9 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </com.google.android.material.card.MaterialCardView>
-        <!--        android:background="@color/design_default_color_error"-->
-        <!--        android:textColor="@color/white"-->
+
         <Button
+            android:id="@+id/btn_delete"
             style="@style/Widget.Material3.Button"
             android:layout_width="@dimen/del_btn_width"
             android:layout_height="0dp"

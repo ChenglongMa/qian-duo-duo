@@ -9,7 +9,10 @@ import com.qdd.databinding.TimelineItemBinding
 import com.qdd.model.TimelineWithX
 import com.qdd.ui.utils.ItemTouchCallback
 
-class TimelineAdapter(private val onClick: (TimelineWithX) -> Unit) :
+class TimelineAdapter(
+    private val onClick: (TimelineWithX) -> Unit,
+    private val onDeleteClick: (TimelineWithX) -> Unit
+) :
     ListAdapter<TimelineWithX, TimelineAdapter.ViewHolder>(TimelineDiffCallback),
     ItemTouchCallback.ItemTouchStatus {
     inner class ViewHolder(
@@ -20,9 +23,10 @@ class TimelineAdapter(private val onClick: (TimelineWithX) -> Unit) :
         private var currentTimeline: TimelineWithX? = null
 
         init {
-            view.root.setOnClickListener {
+            view.materialCardView.setOnClickListener {
                 currentTimeline?.let(onClick)
             }
+            view.btnDelete.setOnClickListener { currentTimeline?.let(onDeleteClick) }
         }
 
         fun bind(timeline: TimelineWithX) {

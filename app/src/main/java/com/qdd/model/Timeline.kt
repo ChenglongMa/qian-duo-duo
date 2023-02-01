@@ -30,6 +30,7 @@ data class Timeline(
     val date: Date,
     val comments: String? = null,
     val money: Double, //TODO: negative value is not allowed
+    val archived: Boolean = false,
 ) {
     @Ignore
     val attachment: Bitmap? = null

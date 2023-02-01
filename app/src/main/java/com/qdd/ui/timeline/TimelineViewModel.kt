@@ -8,6 +8,7 @@ import com.qdd.model.Timeline
 import com.qdd.model.TimelineWithX
 import com.qdd.repository.TimelineRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,6 +18,10 @@ class TimelineViewModel @Inject constructor(private val repository: TimelineRepo
     val allTimelines: LiveData<List<TimelineWithX>> = repository.allTimelineWithXs.asLiveData()
     fun insert(vararg timeline: Timeline) = viewModelScope.launch {
         repository.insert(*timeline)
+    }
+
+    fun delete(timeline: TimelineWithX) = viewModelScope.launch((Dispatchers.IO)) {
+        repository.delete(timeline.timeline)
     }
 
 }

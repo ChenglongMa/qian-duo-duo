@@ -22,6 +22,7 @@ interface TimelineRepository {
     suspend fun insert(project: Project, category: Category, vararg timeline: Timeline)
 
     suspend fun insert(vararg timeline: TimelineWithX)
+    suspend fun delete(timeline: Timeline)
 }
 
 class DefaultTimelineRepository @Inject constructor(
@@ -59,5 +60,9 @@ class DefaultTimelineRepository @Inject constructor(
         timeline.forEach {
             insert(it.project, it.category, it.timeline)
         }
+    }
+
+    override suspend fun delete(timeline: Timeline) {
+        timelineDao.delete(timeline)
     }
 }

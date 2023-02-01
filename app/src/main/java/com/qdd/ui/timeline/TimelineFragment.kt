@@ -34,7 +34,9 @@ class TimelineFragment : Fragment() {
         }
 
         (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
-        val adapter = TimelineAdapter { timeline -> adapterOnClick(timeline) }
+        val adapter = TimelineAdapter(onClick = { timeline -> adapterOnClick(timeline) },
+            onDeleteClick = { timeline -> adapterOnDeleteClick(timeline) })
+//        (onClick = timeline -> adapterOnClick(timeline) )
 
         val itemTouchHelper =
             ItemTouchHelper(
@@ -58,15 +60,20 @@ class TimelineFragment : Fragment() {
         return binding.root
     }
 
+
     private fun addOneOnClick() {
         findNavController().navigate(TimelineFragmentDirections.actionNavTimelineToAddOneActivity())
     }
 
     private fun adapterOnClick(timeline: TimelineWithX) {
         Snackbar.make(
-            binding.timelineList,
+            binding.fabAddOne,
             "Not yet implemented, open details fragment",
             Snackbar.LENGTH_LONG
         ).show()
+    }
+
+    private fun adapterOnDeleteClick(timeline: TimelineWithX) {
+        viewModel.delete(timeline) // TODO: add undo function
     }
 }
