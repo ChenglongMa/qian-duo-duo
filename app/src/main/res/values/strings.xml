@@ -120,5 +120,7 @@
     <string name="prompt_upload_attachment">Upload a photo of this record</string>
     <string name="text_placeholder" translatable="false">...</string>
     <string name="delete">Delete</string>
+    <string name="reset_date_description">Reset date back to today</string>
+    <string name="clear_comments">Clear content of comments</string>
 
 </resources>

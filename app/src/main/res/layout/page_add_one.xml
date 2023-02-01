@@ -127,7 +127,7 @@
                     android:text="@string/datetime"
                     android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                     android:textColor="@android:color/darker_gray"
-                    app:drawableStartCompat="@drawable/outline_calendar_month_24"
+                    app:drawableStartCompat="@drawable/outline_today_24"
                     app:drawableTint="@android:color/darker_gray" />
 
                 <TextView
@@ -137,6 +137,15 @@
                     android:layout_weight="@dimen/layout_weight_right"
                     android:text="@string/default_datetime"
                     android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+
+                <ImageButton
+                    android:id="@+id/reset_date"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.2"
+                    android:backgroundTint="?attr/colorPrimary"
+                    android:contentDescription="@string/reset_date_description"
+                    android:src="@drawable/outline_back_to_today" />
             </LinearLayout>
 
             <View
@@ -173,8 +182,17 @@
                     android:hint="@string/text_placeholder"
                     android:importantForAutofill="no"
                     android:text="@string/default_comments"
+                    android:inputType="textMultiLine"
                     android:textAppearance="@style/TextAppearance.AppCompat.Title" />
 
+                <ImageButton
+                    android:id="@+id/clear_comments"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.2"
+                    android:backgroundTint="?attr/colorPrimary"
+                    android:contentDescription="@string/clear_comments"
+                    android:src="@drawable/outline_close_24" />
             </LinearLayout>
 
             <View

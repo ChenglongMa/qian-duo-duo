@@ -27,5 +27,7 @@
     <string name="attachment">凭证</string>
     <string name="prompt_upload_attachment">上传凭证照片记录</string>
     <string name="delete">删除</string>
+    <string name="reset_date_description">重置为当前时间</string>
+    <string name="clear_comments">清空备注内容</string>
 
 </resources>
