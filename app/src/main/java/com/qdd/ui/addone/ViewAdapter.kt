@@ -1,35 +1,46 @@
 package com.qdd.ui.addone
 
-import android.app.Activity
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.datepicker.MaterialDatePicker
 import com.qdd.R
 import com.qdd.databinding.PageAddOneBinding
 import com.qdd.ui.utils.AppKeyboard
 
 
-class ViewAdapter(private val activity: Activity, private val viewModel: AddOneViewModel) :
+class ViewAdapter(private val activity: FragmentActivity, private val viewModel: AddOneViewModel) :
     RecyclerView.Adapter<ViewAdapter.ViewHolder>() {
     private val itemCount = 2
 
-    inner class ViewHolder(var view: PageAddOneBinding) : RecyclerView.ViewHolder(view.root)
+    inner class ViewHolder(var view: PageAddOneBinding) : RecyclerView.ViewHolder(view.root) {
+        init {
+            // Keyboard
+            val keyboard =
+                AppKeyboard(
+                    view.editableMoney,
+                    view.keyboardView,
+                    R.xml.keyboard,
+                    activity
+                )
+            keyboard.setup()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val holder = ViewHolder(
-            PageAddOneBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        )
-        // Keyboard
-        val keyboard =
-            AppKeyboard(
-                holder.view.editableMoney,
-                holder.view.keyboardView,
-                R.xml.keyboard,
-                activity
-            )
-        keyboard.setup()
-        return holder
+            // Date picker
+            val datePicker =
+                MaterialDatePicker.Builder.datePicker()
+                    .setTitleText("Select date")
+                    .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+                    .build()
+            view.valDatetime.setOnClickListener {
+                datePicker.show(activity.supportFragmentManager, "TAG[DatePicker]")
+            }
+        }
     }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(
+        PageAddOneBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+    )
 
     override fun getItemCount(): Int = itemCount
 
