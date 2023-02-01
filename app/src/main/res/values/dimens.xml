@@ -7,4 +7,7 @@
     <dimen name="drawable_padding">8dp</dimen>
     <dimen name="layout_weight_right">10</dimen>
     <dimen name="layout_children_padding">20dp</dimen>
+
+    <!--    Timeline Fragment    -->
+    <dimen name="del_btn_width">100dp</dimen>
 </resources>

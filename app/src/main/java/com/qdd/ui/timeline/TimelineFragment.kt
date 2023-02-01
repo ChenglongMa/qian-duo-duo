@@ -9,9 +9,12 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.ItemTouchHelper
 import com.google.android.material.snackbar.Snackbar
+import com.qdd.R
 import com.qdd.databinding.FragmentTimelineBinding
 import com.qdd.model.TimelineWithX
+import com.qdd.ui.utils.ItemTouchCallback
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -33,10 +36,18 @@ class TimelineFragment : Fragment() {
         (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
         val adapter = TimelineAdapter { timeline -> adapterOnClick(timeline) }
 
+        val itemTouchHelper =
+            ItemTouchHelper(
+                ItemTouchCallback(
+                    adapter, resources.getDimensionPixelSize(R.dimen.del_btn_width)
+                )
+            )
         binding.timelineList.apply {
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
             this.adapter = adapter
+            itemTouchHelper.attachToRecyclerView(this)
         }
+
         viewModel.allTimelines.observe(viewLifecycleOwner) {
             adapter.submitList(it as MutableList<TimelineWithX>)
         }

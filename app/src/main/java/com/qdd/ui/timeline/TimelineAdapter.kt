@@ -7,9 +7,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.qdd.databinding.TimelineItemBinding
 import com.qdd.model.TimelineWithX
+import com.qdd.ui.utils.ItemTouchCallback
 
 class TimelineAdapter(private val onClick: (TimelineWithX) -> Unit) :
-    ListAdapter<TimelineWithX, TimelineAdapter.ViewHolder>(TimelineDiffCallback) {
+    ListAdapter<TimelineWithX, TimelineAdapter.ViewHolder>(TimelineDiffCallback),
+    ItemTouchCallback.ItemTouchStatus {
     inner class ViewHolder(
         var view: TimelineItemBinding,
         private val onClick: (TimelineWithX) -> Unit
@@ -42,6 +44,13 @@ class TimelineAdapter(private val onClick: (TimelineWithX) -> Unit) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
+
+    // TODO: purpose?
+    override fun onItemRemove(position: Int): Boolean = false
+
+    override fun onSaveItemStatus(viewHolder: RecyclerView.ViewHolder) {
+        // Do nothing
+    }
 }
 
 object TimelineDiffCallback : DiffUtil.ItemCallback<TimelineWithX>() {
@@ -53,24 +62,3 @@ object TimelineDiffCallback : DiffUtil.ItemCallback<TimelineWithX>() {
 
 }
 
-class TimelineAdapter2(private val dataset: List<TimelineWithX>) :
-    RecyclerView.Adapter<TimelineAdapter2.ViewHolder>() {
-    inner class ViewHolder(var view: TimelineItemBinding) : RecyclerView.ViewHolder(view.root)
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        return ViewHolder(
-            TimelineItemBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
-        )
-    }
-
-    override fun getItemCount(): Int = dataset.size
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.view.timeline = dataset[position]
-    }
-
-}

@@ -257,7 +257,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginBottom="128dp"
-            android:hint="@string/comments"
+            android:hint="@string/datetime"
             app:boxStrokeWidth="0dp"
             app:boxStrokeWidthFocused="0dp"
             app:endIconMode="clear_text"
@@ -265,18 +265,21 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:placeholderText="..."
-            app:prefixText="备注"
             app:startIconCheckable="false"
-            app:startIconDrawable="@drawable/baseline_business_24">
+            app:startIconDrawable="@drawable/outline_calendar_month_24">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/val_text"
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="wrap_content" />
 
-                android:hint="@string/text_placeholder"
-                android:text="@string/default_comments"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+            <!--            <com.google.android.material.textfield.TextInputEditText-->
+            <!--                android:id="@+id/val_text"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+
+            <!--                android:hint="@string/text_placeholder"-->
+            <!--                android:text="@string/default_comments"-->
+            <!--                android:textAppearance="@style/TextAppearance.AppCompat.Title" />-->
 
         </com.google.android.material.textfield.TextInputLayout>
         <!--TODO: Key background design-->
@@ -295,6 +298,8 @@
         <!--            app:layout_constraintBottom_toBottomOf="parent"-->
         <!--            app:layout_constraintEnd_toEndOf="parent"-->
         <!--            app:layout_constraintStart_toStartOf="parent" />-->
+
+        <!--TODO: Move into bottom sheet-->
         <com.qdd.ui.widget.KeyboardView
             android:id="@+id/keyboardView"
             android:layout_width="match_parent"

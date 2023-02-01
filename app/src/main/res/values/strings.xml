@@ -119,5 +119,6 @@
     <string name="attachment">Attachment</string>
     <string name="prompt_upload_attachment">Upload a photo of this record</string>
     <string name="text_placeholder" translatable="false">...</string>
+    <string name="delete">Delete</string>
 
 </resources>
