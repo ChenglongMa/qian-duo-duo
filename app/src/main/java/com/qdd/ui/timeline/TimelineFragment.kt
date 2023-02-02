@@ -15,6 +15,7 @@ import com.qdd.R
 import com.qdd.databinding.FragmentTimelineBinding
 import com.qdd.model.TimelineWithX
 import com.qdd.ui.utils.ItemTouchCallback
+import com.qdd.ui.utils.showSnackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -36,7 +37,6 @@ class TimelineFragment : Fragment() {
         (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
         val adapter = TimelineAdapter(onClick = { timeline -> adapterOnClick(timeline) },
             onDeleteClick = { timeline -> adapterOnDeleteClick(timeline) })
-//        (onClick = timeline -> adapterOnClick(timeline) )
 
         val itemTouchHelper =
             ItemTouchHelper(
@@ -67,13 +67,19 @@ class TimelineFragment : Fragment() {
 
     private fun adapterOnClick(timeline: TimelineWithX) {
         Snackbar.make(
-            binding.fabAddOne,
+            requireActivity().findViewById(android.R.id.content),
             "Not yet implemented, open details fragment",
             Snackbar.LENGTH_LONG
-        ).show()
+        ).setAnchorView(binding.fabAddOne)
+            .show()
     }
 
     private fun adapterOnDeleteClick(timeline: TimelineWithX) {
-        viewModel.delete(timeline) // TODO: add undo function
+        viewModel.delete(timeline) // TODO: verify if deleted successfully
+        requireActivity().showSnackbar(
+            R.string.timeline_deleted,
+            anchorView = requireActivity().findViewById(R.id.nav_view),
+            actionFunc = null // TODO: add function
+        )
     }
 }

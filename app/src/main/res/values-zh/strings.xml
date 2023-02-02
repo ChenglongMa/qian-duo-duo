@@ -30,5 +30,7 @@
     <string name="reset_date_description">重置为当前时间</string>
     <string name="clear_comments">清空备注内容</string>
     <string name="displayed_date">yyyy年MM月dd日 HH:mm</string>
+    <string name="undo">撤销</string>
+    <string name="timeline_deleted">您删除了一条流水记录</string>
 
 </resources>

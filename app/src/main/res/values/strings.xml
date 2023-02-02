@@ -123,5 +123,7 @@
     <string name="delete">Delete</string>
     <string name="reset_date_description">Reset date back to today</string>
     <string name="clear_comments">Clear content of comments</string>
+    <string name="undo">Undo</string>
+    <string name="timeline_deleted">One record was deleted</string>
 
 </resources>
