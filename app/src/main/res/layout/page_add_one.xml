@@ -184,6 +184,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="@dimen/layout_weight_right"
+                    android:background="@null"
                     android:backgroundTint="@android:color/white"
                     android:hint="@string/text_placeholder"
                     android:importantForAutofill="no"

@@ -41,6 +41,10 @@ class ViewAdapter(private val activity: FragmentActivity, private val viewModel:
                 viewModel.updateDateToToday()
             }
 
+            view.clearComments.setOnClickListener {
+                viewModel.comments.value = ""
+            }
+
             view.button.setOnClickListener {
                 Log.d("ViewAdapter", "comments: ${viewModel.comments.value}")
             }
