@@ -32,5 +32,8 @@
     <string name="displayed_date">yyyy年MM月dd日 HH:mm</string>
     <string name="undo">撤销</string>
     <string name="timeline_deleted">您删除了一条流水记录</string>
+    <string name="to_delete_dialog_title">您确定要删除这条记录吗？</string>
+    <string name="yes">确定</string>
+    <string name="no">取消</string>
 
 </resources>

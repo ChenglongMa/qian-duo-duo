@@ -15,6 +15,7 @@ import com.qdd.R
 import com.qdd.databinding.FragmentTimelineBinding
 import com.qdd.model.TimelineWithX
 import com.qdd.ui.utils.ItemTouchCallback
+import com.qdd.ui.utils.createDeleteDialog
 import com.qdd.ui.utils.showSnackbar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -75,11 +76,12 @@ class TimelineFragment : Fragment() {
     }
 
     private fun adapterOnDeleteClick(timeline: TimelineWithX) {
-        viewModel.delete(timeline) // TODO: verify if deleted successfully
-        requireActivity().showSnackbar(
-            R.string.timeline_deleted,
-            anchorView = requireActivity().findViewById(R.id.nav_view),
-            actionFunc = null // TODO: add function
-        )
+        requireContext().createDeleteDialog {
+            viewModel.archive(timeline) // TODO: verify if deleted successfully
+            requireActivity().showSnackbar(
+                R.string.timeline_deleted,
+                anchorView = requireActivity().findViewById(R.id.nav_view),
+            ) { viewModel.unarchive(timeline) }
+        }.show()
     }
 }

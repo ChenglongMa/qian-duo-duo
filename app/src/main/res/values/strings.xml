@@ -125,5 +125,8 @@
     <string name="clear_comments">Clear content of comments</string>
     <string name="undo">Undo</string>
     <string name="timeline_deleted">One record was deleted</string>
+    <string name="to_delete_dialog_title">Are you sure you want to delete this record?</string>
+    <string name="yes">Yes</string>
+    <string name="no">Cancel</string>
 
 </resources>

@@ -23,6 +23,8 @@ interface TimelineRepository {
 
     suspend fun insert(vararg timeline: TimelineWithX)
     suspend fun delete(timeline: Timeline)
+    suspend fun archive(timeline: Timeline)
+    suspend fun unarchive(timeline: Timeline)
 }
 
 class DefaultTimelineRepository @Inject constructor(
@@ -60,6 +62,14 @@ class DefaultTimelineRepository @Inject constructor(
         timeline.forEach {
             insert(it.project, it.category, it.timeline)
         }
+    }
+
+    override suspend fun archive(timeline: Timeline) {
+        timelineDao.archive(timeline.id)
+    }
+
+    override suspend fun unarchive(timeline: Timeline) {
+        timelineDao.unarchive(timeline.id)
     }
 
     override suspend fun delete(timeline: Timeline) {

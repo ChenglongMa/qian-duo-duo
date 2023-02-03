@@ -24,4 +24,12 @@ class TimelineViewModel @Inject constructor(private val repository: TimelineRepo
         repository.delete(timeline.timeline)
     }
 
+    fun archive(timeline: TimelineWithX) = viewModelScope.launch(Dispatchers.IO) {
+        repository.archive(timeline.timeline)
+    }
+
+    fun unarchive(timeline: TimelineWithX) = viewModelScope.launch(Dispatchers.IO) {
+        repository.unarchive(timeline.timeline)
+    }
+
 }
