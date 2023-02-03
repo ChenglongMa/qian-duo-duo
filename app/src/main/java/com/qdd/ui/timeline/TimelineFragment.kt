@@ -53,6 +53,8 @@ class TimelineFragment : Fragment() {
 
         viewModel.allTimelines.observe(viewLifecycleOwner) {
             adapter.submitList(it as MutableList<TimelineWithX>)
+            binding.promptView.visibility = if (it.isEmpty()) View.VISIBLE else View.GONE
+            binding.timelineList.visibility = if (it.isEmpty()) View.GONE else View.VISIBLE
         }
 
         binding.fabAddOne.setOnClickListener {

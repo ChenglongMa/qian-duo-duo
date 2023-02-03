@@ -16,7 +16,8 @@ android {
         targetSdk 33
         versionCode 1
         versionName "1.0"
-
+        // 过滤语言包
+//        resConfigs('zh-rCN', 'en')
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         javaCompileOptions {
