@@ -25,6 +25,7 @@ class TimelineFragment : Fragment() {
     private val viewModel: TimelineViewModel by viewModels()
 
     private lateinit var binding: FragmentTimelineBinding
+    private lateinit var itemTouchHelper: ItemTouchHelper
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,12 +40,12 @@ class TimelineFragment : Fragment() {
         val adapter = TimelineAdapter(onClick = { timeline -> adapterOnClick(timeline) },
             onDeleteClick = { timeline -> adapterOnDeleteClick(timeline) })
 
-        val itemTouchHelper =
-            ItemTouchHelper(
-                ItemTouchCallback(
-                    adapter, resources.getDimensionPixelSize(R.dimen.del_btn_width)
-                )
+        itemTouchHelper = ItemTouchHelper(
+            ItemTouchCallback(
+                adapter,
+                resources.getDimensionPixelSize(R.dimen.del_btn_width)
             )
+        )
         binding.timelineList.apply {
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
             this.adapter = adapter
@@ -69,6 +70,8 @@ class TimelineFragment : Fragment() {
     }
 
     private fun adapterOnClick(timeline: TimelineWithX) {
+//        itemTouchHelper.attachToRecyclerView(null)
+//        itemTouchHelper.attachToRecyclerView(binding.timelineList)
         Snackbar.make(
             requireActivity().findViewById(android.R.id.content),
             "Not yet implemented, open details fragment",

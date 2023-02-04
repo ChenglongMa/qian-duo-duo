@@ -15,6 +15,8 @@ class TimelineAdapter(
 ) :
     ListAdapter<TimelineWithX, TimelineAdapter.ViewHolder>(TimelineDiffCallback),
     ItemTouchCallback.ItemTouchStatus {
+    private val TAG = "TimelineAdapter"
+
     inner class ViewHolder(
         var view: TimelineItemBinding,
         private val onClick: (TimelineWithX) -> Unit

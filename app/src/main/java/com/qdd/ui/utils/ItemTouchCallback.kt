@@ -1,13 +1,16 @@
 package com.qdd.ui.utils
 
 import android.graphics.Canvas
+import android.view.View
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.qdd.ui.timeline.TimelineAdapter
 import kotlin.properties.Delegates
 
 // refer to https://github.com/BeauteousJade/SlideDeleteDemo
 class ItemTouchCallback(
-    private val itemTouchStatus: ItemTouchStatus,
+    private val adapter: TimelineAdapter,
     private val defaultScrollX: Int
 ) : ItemTouchHelper.Callback() {
 
@@ -15,10 +18,13 @@ class ItemTouchCallback(
     private var currentScrollXWhenInactive by Delegates.notNull<Int>()
     private var firstInactive: Boolean = false
     private var currentScrollX by Delegates.notNull<Int>()
+    private var prevItemView: View? = null
+    private var prevViewHolder: ViewHolder? = null
+    private val TAG = "ItemTouchCallback"
 
     override fun getMovementFlags(
         recyclerView: RecyclerView,
-        viewHolder: RecyclerView.ViewHolder
+        viewHolder: ViewHolder
     ): Int {
         val dragFlags = ItemTouchHelper.UP or ItemTouchHelper.DOWN
         val swipeFlags = ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
@@ -27,15 +33,15 @@ class ItemTouchCallback(
 
     override fun onMove(
         recyclerView: RecyclerView,
-        viewHolder: RecyclerView.ViewHolder,
-        target: RecyclerView.ViewHolder
+        viewHolder: ViewHolder,
+        target: ViewHolder
     ): Boolean = true
 
-    override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+    override fun onSwiped(viewHolder: ViewHolder, direction: Int) {
         // Do nothing
     }
 
-    override fun getSwipeThreshold(viewHolder: RecyclerView.ViewHolder): Float =
+    override fun getSwipeThreshold(viewHolder: ViewHolder): Float =
         Int.MAX_VALUE.toFloat()
 
     override fun getSwipeEscapeVelocity(defaultValue: Float): Float =
@@ -44,7 +50,7 @@ class ItemTouchCallback(
     override fun onChildDraw(
         c: Canvas,
         recyclerView: RecyclerView,
-        viewHolder: RecyclerView.ViewHolder,
+        viewHolder: ViewHolder,
         dX: Float,
         dY: Float,
         actionState: Int,
@@ -69,6 +75,17 @@ class ItemTouchCallback(
                 viewHolder.itemView.scrollTo(
                     (currentScrollX + -dX.toInt()).coerceAtLeast(defaultScrollX), 0
                 )
+                if (prevViewHolder != null && prevViewHolder != viewHolder) {
+                    prevViewHolder!!.itemView.scrollTo(0, 0)
+//                    adapter.notifyItemChanged(prevViewHolder!!.adapterPosition)
+                }
+                prevViewHolder = viewHolder
+//                if (prevItemView != null && prevItemView != viewHolder.itemView) {
+//                    prevItemView!!.scrollTo(0,0)
+//                    Log.d(TAG, "onChildDraw: preItemView reset")
+//                }
+//                prevItemView = viewHolder.itemView
+//                Log.d(TAG, "onChildDraw: new Item : $prevItemView")
             } else {
                 // 这里只能做距离的比例缩放，因为回到最初位置必须得从当前位置开始，dx不一定与ItemView的滑动距离相等
                 viewHolder.itemView.scrollTo(
@@ -79,19 +96,20 @@ class ItemTouchCallback(
         }
     }
 
-    override fun clearView(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder) {
+    override fun clearView(recyclerView: RecyclerView, viewHolder: ViewHolder) {
         super.clearView(recyclerView, viewHolder)
-        if (viewHolder.itemView.scrollX > defaultScrollX) {
+        val scrollX = viewHolder.itemView.scrollX
+        if (scrollX > defaultScrollX) {
             viewHolder.itemView.scrollTo(defaultScrollX, 0)
-        } else if (viewHolder.itemView.scrollX < 0) {
+        } else if (scrollX < 0) {
             viewHolder.itemView.scrollTo(0, 0)
         }
-        itemTouchStatus.onSaveItemStatus(viewHolder)
+//        itemTouchStatus.onSaveItemStatus(viewHolder)
     }
 
     interface ItemTouchStatus {
         fun onItemRemove(position: Int): Boolean
 
-        fun onSaveItemStatus(viewHolder: RecyclerView.ViewHolder)
+        fun onSaveItemStatus(viewHolder: ViewHolder)
     }
 }
