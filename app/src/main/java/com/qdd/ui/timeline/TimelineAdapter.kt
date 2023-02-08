@@ -1,6 +1,7 @@
 package com.qdd.ui.timeline
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -15,7 +16,9 @@ class TimelineAdapter(
 ) :
     ListAdapter<TimelineWithX, TimelineAdapter.ViewHolder>(TimelineDiffCallback),
     ItemTouchCallback.ItemTouchStatus {
+
     private val TAG = "TimelineAdapter"
+    public var prevItemView: RecyclerView.ViewHolder? = null
 
     inner class ViewHolder(
         var view: TimelineItemBinding,
@@ -56,6 +59,13 @@ class TimelineAdapter(
 
     override fun onSaveItemStatus(viewHolder: RecyclerView.ViewHolder) {
         // Do nothing
+    }
+
+    fun resetXPosition(view: View?) {
+        if (view != prevItemView?.itemView) {
+            prevItemView?.itemView?.scrollTo(0, 0)
+            prevItemView = null
+        }
     }
 }
 

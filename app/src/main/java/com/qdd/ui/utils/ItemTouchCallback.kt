@@ -1,7 +1,6 @@
 package com.qdd.ui.utils
 
 import android.graphics.Canvas
-import android.view.View
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
@@ -18,8 +17,8 @@ class ItemTouchCallback(
     private var currentScrollXWhenInactive by Delegates.notNull<Int>()
     private var firstInactive: Boolean = false
     private var currentScrollX by Delegates.notNull<Int>()
-    private var prevItemView: View? = null
-    private var prevViewHolder: ViewHolder? = null
+
+    //    private var prevViewHolder: ViewHolder? = null
     private val TAG = "ItemTouchCallback"
 
     override fun getMovementFlags(
@@ -38,7 +37,7 @@ class ItemTouchCallback(
     ): Boolean = true
 
     override fun onSwiped(viewHolder: ViewHolder, direction: Int) {
-        // Do nothing
+        adapter.notifyItemChanged(viewHolder.adapterPosition)
     }
 
     override fun getSwipeThreshold(viewHolder: ViewHolder): Float =
@@ -75,17 +74,9 @@ class ItemTouchCallback(
                 viewHolder.itemView.scrollTo(
                     (currentScrollX + -dX.toInt()).coerceAtLeast(defaultScrollX), 0
                 )
-                if (prevViewHolder != null && prevViewHolder != viewHolder) {
-                    prevViewHolder!!.itemView.scrollTo(0, 0)
-//                    adapter.notifyItemChanged(prevViewHolder!!.adapterPosition)
-                }
-                prevViewHolder = viewHolder
-//                if (prevItemView != null && prevItemView != viewHolder.itemView) {
-//                    prevItemView!!.scrollTo(0,0)
-//                    Log.d(TAG, "onChildDraw: preItemView reset")
-//                }
-//                prevItemView = viewHolder.itemView
-//                Log.d(TAG, "onChildDraw: new Item : $prevItemView")
+                adapter.resetXPosition(viewHolder.itemView)
+//                prevViewHolder = viewHolder
+                adapter.prevItemView = viewHolder
             } else {
                 // 这里只能做距离的比例缩放，因为回到最初位置必须得从当前位置开始，dx不一定与ItemView的滑动距离相等
                 viewHolder.itemView.scrollTo(

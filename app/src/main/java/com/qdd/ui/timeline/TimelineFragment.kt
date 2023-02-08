@@ -2,6 +2,7 @@ package com.qdd.ui.timeline
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
@@ -21,7 +22,16 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class TimelineFragment : Fragment() {
+class TimelineFragment : Fragment(), View.OnTouchListener {
+    private val adapter: TimelineAdapter by lazy {
+        TimelineAdapter(onClick = { timeline -> adapterOnClick(timeline) },
+            onDeleteClick = { timeline -> adapterOnDeleteClick(timeline) })
+    }
+//    private val adapter: TimelineAdapter =
+//        TimelineAdapter(onClick = { timeline -> adapterOnClick(timeline) },
+//            onDeleteClick = { timeline -> adapterOnDeleteClick(timeline) })
+
+
     private val viewModel: TimelineViewModel by viewModels()
 
     private lateinit var binding: FragmentTimelineBinding
@@ -37,8 +47,6 @@ class TimelineFragment : Fragment() {
         }
 
         (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
-        val adapter = TimelineAdapter(onClick = { timeline -> adapterOnClick(timeline) },
-            onDeleteClick = { timeline -> adapterOnDeleteClick(timeline) })
 
         itemTouchHelper = ItemTouchHelper(
             ItemTouchCallback(
@@ -48,8 +56,9 @@ class TimelineFragment : Fragment() {
         )
         binding.timelineList.apply {
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
-            this.adapter = adapter
+            adapter = this@TimelineFragment.adapter
             itemTouchHelper.attachToRecyclerView(this)
+            setOnTouchListener(this@TimelineFragment)
         }
 
         viewModel.allTimelines.observe(viewLifecycleOwner) {
@@ -58,10 +67,15 @@ class TimelineFragment : Fragment() {
             binding.timelineList.visibility = if (it.isEmpty()) View.GONE else View.VISIBLE
         }
 
-        binding.fabAddOne.setOnClickListener {
-            addOneOnClick()
+        binding.fabAddOne.apply {
+            setOnClickListener {
+                addOneOnClick()
+            }
+            setOnTouchListener(this@TimelineFragment)
         }
-        return binding.root
+        val rootView = binding.root
+        rootView.setOnTouchListener(this)
+        return rootView
     }
 
 
@@ -88,5 +102,17 @@ class TimelineFragment : Fragment() {
                 anchorView = requireActivity().findViewById(R.id.nav_view),
             ) { viewModel.unarchive(timeline) }
         }.show()
+    }
+
+    override fun onTouch(view: View?, event: MotionEvent?): Boolean {
+        when (event?.action) {
+            MotionEvent.ACTION_UP -> {
+                view?.performClick()
+                adapter.resetXPosition(view)
+            }
+            else -> {}
+        }
+
+        return view?.onTouchEvent(event) ?: true
     }
 }
