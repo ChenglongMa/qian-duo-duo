@@ -86,6 +86,7 @@ class TimelineFragment : Fragment(), View.OnTouchListener {
     private fun adapterOnClick(timeline: TimelineWithX) {
 //        itemTouchHelper.attachToRecyclerView(null)
 //        itemTouchHelper.attachToRecyclerView(binding.timelineList)
+        // TODO: add open animation
         Snackbar.make(
             requireActivity().findViewById(android.R.id.content),
             "Not yet implemented, open details fragment",

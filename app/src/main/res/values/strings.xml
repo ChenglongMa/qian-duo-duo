@@ -130,5 +130,7 @@
     <string name="no">Cancel</string>
     <string name="prompt_add_one_prefix">You don\'t have records yet, click</string>
     <string name="prompt_add_one_suffix">to start.</string>
+    <string name="project_icon">Project icon</string>
+    <string name="project_view_button_description">Hide project view</string>
 
 </resources>

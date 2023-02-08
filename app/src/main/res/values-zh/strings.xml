@@ -37,5 +37,7 @@
     <string name="no">取消</string>
     <string name="prompt_add_one_prefix">您还没有流水记录，请点击右上角</string>
     <string name="prompt_add_one_suffix">添加一条记录。</string>
+    <string name="project_icon">项目图标</string>
+    <string name="project_view_button_description">隐藏项目选择界面</string>
 
 </resources>
