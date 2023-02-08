@@ -10,6 +10,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.annotation.XmlRes
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.qdd.R
 import com.qdd.ui.widget.Keyboard
 import com.qdd.ui.widget.KeyboardView
@@ -19,7 +20,8 @@ class AppKeyboard(
     private val editText: EditText,
     private val keyboardView: KeyboardView,
     @XmlRes layoutResId: Int = R.xml.keyboard,
-    private val activity: Activity
+    private val activity: Activity,
+    private val bottomSheetBehavior: BottomSheetBehavior<View>
 ) :
     Keyboard(
         editText.context, layoutResId
@@ -48,11 +50,13 @@ class AppKeyboard(
     }
 
     private fun showKeyboard() {
-        keyboardView.visibility = View.VISIBLE
+//        keyboardView.visibility = View.VISIBLE
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
     }
 
     private fun hideKeyboard() {
-        keyboardView.visibility = View.GONE
+//        keyboardView.visibility = View.GONE
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
         val inputMethodManager: InputMethodManager? =
             activity.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager?
         inputMethodManager?.hideSoftInputFromWindow(editText.windowToken, 0)

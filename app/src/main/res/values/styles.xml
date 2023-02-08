@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="ModalBottomSheet" parent="Widget.Material3.BottomSheet">
-        <item name="backgroundTint">@color/shrine_theme_light_primaryContainer</item>
+    <style name="BottomSheet.Modal" parent="Widget.Material3.BottomSheet.Modal">
+        <!--        <item name="backgroundTint">@color/shrine_theme_light_primaryContainer</item>-->
+        <item name="shapeAppearance">@style/ShapeAppearance.App.LargeComponent</item>
+        <item name="shouldRemoveExpandedCorners">true</item>
+    </style>
+
+    <style name="BottomSheet" parent="Widget.Material3.BottomSheet">
+        <!--        <item name="backgroundTint">@color/shrine_theme_light_surfaceVariant</item>-->
+        <item name="backgroundTint">#e4e7e9</item>
         <item name="shapeAppearance">@style/ShapeAppearance.App.LargeComponent</item>
     </style>
 
-    <style name="BottomSheet" parent="Widget.Material3.BottomSheet.Modal">
-        <item name="backgroundTint">@color/shrine_theme_light_primaryContainer</item>
-        <item name="shapeAppearance">@style/ShapeAppearance.App.LargeComponent</item>
-    </style>
-
-    <!--    <style name="ShapeAppearance.App.LargeComponent" parent="ShapeAppearance.MaterialComponents.LargeComponent">-->
     <style name="ShapeAppearance.App.LargeComponent" parent="ShapeAppearance.Material3.LargeComponent">
-        <item name="cornerFamily">cut</item>
-        <item name="cornerSize">5dp</item>
+        <item name="cornerSize">8dp</item>
     </style>
 </resources>
