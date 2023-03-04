@@ -1,8 +1,7 @@
 package com.qdd.ui.addone
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import com.qdd.model.Project
 import com.qdd.model.Timeline
 import com.qdd.model.TimelineWithX
 import com.qdd.repository.TimelineRepository
@@ -14,12 +13,16 @@ import javax.inject.Inject
 @HiltViewModel
 class AddOneViewModel @Inject constructor(private val repository: TimelineRepository) :
     ViewModel() {
+
     var projectName: MutableLiveData<String> = MutableLiveData()
     var categoryName: MutableLiveData<String> = MutableLiveData()
     val date: MutableLiveData<Date> = MutableLiveData(Date(System.currentTimeMillis()))
     val money: MutableLiveData<Double> = MutableLiveData()
     val comments: MutableLiveData<String> = MutableLiveData()
     val isIncome: MutableLiveData<Boolean> = MutableLiveData()
+
+    val allProjects: LiveData<List<Project>> = repository.allProjects.asLiveData()
+
 
     fun insert(vararg timeline: Timeline) = viewModelScope.launch {
         repository.insert(*timeline)

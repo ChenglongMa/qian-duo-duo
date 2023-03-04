@@ -18,7 +18,7 @@ class TimelineAdapter(
     ItemTouchCallback.ItemTouchStatus {
 
     private val TAG = "TimelineAdapter"
-    public var prevItemView: RecyclerView.ViewHolder? = null
+    var prevItemView: RecyclerView.ViewHolder? = null
 
     inner class ViewHolder(
         var view: TimelineItemBinding,
@@ -54,6 +54,10 @@ class TimelineAdapter(
         holder.bind(getItem(position))
     }
 
+    override fun onItemMove(fromPosition: Int, toPosition: Int): Boolean {
+        return true
+    }
+
     // TODO: purpose?
     override fun onItemRemove(position: Int): Boolean = false
 
@@ -61,10 +65,20 @@ class TimelineAdapter(
         // Do nothing
     }
 
+    override fun onItemDismiss(position: Int) {
+        TODO("Not yet implemented")
+    }
+
     fun resetXPosition(view: View?) {
+
         if (view != prevItemView?.itemView) {
             prevItemView?.itemView?.scrollTo(0, 0)
-            prevItemView = null
+            prevItemView?.bindingAdapterPosition?.let { notifyItemChanged(it) }
+//            ItemTouchHelper.Callback.getDefaultUIUtil().onDraw(
+//                prevItemView?.itemView?.can
+//            )
+//            prevItemView?.itemView?.scrollTo(0, 0)
+//            prevItemView = null
         }
     }
 }

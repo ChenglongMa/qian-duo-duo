@@ -10,7 +10,7 @@
     <color name="expense">#1CB1AE</color>
     <color name="income">#E34E51</color>
 
-    <color name="shrine_theme_light_primary">#e34e51</color>
+    <color name="shrine_theme_light_primary">#E34E51</color>
     <!--    <color name="shrine_theme_light_primary">#9A4525</color>-->
     <color name="shrine_theme_light_onPrimary">#FFFFFF</color>
     <color name="shrine_theme_light_primaryContainer">#FFDBCF</color>

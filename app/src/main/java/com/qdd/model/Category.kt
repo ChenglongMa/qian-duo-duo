@@ -10,7 +10,8 @@ data class Category(
     @PrimaryKey(autoGenerate = false)
     val name: String,
     val parentName: String? = null,
-    val isIncome: Boolean
+    val isIncome: Boolean,
+    val archived: Boolean = false,
 )
 
 data class CategoryWithTimelines(

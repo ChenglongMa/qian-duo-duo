@@ -57,6 +57,7 @@
                     android:layout_height="@dimen/layout_children_padding" />
 
                 <LinearLayout
+                    android:id="@+id/row_project"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -77,7 +78,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="@dimen/layout_weight_right"
-                        android:text="@string/default_project"
+                        android:hint="@string/text_placeholder"
+                        android:text="@{viewModel.projectName}"
                         android:textAppearance="@style/TextAppearance.AppCompat.Title" />
                 </LinearLayout>
 
@@ -91,6 +93,7 @@
                     android:layout_height="@dimen/layout_children_padding" />
 
                 <LinearLayout
+                    android:id="@+id/row_category"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -111,7 +114,8 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="@dimen/layout_weight_right"
-                        android:text="@string/default_category"
+                        android:hint="@string/text_placeholder"
+                        android:text="@{viewModel.categoryName}"
                         android:textAppearance="@style/TextAppearance.AppCompat.Title" />
                 </LinearLayout>
 

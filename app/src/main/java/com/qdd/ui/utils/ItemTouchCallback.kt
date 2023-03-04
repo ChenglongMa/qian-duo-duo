@@ -1,6 +1,7 @@
 package com.qdd.ui.utils
 
 import android.graphics.Canvas
+import android.util.Log
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
@@ -34,10 +35,13 @@ class ItemTouchCallback(
         recyclerView: RecyclerView,
         viewHolder: ViewHolder,
         target: ViewHolder
-    ): Boolean = true
+    ): Boolean {
+        return adapter.onItemMove(viewHolder.bindingAdapterPosition, target.bindingAdapterPosition)
+    }
 
     override fun onSwiped(viewHolder: ViewHolder, direction: Int) {
-        adapter.notifyItemChanged(viewHolder.adapterPosition)
+        Log.d(TAG, "onSwiped: ${viewHolder.bindingAdapterPosition}")
+        adapter.notifyItemChanged(viewHolder.bindingAdapterPosition)
     }
 
     override fun getSwipeThreshold(viewHolder: ViewHolder): Float =
@@ -99,8 +103,10 @@ class ItemTouchCallback(
     }
 
     interface ItemTouchStatus {
+        fun onItemMove(fromPosition: Int, toPosition: Int): Boolean
         fun onItemRemove(position: Int): Boolean
 
         fun onSaveItemStatus(viewHolder: ViewHolder)
+        fun onItemDismiss(position: Int)
     }
 }

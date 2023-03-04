@@ -23,19 +23,15 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class TimelineFragment : Fragment(), View.OnTouchListener {
+    private val TAG = "TimelineFragment"
     private val adapter: TimelineAdapter by lazy {
         TimelineAdapter(onClick = { timeline -> adapterOnClick(timeline) },
             onDeleteClick = { timeline -> adapterOnDeleteClick(timeline) })
     }
-//    private val adapter: TimelineAdapter =
-//        TimelineAdapter(onClick = { timeline -> adapterOnClick(timeline) },
-//            onDeleteClick = { timeline -> adapterOnDeleteClick(timeline) })
-
 
     private val viewModel: TimelineViewModel by viewModels()
 
     private lateinit var binding: FragmentTimelineBinding
-    private lateinit var itemTouchHelper: ItemTouchHelper
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,7 +44,7 @@ class TimelineFragment : Fragment(), View.OnTouchListener {
 
         (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
 
-        itemTouchHelper = ItemTouchHelper(
+        val itemTouchHelper = ItemTouchHelper(
             ItemTouchCallback(
                 adapter,
                 resources.getDimensionPixelSize(R.dimen.del_btn_width)
@@ -84,8 +80,6 @@ class TimelineFragment : Fragment(), View.OnTouchListener {
     }
 
     private fun adapterOnClick(timeline: TimelineWithX) {
-//        itemTouchHelper.attachToRecyclerView(null)
-//        itemTouchHelper.attachToRecyclerView(binding.timelineList)
         // TODO: add open animation
         Snackbar.make(
             requireActivity().findViewById(android.R.id.content),

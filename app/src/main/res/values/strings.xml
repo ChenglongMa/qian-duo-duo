@@ -132,5 +132,6 @@
     <string name="prompt_add_one_suffix">to start.</string>
     <string name="project_icon">Project icon</string>
     <string name="project_view_button_description">Hide project view</string>
+    <string name="project_selected_description">Project selection indicator</string>
 
 </resources>

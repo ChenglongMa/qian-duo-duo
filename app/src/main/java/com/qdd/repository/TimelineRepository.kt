@@ -13,6 +13,7 @@ import javax.inject.Inject
 
 interface TimelineRepository {
     val allTimelines: Flow<List<Timeline>>
+    val allProjects: Flow<List<Project>>
     val allTimelineWithXs: Flow<List<TimelineWithX>>
 
     @WorkerThread
@@ -36,6 +37,7 @@ class DefaultTimelineRepository @Inject constructor(
     // Room executes all queries on a separate thread.
     // Observed Flow will notify the observer when the data has changed.
     override val allTimelines: Flow<List<Timeline>> = timelineDao.getTimelines()
+    override val allProjects: Flow<List<Project>> = projectDao.getProjects()
     override val allTimelineWithXs: Flow<List<TimelineWithX>> = timelineDao.getTimelinesWithX()
 
     // By default Room runs suspend queries off the main thread, therefore, we don't need to

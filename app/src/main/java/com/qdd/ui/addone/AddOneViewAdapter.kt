@@ -5,16 +5,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.qdd.R
 import com.qdd.databinding.PageAddOneBinding
+import com.qdd.databinding.ProjectItemBinding
+import com.qdd.model.Project
 import com.qdd.ui.utils.AppKeyboard
 
 
-class ViewAdapter(private val activity: FragmentActivity, private val viewModel: AddOneViewModel) :
-    RecyclerView.Adapter<ViewAdapter.ViewHolder>() {
+class AddOneViewAdapter(
+    private val activity: FragmentActivity,
+    private val viewModel: AddOneViewModel
+) :
+    RecyclerView.Adapter<AddOneViewAdapter.ViewHolder>() {
     companion object {
         const val ITEM_COUNT = 2
     }
@@ -57,7 +64,11 @@ class ViewAdapter(private val activity: FragmentActivity, private val viewModel:
             view.button.setOnClickListener {
                 Log.d("ViewAdapter", "comments: ${viewModel.comments.value}")
             }
-//            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_HIDDEN);
+            view.rowProject.setOnClickListener {
+                ProjectListDialog { project ->
+                    viewModel.projectName.value = project.name
+                }.show(activity.supportFragmentManager, "TAG[ProjectListDialog]")
+            }
         }
     }
 
@@ -72,4 +83,59 @@ class ViewAdapter(private val activity: FragmentActivity, private val viewModel:
         viewModel.updateDateToToday()
         holder.view.viewModel = viewModel
     }
+}
+
+
+class ProjectItemAdapter(val viewModel: AddOneViewModel, private val onClick: (Project) -> Unit) :
+    ListAdapter<Project, ProjectItemAdapter.ViewHolder>(ProjectDiffCallback) {
+    companion object {
+        const val TAG = "ProjectItemAdapter"
+    }
+
+    inner class ViewHolder(
+        val binding: ProjectItemBinding,
+        private val onClick: (Project) -> Unit
+    ) :
+        RecyclerView.ViewHolder(binding.root) {
+        private var currentProject: Project? = null
+
+        init {
+            binding.projectName.setOnClickListener {
+                currentProject?.let { onClick }
+                Log.d(TAG, "ProjectItemOnClick: clicked")
+            }
+        }
+
+        fun bind(project: Project) {
+            currentProject = project
+            binding.project = project
+            binding.isSelected.visibility =
+                if (project.name == viewModel.projectName.value) View.VISIBLE else View.INVISIBLE
+            Log.d(TAG, "ProjectItem: bind project")
+        }
+    }
+
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): ProjectItemAdapter.ViewHolder = ViewHolder(
+        ProjectItemBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        ), onClick
+    )
+
+    override fun onBindViewHolder(holder: ProjectItemAdapter.ViewHolder, position: Int) {
+        holder.bind(getItem(position))
+    }
+}
+
+object ProjectDiffCallback : DiffUtil.ItemCallback<Project>() {
+    override fun areItemsTheSame(oldItem: Project, newItem: Project): Boolean =
+        oldItem.name == newItem.name
+
+    override fun areContentsTheSame(oldItem: Project, newItem: Project): Boolean =
+        oldItem.name == newItem.name
+
 }
