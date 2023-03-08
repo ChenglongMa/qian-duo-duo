@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.qdd.databinding.BottomSheetProjectBinding
 import com.qdd.model.Project
@@ -34,8 +35,7 @@ class ProjectListDialog : BottomSheetDialogFragment() {
         binding = BottomSheetProjectBinding.inflate(inflater, container, false)
         binding.projectList.apply {
             adapter = this@ProjectListDialog.adapter
-            // TODO: add item decoration
-//            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
+            addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
 //            setOnTouchListener { view: View?, event: MotionEvent? ->
 //                view?.parent?.requestDisallowInterceptTouchEvent(true)
 //                view?.onTouchEvent(event)

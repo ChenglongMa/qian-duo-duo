@@ -4,7 +4,9 @@
     <style name="BottomSheet.Modal" parent="ThemeOverlay.Material3.DayNight.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/BottomSheet</item>
         <item name="behavior_draggable">false</item>
-        <item name="android:listDivider">?android:attr/listDivider</item>
+        <item name="android:listDivider">@drawable/vertical_divider</item>
+        <!--        <item name="android:divider">@android:color/black</item>-->
+        <!--        <item name="android:dividerHeight">1dp</item>-->
     </style>
 
     <style name="BottomSheet" parent="Widget.Material3.BottomSheet">
