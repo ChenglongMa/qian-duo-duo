@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="BottomSheet.Modal" parent="Widget.Material3.BottomSheet.Modal">
-        <!--        <item name="backgroundTint">@color/shrine_theme_light_primaryContainer</item>-->
-        <item name="shapeAppearance">@style/ShapeAppearance.App.LargeComponent</item>
-        <item name="shouldRemoveExpandedCorners">true</item>
+    <style name="BottomSheet.Modal" parent="ThemeOverlay.Material3.DayNight.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/BottomSheet</item>
+        <item name="android:listDivider">?android:attr/listDivider</item>
     </style>
 
     <style name="BottomSheet" parent="Widget.Material3.BottomSheet">
-        <!--        <item name="backgroundTint">@color/shrine_theme_light_surfaceVariant</item>-->
-        <item name="backgroundTint">#e4e7e9</item>
         <item name="shapeAppearance">@style/ShapeAppearance.App.LargeComponent</item>
     </style>
 

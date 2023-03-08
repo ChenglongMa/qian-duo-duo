@@ -24,7 +24,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:animateLayoutChanges="true">
+            android:animateLayoutChanges="true"
+            android:padding="8dp">
 
             <LinearLayout
                 android:id="@+id/linearLayout"
@@ -285,6 +286,7 @@
             style="@style/BottomSheet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:backgroundTint="#e4e7e9"
             app:behavior_hideable="true"
             app:behavior_peekHeight="0dp"
             app:layout_behavior="@string/bottom_sheet_behavior">
