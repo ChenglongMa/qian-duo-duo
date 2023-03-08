@@ -42,5 +42,6 @@
     <string name="project_selected_description">显示该项目是否被选择</string>
     <string name="hint_search">请输入关键词</string>
     <string name="add_project">添加项目</string>
+    <string name="no_project">无项目</string>
 
 </resources>

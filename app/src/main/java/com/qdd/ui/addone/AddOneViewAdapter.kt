@@ -4,6 +4,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import androidx.fragment.app.FragmentActivity
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -15,6 +17,7 @@ import com.qdd.databinding.PageAddOneBinding
 import com.qdd.databinding.ProjectItemBinding
 import com.qdd.model.Project
 import com.qdd.ui.utils.AppKeyboard
+import java.util.*
 
 
 class AddOneViewAdapter(
@@ -86,9 +89,17 @@ class AddOneViewAdapter(
 
 
 class ProjectItemAdapter(val viewModel: AddOneViewModel, private val onClick: (Project) -> Unit) :
-    ListAdapter<Project, ProjectItemAdapter.ViewHolder>(ProjectDiffCallback) {
+    ListAdapter<Project, ProjectItemAdapter.ViewHolder>(ProjectDiffCallback), Filterable {
     companion object {
         const val TAG = "ProjectItemAdapter"
+    }
+
+    private lateinit var data: MutableList<Project>
+    private lateinit var filteredList: MutableList<Project>
+    fun initializeList(data: MutableList<Project>) {
+        this.data = data
+        this.filteredList = data
+        this.submitList(data)
     }
 
     inner class ViewHolder(
@@ -129,6 +140,33 @@ class ProjectItemAdapter(val viewModel: AddOneViewModel, private val onClick: (P
 
     override fun onBindViewHolder(holder: ProjectItemAdapter.ViewHolder, position: Int) {
         holder.bind(getItem(position))
+    }
+
+    override fun getFilter(): Filter = object : Filter() {
+        override fun performFiltering(charSequence: CharSequence?): FilterResults {
+            val query = charSequence.toString().lowercase(Locale.getDefault())
+            filteredList = if (query.isEmpty()) {
+                data.toMutableList() // 如果查询为空，则返回原始列表
+            } else {
+                val list = mutableListOf<Project>()
+                for (item in data) {
+                    if (item.name.lowercase(Locale.getDefault()).contains(query)) {
+                        list.add(item)
+                    }
+                }
+                list // 如果查询不为空，则返回筛选后的列表
+            }
+            return FilterResults().apply {
+                values = filteredList
+                count = filteredList.size
+            }
+        }
+
+        @Suppress("UNCHECKED_CAST")
+        override fun publishResults(charSequence: CharSequence?, filterResults: FilterResults?) {
+            filteredList = filterResults?.values as? MutableList<Project> ?: mutableListOf()
+            submitList(filteredList)
+        }
     }
 }
 

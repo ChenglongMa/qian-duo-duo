@@ -51,6 +51,7 @@ class TimelineFragment : Fragment(), View.OnTouchListener {
             )
         )
         binding.timelineList.apply {
+            //TODO: https://github.com/scwang90/SmartRefreshLayout/issues/1160
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
             adapter = this@TimelineFragment.adapter
             itemTouchHelper.attachToRecyclerView(this)
