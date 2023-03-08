@@ -40,5 +40,7 @@
     <string name="project_icon">项目图标</string>
     <string name="project_view_button_description">隐藏项目选择界面</string>
     <string name="project_selected_description">显示该项目是否被选择</string>
+    <string name="hint_search">请输入关键词</string>
+    <string name="add_project">添加项目</string>
 
 </resources>

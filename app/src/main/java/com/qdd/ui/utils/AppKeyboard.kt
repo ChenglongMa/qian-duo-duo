@@ -50,12 +50,10 @@ class AppKeyboard(
     }
 
     private fun showKeyboard() {
-//        keyboardView.visibility = View.VISIBLE
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
     }
 
-    private fun hideKeyboard() {
-//        keyboardView.visibility = View.GONE
+    fun hideKeyboard() {
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
         val inputMethodManager: InputMethodManager? =
             activity.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager?

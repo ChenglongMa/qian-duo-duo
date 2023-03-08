@@ -3,6 +3,7 @@
 
     <style name="BottomSheet.Modal" parent="ThemeOverlay.Material3.DayNight.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/BottomSheet</item>
+        <item name="behavior_draggable">false</item>
         <item name="android:listDivider">?android:attr/listDivider</item>
     </style>
 
@@ -11,6 +12,6 @@
     </style>
 
     <style name="ShapeAppearance.App.LargeComponent" parent="ShapeAppearance.Material3.LargeComponent">
-        <item name="cornerSize">8dp</item>
+        <item name="cornerSize">12dp</item>
     </style>
 </resources>

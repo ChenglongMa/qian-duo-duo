@@ -65,9 +65,8 @@ class AddOneViewAdapter(
                 Log.d("ViewAdapter", "comments: ${viewModel.comments.value}")
             }
             view.rowProject.setOnClickListener {
-                ProjectListDialog { project ->
-                    viewModel.projectName.value = project.name
-                }.show(activity.supportFragmentManager, "TAG[ProjectListDialog]")
+                keyboard.hideKeyboard()
+                ProjectListDialog().show(activity.supportFragmentManager, "TAG[ProjectListDialog]")
             }
         }
     }
@@ -100,9 +99,11 @@ class ProjectItemAdapter(val viewModel: AddOneViewModel, private val onClick: (P
         private var currentProject: Project? = null
 
         init {
-            binding.projectName.setOnClickListener {
-                currentProject?.let { onClick }
-                Log.d(TAG, "ProjectItemOnClick: clicked")
+            binding.projectCard.setOnClickListener {
+                currentProject?.let {
+                    onClick(it)
+                }
+                Log.d(TAG, "ProjectItemOnClick: clicked ${currentProject?.name}")
             }
         }
 
@@ -111,7 +112,7 @@ class ProjectItemAdapter(val viewModel: AddOneViewModel, private val onClick: (P
             binding.project = project
             binding.isSelected.visibility =
                 if (project.name == viewModel.projectName.value) View.VISIBLE else View.INVISIBLE
-            Log.d(TAG, "ProjectItem: bind project")
+            Log.d(TAG, "ProjectItem: bind project ${project.name} ${viewModel.projectName.value}")
         }
     }
 

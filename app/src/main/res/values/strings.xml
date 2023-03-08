@@ -133,5 +133,7 @@
     <string name="project_icon">Project icon</string>
     <string name="project_view_button_description">Hide project view</string>
     <string name="project_selected_description">Project selection indicator</string>
+    <string name="hint_search">Please type the keywords</string>
+    <string name="add_project">Add Project</string>
 
 </resources>
