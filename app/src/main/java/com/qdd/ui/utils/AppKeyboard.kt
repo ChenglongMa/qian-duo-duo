@@ -21,7 +21,8 @@ class AppKeyboard(
     private val keyboardView: KeyboardView,
     @XmlRes layoutResId: Int = R.xml.keyboard,
     private val activity: Activity,
-    private val bottomSheetBehavior: BottomSheetBehavior<View>
+    private val bottomSheetBehavior: BottomSheetBehavior<View>? = null,
+    private val dismissFunc: (() -> Unit)? = null
 ) :
     Keyboard(
         editText.context, layoutResId
@@ -37,24 +38,19 @@ class AppKeyboard(
 
         editText.apply {
             inputType = InputType.TYPE_NULL
-            onFocusChangeListener = View.OnFocusChangeListener { _: View, hasFocus: Boolean ->
-                if (hasFocus) {
-                    showKeyboard()
-                } else {
-                    hideKeyboard()
-                }
-            }
+
             showSoftInputOnFocus = false
-            setOnClickListener { showKeyboard() }
+//            setOnClickListener { showKeyboard() }
         }
     }
 
     private fun showKeyboard() {
-        bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+        bottomSheetBehavior?.state = BottomSheetBehavior.STATE_EXPANDED
     }
 
     fun hideKeyboard() {
-        bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+        dismissFunc?.invoke()
+        bottomSheetBehavior?.state = BottomSheetBehavior.STATE_HIDDEN
         val inputMethodManager: InputMethodManager? =
             activity.getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager?
         inputMethodManager?.hideSoftInputFromWindow(editText.windowToken, 0)

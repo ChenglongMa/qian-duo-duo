@@ -12,11 +12,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.datepicker.MaterialDatePicker
-import com.qdd.R
 import com.qdd.databinding.PageAddOneBinding
 import com.qdd.databinding.ProjectItemBinding
 import com.qdd.model.Project
-import com.qdd.ui.utils.AppKeyboard
 import java.util.*
 
 
@@ -30,45 +28,59 @@ class AddOneViewAdapter(
     }
 
 
-    inner class ViewHolder(var view: PageAddOneBinding) : RecyclerView.ViewHolder(view.root) {
+    inner class ViewHolder(var binding: PageAddOneBinding) : RecyclerView.ViewHolder(binding.root) {
 
         init {
-            view.lifecycleOwner = activity
+            binding.lifecycleOwner = activity
             val keyboardBottomBehavior: BottomSheetBehavior<View> =
-                BottomSheetBehavior.from(view.keyboardBottomSheet)
-            // Keyboard
-            val keyboard =
-                AppKeyboard(
-                    view.editableMoney,
-                    view.keyboardView,
-                    R.xml.keyboard,
-                    activity,
-                    keyboardBottomBehavior
-                )
-            keyboard.setup()
+                BottomSheetBehavior.from(binding.keyboardBottomSheet)
+//            // Keyboard
+//            val keyboard =
+//                AppKeyboard(
+//                    binding.editableMoney,
+//                    binding.keyboardView,
+//                    R.xml.keyboard,
+//                    activity,
+//                    keyboardBottomBehavior
+//                )
+//            keyboard.setup()
+            val keyboardDialog = KeyboardDialog(binding.editableMoney)
+            binding.editableMoney.apply {
+                onFocusChangeListener = View.OnFocusChangeListener { _: View, hasFocus: Boolean ->
+                    if (hasFocus) {
+                        keyboardDialog.show(activity.supportFragmentManager, "TAG[Keyboard]")
+                    } else {
+                        keyboardDialog.dismiss()
+                    }
+                }
+                setOnClickListener {
+                    keyboardDialog.show(activity.supportFragmentManager, "TAG[Keyboard]")
+                }
+            }
+
 
             // Date picker
             val datePicker =
                 MaterialDatePicker.Builder.datePicker()
                     .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
                     .build()
-            view.valDatetime.setOnClickListener {
+            binding.valDatetime.setOnClickListener {
                 datePicker.show(activity.supportFragmentManager, "TAG[DatePicker]")
             }
 
-            view.resetDate.setOnClickListener {
+            binding.resetDate.setOnClickListener {
                 viewModel.updateDateToToday()
             }
 
-            view.clearComments.setOnClickListener {
+            binding.clearComments.setOnClickListener {
                 viewModel.comments.value = ""
             }
 
-            view.button.setOnClickListener {
+            binding.button.setOnClickListener {
                 Log.d("ViewAdapter", "comments: ${viewModel.comments.value}")
             }
-            view.rowProject.setOnClickListener {
-                keyboard.hideKeyboard()
+            binding.rowProject.setOnClickListener {
+//                keyboard.hideKeyboard()
                 ProjectListDialog().show(activity.supportFragmentManager, "TAG[ProjectListDialog]")
             }
         }
@@ -83,7 +95,7 @@ class AddOneViewAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         viewModel.isIncome.value = position == 1 // 0: expense 1: income
         viewModel.updateDateToToday()
-        holder.view.viewModel = viewModel
+        holder.binding.viewModel = viewModel
     }
 }
 
