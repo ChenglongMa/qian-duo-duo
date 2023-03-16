@@ -10,12 +10,19 @@ import com.qdd.R
 import com.qdd.databinding.BottomSheetKeyboardBinding
 import com.qdd.ui.utils.AppKeyboard
 
+@Deprecated("Use BottomSheet instead")
 class KeyboardDialog(private val editText: EditText) : BottomSheetDialogFragment() {
     companion object {
         const val TAG = "KeyboardDialog"
     }
 
     private lateinit var binding: BottomSheetKeyboardBinding
+//    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+//        return super.onCreateDialog(savedInstanceState).apply {
+//            setCanceledOnTouchOutside(false)
+//        }
+//    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

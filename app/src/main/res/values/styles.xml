@@ -14,7 +14,8 @@
 
     <style name="KeyboardBottomSheet.Modal" parent="ThemeOverlay.Material3.DayNight.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/KeyboardBottomSheet</item>
-        <item name="behavior_draggable">false</item>
+        <item name="behavior_draggable">true</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
         <item name="android:backgroundDimEnabled">false</item>
     </style>
 

@@ -12,9 +12,11 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.qdd.R
 import com.qdd.databinding.PageAddOneBinding
 import com.qdd.databinding.ProjectItemBinding
 import com.qdd.model.Project
+import com.qdd.ui.utils.AppKeyboard
 import java.util.*
 
 
@@ -34,29 +36,29 @@ class AddOneViewAdapter(
             binding.lifecycleOwner = activity
             val keyboardBottomBehavior: BottomSheetBehavior<View> =
                 BottomSheetBehavior.from(binding.keyboardBottomSheet)
-//            // Keyboard
-//            val keyboard =
-//                AppKeyboard(
-//                    binding.editableMoney,
-//                    binding.keyboardView,
-//                    R.xml.keyboard,
-//                    activity,
-//                    keyboardBottomBehavior
-//                )
-//            keyboard.setup()
-            val keyboardDialog = KeyboardDialog(binding.editableMoney)
-            binding.editableMoney.apply {
-                onFocusChangeListener = View.OnFocusChangeListener { _: View, hasFocus: Boolean ->
-                    if (hasFocus) {
-                        keyboardDialog.show(activity.supportFragmentManager, "TAG[Keyboard]")
-                    } else {
-                        keyboardDialog.dismiss()
-                    }
-                }
-                setOnClickListener {
-                    keyboardDialog.show(activity.supportFragmentManager, "TAG[Keyboard]")
-                }
-            }
+            // Keyboard
+            val keyboard =
+                AppKeyboard(
+                    binding.editableMoney,
+                    binding.keyboardView,
+                    R.xml.keyboard,
+                    activity,
+                    keyboardBottomBehavior
+                )
+            keyboard.setup()
+//            val keyboardDialog = KeyboardDialog(binding.editableMoney)
+//            binding.editableMoney.apply {
+//                onFocusChangeListener = View.OnFocusChangeListener { _: View, hasFocus: Boolean ->
+//                    if (hasFocus) {
+//                        keyboardDialog.show(activity.supportFragmentManager, "TAG[Keyboard]")
+//                    } else {
+//                        keyboardDialog.dismiss()
+//                    }
+//                }
+//                setOnClickListener {
+//                    keyboardDialog.show(activity.supportFragmentManager, "TAG[Keyboard]")
+//                }
+//            }
 
 
             // Date picker
@@ -80,7 +82,7 @@ class AddOneViewAdapter(
                 Log.d("ViewAdapter", "comments: ${viewModel.comments.value}")
             }
             binding.rowProject.setOnClickListener {
-//                keyboard.hideKeyboard()
+                keyboard.hideKeyboard()
                 ProjectListDialog().show(activity.supportFragmentManager, "TAG[ProjectListDialog]")
             }
         }

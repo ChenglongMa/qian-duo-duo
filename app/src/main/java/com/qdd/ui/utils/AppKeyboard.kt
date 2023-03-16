@@ -40,7 +40,7 @@ class AppKeyboard(
             inputType = InputType.TYPE_NULL
 
             showSoftInputOnFocus = false
-//            setOnClickListener { showKeyboard() }
+            setOnClickListener { showKeyboard() }
         }
     }
 
