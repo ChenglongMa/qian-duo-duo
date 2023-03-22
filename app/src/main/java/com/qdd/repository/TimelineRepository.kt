@@ -4,17 +4,17 @@ import androidx.annotation.WorkerThread
 import com.qdd.data.CategoryDao
 import com.qdd.data.ProjectDao
 import com.qdd.data.TimelineDao
-import com.qdd.model.Category
-import com.qdd.model.Project
-import com.qdd.model.Timeline
-import com.qdd.model.TimelineWithX
+import com.qdd.model.*
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 interface TimelineRepository {
     val allTimelines: Flow<List<Timeline>>
     val allProjects: Flow<List<Project>>
+    val allCategories: Flow<List<Category>>
     val allTimelineWithXs: Flow<List<TimelineWithX>>
+
+    fun getAllCategoriesWithChildren(isIncome: Boolean): Flow<List<CategoryWithChildren>>
 
     @WorkerThread
     suspend fun insert(vararg timeline: Timeline)
@@ -32,18 +32,23 @@ class DefaultTimelineRepository @Inject constructor(
     private val timelineDao: TimelineDao,
     private val projectDao: ProjectDao,
     private val categoryDao: CategoryDao
-) :
-    TimelineRepository {
+) : TimelineRepository {
     // Room executes all queries on a separate thread.
     // Observed Flow will notify the observer when the data has changed.
     override val allTimelines: Flow<List<Timeline>> = timelineDao.getTimelines()
     override val allProjects: Flow<List<Project>> = projectDao.getProjects()
+    override val allCategories: Flow<List<Category>> = categoryDao.getCategories()
     override val allTimelineWithXs: Flow<List<TimelineWithX>> = timelineDao.getTimelinesWithX()
 
     // By default Room runs suspend queries off the main thread, therefore, we don't need to
     // implement anything else to ensure we're not doing long running database work
     // off the main thread.
 //    @Suppress("RedundantSuspendModifier")
+
+    override fun getAllCategoriesWithChildren(isIncome: Boolean): Flow<List<CategoryWithChildren>> {
+        return categoryDao.getCategoriesWithChildren(isIncome)
+    }
+
     override suspend fun insert(vararg timeline: Timeline) {
         timelineDao.insert(*timeline)
     }

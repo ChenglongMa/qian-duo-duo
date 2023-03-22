@@ -73,7 +73,12 @@ abstract class AppDatabase : RoomDatabase() {
             val categoryDao = appDatabase.categoryDao()
             categoryDao.insert(
                 Category(name = "原材料", isIncome = false),
-                Category(name = "预付款", isIncome = true)
+                Category(name = "钢板", isIncome = false, parentName = "原材料"),
+                Category(name = "交税", isIncome = false),
+
+                Category(name = "预付款", isIncome = true),
+                Category(name = "1月款", isIncome = true, parentName = "预付款"),
+                Category(name = "尾款", isIncome = true),
             )
 
             val timelineDao = appDatabase.timelineDao()

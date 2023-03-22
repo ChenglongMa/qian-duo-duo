@@ -1,6 +1,7 @@
 package com.qdd.ui.addone
 
 import androidx.lifecycle.*
+import com.qdd.model.Category
 import com.qdd.model.Project
 import com.qdd.model.Timeline
 import com.qdd.model.TimelineWithX
@@ -22,7 +23,10 @@ class AddOneViewModel @Inject constructor(private val repository: TimelineReposi
     val isIncome: MutableLiveData<Boolean> = MutableLiveData()
 
     val allProjects: LiveData<List<Project>> = repository.allProjects.asLiveData()
+    val allCategories: LiveData<List<Category>> = repository.allCategories.asLiveData()
 
+    val allCategoriesWithChildren =
+        repository.getAllCategoriesWithChildren(isIncome.value == true).asLiveData()
 
     fun insert(vararg timeline: Timeline) = viewModelScope.launch {
         repository.insert(*timeline)

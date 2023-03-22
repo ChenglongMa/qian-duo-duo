@@ -9,23 +9,23 @@ import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.qdd.databinding.BottomSheetProjectBinding
-import com.qdd.model.Project
+import com.qdd.databinding.BottomSheetCategoryBinding
+import com.qdd.model.CategoryWithChildren
 import com.qdd.ui.utils.GlobalLayoutListener
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ProjectListDialog : BottomSheetDialogFragment() {
+class CategoryListDialog : BottomSheetDialogFragment() {
     companion object {
-        const val TAG = "ProjectListDialog"
+        const val TAG = "CategoryListDialog"
     }
 
-    private lateinit var binding: BottomSheetProjectBinding
+    private lateinit var binding: BottomSheetCategoryBinding
 
     private val viewModel: AddOneViewModel by activityViewModels()
-    private val adapter: ProjectItemAdapter by lazy {
-        ProjectItemAdapter(viewModel = viewModel) {
-            viewModel.projectName.value = it.name
+    private val adapter: CategoryWithChildrenItemAdapter by lazy {
+        CategoryWithChildrenItemAdapter(viewModel = viewModel) {
+            viewModel.categoryName.value = it.category.name // TODO: change this
             this.dismiss()
         }
     }
@@ -35,9 +35,9 @@ class ProjectListDialog : BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        binding = BottomSheetProjectBinding.inflate(inflater, container, false)
-        binding.projectList.apply {
-            adapter = this@ProjectListDialog.adapter
+        binding = BottomSheetCategoryBinding.inflate(inflater, container, false)
+        binding.categoryList.apply {
+            adapter = this@CategoryListDialog.adapter
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
 //            setOnTouchListener { view: View?, event: MotionEvent? ->
 //                view?.parent?.requestDisallowInterceptTouchEvent(true)
@@ -45,14 +45,14 @@ class ProjectListDialog : BottomSheetDialogFragment() {
 //                true
 //            }
         }
-        binding.isNoProject.visibility =
-            if (viewModel.projectName.value.isNullOrBlank()) View.VISIBLE else View.INVISIBLE
-        binding.noProjectCard.setOnClickListener {
-            viewModel.projectName.value = null
-            this.dismiss()
-        }
-        viewModel.allProjects.observe(viewLifecycleOwner) {
-            adapter.initializeList(it as MutableList<Project>)
+//        binding.isNoCategory.visibility =
+//            if (viewModel.projectName.value.isNullOrBlank()) View.VISIBLE else View.INVISIBLE
+//        binding.noCategoryCard.setOnClickListener {
+//            viewModel.projectName.value = null
+//            this.dismiss()
+//        }
+        viewModel.allCategoriesWithChildren.observe(viewLifecycleOwner) {
+            adapter.initializeList(it as MutableList<CategoryWithChildren>)
         }
         binding.btnDismiss.setOnClickListener {
             dismiss()
@@ -76,7 +76,7 @@ class ProjectListDialog : BottomSheetDialogFragment() {
         observer.addOnGlobalLayoutListener(
             GlobalLayoutListener(
                 binding.container,
-                binding.projectList
+                binding.categoryList
             )
         )
         return binding.root
