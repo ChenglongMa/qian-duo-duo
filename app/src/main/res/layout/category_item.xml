@@ -19,6 +19,7 @@
             android:id="@+id/category_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:checkable="true"
             android:clickable="true"
             android:focusable="true"
             app:cardCornerRadius="0dp"
@@ -42,7 +43,6 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/baseline_business_24" />
 
-                <!-- TODO: add more details for data binding-->
                 <TextView
                     android:id="@+id/category_name"
                     android:layout_width="wrap_content"
@@ -54,12 +54,19 @@
                     app:layout_constraintStart_toEndOf="@+id/category_img"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
+                <ToggleButton
                     android:id="@+id/btn_expand"
+                    style="@style/ToggleButtonWithIconOnly"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:checked="true"
                     android:contentDescription="@string/category_expand_description"
-                    android:src="@drawable/baseline_keyboard_arrow_down_24"
+                    android:foreground="@drawable/btn_expand"
+                    android:gravity="center"
+                    android:textAppearance="@null"
+                    android:textOff="@null"
+                    android:textOn="@null"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -70,6 +77,7 @@
             android:id="@+id/sub_category_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:elevation="-1dp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

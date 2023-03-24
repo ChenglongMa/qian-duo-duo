@@ -18,10 +18,10 @@
             android:id="@+id/sub_category_card"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:checkable="true"
             android:clickable="true"
             android:focusable="true"
             app:cardCornerRadius="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -42,17 +42,16 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:srcCompat="@drawable/baseline_business_24" />
 
-                <!--TODO: add details-->
+                <!--TODO: add details android:text="@{category.name}"-->
                 <TextView
                     android:id="@+id/sub_category_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
                     android:text="@{category.name}"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="@id/sub_category_img"
+                    app:layout_constraintStart_toStartOf="@id/sub_category_img"
                     app:layout_constraintTop_toBottomOf="@id/sub_category_img" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

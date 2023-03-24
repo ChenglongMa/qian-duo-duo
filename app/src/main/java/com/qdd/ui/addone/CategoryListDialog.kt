@@ -25,7 +25,7 @@ class CategoryListDialog : BottomSheetDialogFragment() {
     private val viewModel: AddOneViewModel by activityViewModels()
     private val adapter: CategoryWithChildrenItemAdapter by lazy {
         CategoryWithChildrenItemAdapter(viewModel = viewModel) {
-            viewModel.categoryName.value = it.category.name // TODO: change this
+            viewModel.categoryName.value = it.toString()
             this.dismiss()
         }
     }

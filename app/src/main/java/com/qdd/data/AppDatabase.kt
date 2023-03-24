@@ -75,6 +75,8 @@ abstract class AppDatabase : RoomDatabase() {
                 Category(name = "原材料", isIncome = false),
                 Category(name = "钢板", isIncome = false, parentName = "原材料"),
                 Category(name = "交税", isIncome = false),
+                Category(name = "个人所得税", isIncome = false, parentName = "交税"),
+                Category(name = "商品税", isIncome = false, parentName = "交税"),
 
                 Category(name = "预付款", isIncome = true),
                 Category(name = "1月款", isIncome = true, parentName = "预付款"),

@@ -12,7 +12,12 @@ data class Category(
     val parentName: String? = null,
     val isIncome: Boolean,
     val archived: Boolean = false,
-)
+) {
+    override fun toString(): String {
+        val prefix = parentName?.let { "$it > " }.orEmpty()
+        return "${prefix}${name}"
+    }
+}
 
 data class CategoryWithTimelines(
     @Embedded

@@ -17,6 +17,10 @@ class AddOneViewModel @Inject constructor(private val repository: TimelineReposi
 
     var projectName: MutableLiveData<String> = MutableLiveData()
     var categoryName: MutableLiveData<String> = MutableLiveData()
+    val subCategoryName: String?
+        get() = categoryName.value?.split(" > ")?.last()
+    val parentCategoryName: String?
+        get() = categoryName.value?.split(" > ")?.first()
     val date: MutableLiveData<Date> = MutableLiveData(Date(System.currentTimeMillis()))
     val money: MutableLiveData<Double> = MutableLiveData()
     val comments: MutableLiveData<String> = MutableLiveData()
