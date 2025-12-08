@@ -1,0 +1,170 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum EntryType {
+  income
+  expense
+}
+
+enum EntryStatus {
+  normal
+  pending_review
+}
+
+enum AttachmentType {
+  pdf
+  image
+}
+
+enum ParseStatus {
+  pending
+  success
+  failed
+}
+
+enum LedgerRole {
+  owner
+  editor
+  viewer
+}
+
+model User {
+  id            String    @id @default(uuid())
+  email         String    @unique
+  passwordHash  String
+  name          String
+  mainCurrency  String    @default("CNY")
+  locale        String?   @default("zh-CN")
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  ownedLedgers  Ledger[]  @relation("OwnedLedgers")
+  memberships   LedgerMember[]
+  refreshTokens RefreshToken[]
+}
+
+model RefreshToken {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
+
+model Ledger {
+  id          String         @id @default(uuid())
+  name        String
+  description String?
+  owner       User           @relation("OwnedLedgers", fields: [ownerId], references: [id])
+  ownerId     String
+  members     LedgerMember[]
+  categories  Category[]
+  merchants   Merchant[]
+  projects    Project[]
+  entries     Entry[]
+  attachments Attachment[]
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+}
+
+model LedgerMember {
+  ledger   Ledger     @relation(fields: [ledgerId], references: [id])
+  ledgerId String
+  user     User       @relation(fields: [userId], references: [id])
+  userId   String
+  role     LedgerRole
+  @@id([ledgerId, userId])
+}
+
+model Category {
+  id        String     @id @default(uuid())
+  ledger    Ledger     @relation(fields: [ledgerId], references: [id])
+  ledgerId  String
+  name      String
+  type      EntryType
+  icon      String?
+  parent    Category?  @relation("Subcategories", fields: [parentId], references: [id])
+  parentId  String?
+  children  Category[] @relation("Subcategories")
+  entries   Entry[]    @relation("EntryCategory")
+  subEntries Entry[]   @relation("EntrySubcategory")
+}
+
+model Merchant {
+  id                 String    @id @default(uuid())
+  ledger             Ledger    @relation(fields: [ledgerId], references: [id])
+  ledgerId           String
+  name               String
+  tags               String[]
+  defaultCategory    Category? @relation(fields: [defaultCategoryId], references: [id])
+  defaultCategoryId  String?
+  entries            Entry[]
+  @@unique([ledgerId, name])
+}
+
+model Project {
+  id       String  @id @default(uuid())
+  ledger   Ledger  @relation(fields: [ledgerId], references: [id])
+  ledgerId String
+  name     String
+  entries  Entry[]
+  @@unique([ledgerId, name])
+}
+
+model Entry {
+  id            String     @id @default(uuid())
+  ledger        Ledger     @relation(fields: [ledgerId], references: [id])
+  ledgerId      String
+  type          EntryType
+  amount        Decimal    @db.Decimal(18, 2)
+  currency      String
+  amountMain    Decimal    @db.Decimal(18, 2)
+  fxRate        Decimal    @db.Decimal(18, 6)
+  category      Category?  @relation("EntryCategory", fields: [categoryId], references: [id])
+  categoryId    String?
+  subcategory   Category?  @relation("EntrySubcategory", fields: [subcategoryId], references: [id])
+  subcategoryId String?
+  project       Project?   @relation(fields: [projectId], references: [id])
+  projectId     String?
+  merchant      Merchant?  @relation(fields: [merchantId], references: [id])
+  merchantId    String?
+  member        String?
+  date          DateTime   @db.Timestamp(6)
+  note          String?
+  status        EntryStatus @default(normal)
+  duplicateOf   String?
+  attachments   Attachment[]
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  @@index([ledgerId, date])
+}
+
+model Attachment {
+  id            String        @id @default(uuid())
+  ledger        Ledger        @relation(fields: [ledgerId], references: [id])
+  ledgerId      String
+  entry         Entry?        @relation(fields: [entryId], references: [id])
+  entryId       String?
+  type          AttachmentType
+  url           String
+  ocrText       String?
+  parseStatus   ParseStatus   @default(pending)
+  parseResult   Json?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+model FxRate {
+  id     String   @id @default(uuid())
+  base   String
+  quote  String
+  rate   Decimal  @db.Decimal(18, 6)
+  asOf   DateTime
+  @@unique([base, quote, asOf])
+}

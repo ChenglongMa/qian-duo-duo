@@ -1,0 +1,22 @@
+{
+  "name": "qianduoduo",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "apps/web",
+    "apps/api",
+    "packages/shared"
+  ],
+  "scripts": {
+    "dev:web": "npm --workspace apps/web run dev",
+    "dev:api": "npm --workspace apps/api run dev",
+    "build": "npm run build:api && npm run build:web",
+    "build:web": "npm --workspace apps/web run build",
+    "build:api": "npm --workspace apps/api run build",
+    "lint": "npm --workspaces run lint",
+    "format": "npm --workspaces run format"
+  },
+  "engines": {
+    "node": ">=18.18.0"
+  }
+}
