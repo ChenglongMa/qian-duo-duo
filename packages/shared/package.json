@@ -1,5 +1,5 @@
 {
-  "name": "@qianduoduo/shared",
+  "name": "@qian-duo-duo/shared",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -14,8 +14,8 @@
     "format": "prettier -w \"src/**/*.{ts,tsx,json}\""
   },
   "devDependencies": {
-    "eslint": "^9.9.0",
-    "prettier": "^3.3.3",
-    "typescript": "^5.6.2"
+    "eslint": "^9.39.1",
+    "prettier": "^3.7.4",
+    "typescript": "^5.9.3"
   }
 }
