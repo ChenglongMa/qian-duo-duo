@@ -5,8 +5,8 @@ import { CssBaseline, ThemeProvider } from '@mui/material';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { registerSW } from 'virtual:pwa-register';
-import App from './App';
-import { theme } from './theme';
+import App from "./App.js";
+import { theme } from "./theme.js";
 
 const queryClient = new QueryClient({
   defaultOptions: {

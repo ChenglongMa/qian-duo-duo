@@ -1,11 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Controller, useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { Button, MenuItem, Paper, Stack, TextField, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
-import Grid from '@mui/material/Unstable_Grid2';
+import { Button, Grid, MenuItem, Paper, Stack, TextField, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
 import dayjs from 'dayjs';
-import { useCategories } from '../api/hooks';
-import { useAuth } from '../hooks/useAuth';
+import { useCategories } from '../api/hooks.js';
+import { useAuth } from '../hooks/useAuth.js';
 
 const schema = z.object({
   type: z.enum(['income', 'expense']),
@@ -107,7 +106,7 @@ const EntryForm = ({ onSubmit }: Props) => {
           <Grid size={{ xs: 12, md: 6 }}>
             <TextField select label="类别" fullWidth {...register('categoryId')}>
               <MenuItem value="">未选择</MenuItem>
-              {options.map((cat: any) => (
+              {options.map((cat: Category) => (
                 <MenuItem key={cat.id} value={cat.id}>
                   {cat.name}
                 </MenuItem>

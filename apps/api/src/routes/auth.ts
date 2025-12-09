@@ -1,18 +1,18 @@
 import { FastifyPluginAsyncZod } from 'fastify-type-provider-zod';
 import { z } from 'zod';
-import { prisma } from '../prisma';
-import { buildJwtPayload, hashPassword, verifyPassword } from '../auth';
-import { createDefaultCategories } from '../services/defaultCategories';
+import { prisma } from '../prisma.js';
+import { buildJwtPayload, hashPassword, verifyPassword } from '../auth.js';
+import { createDefaultCategories } from '../services/defaultCategories.js';
 
 const registerSchema = z.object({
-  email: z.string().email(),
+  email: z.email(),
   password: z.string().min(8),
   name: z.string().min(1),
   mainCurrency: z.string().min(3).max(3)
 });
 
 const loginSchema = z.object({
-  email: z.string().email(),
+  email: z.email(),
   password: z.string()
 });
 

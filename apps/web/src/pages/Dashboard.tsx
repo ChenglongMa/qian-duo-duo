@@ -1,14 +1,13 @@
 import { useMemo } from 'react';
-import { Alert, Box, Card, CardContent, Chip, Divider, Stack, Typography } from '@mui/material';
-import Grid from '@mui/material/Unstable_Grid2';
+import { Alert, Box, Card, CardContent, Chip, Divider, Grid, Stack, Typography } from '@mui/material';
 import dayjs from 'dayjs';
 import ReactECharts from 'echarts-for-react';
-import EntryForm, { EntryFormValues } from '../components/EntryForm';
-import TopBar from '../components/TopBar';
-import { useAuth } from '../hooks/useAuth';
-import { useCreateEntry, useEntries } from '../api/hooks';
-import { useOfflineQueue } from '../hooks/useOfflineQueue';
-import { useLogout } from '../api/hooks';
+import EntryForm, { EntryFormValues } from '../components/EntryForm.js';
+import TopBar from '../components/TopBar.js';
+import { useAuth } from '../hooks/useAuth.js';
+import { useCreateEntry, useEntries } from '../api/hooks.js';
+import { useOfflineQueue } from '../hooks/useOfflineQueue.js';
+import { useLogout } from '../api/hooks.js';
 
 const DashboardPage = () => {
   const ledgerId = useAuth((s) => s.ledgerId);

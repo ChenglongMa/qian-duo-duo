@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
 import { Navigate, Outlet, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { Box, CircularProgress } from '@mui/material';
-import LoginPage from './pages/Login';
-import RegisterPage from './pages/Register';
-import DashboardPage from './pages/Dashboard';
-import SettingsPage from './pages/Settings';
-import { useAuth } from './hooks/useAuth';
-import { useLedgers } from './api/hooks';
+import LoginPage from './pages/Login.js';
+import RegisterPage from "./pages/Register.js";
+import DashboardPage from "./pages/Dashboard.js";
+import SettingsPage from "./pages/Settings.js";
+import { useAuth } from './hooks/useAuth.js';
+import { useLedgers } from "./api/hooks.js";
 
 const RequireAuth = () => {
   const token = useAuth((s) => s.token);

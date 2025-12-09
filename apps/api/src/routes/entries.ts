@@ -1,18 +1,18 @@
 import { FastifyPluginAsyncZod } from 'fastify-type-provider-zod';
 import { z } from 'zod';
-import { prisma } from '../prisma';
-import { detectDuplicates } from '../services/duplicates';
-import { getFxRate } from '../services/fx';
+import { prisma } from '../prisma.js';
+import { detectDuplicates } from '../services/duplicates.js';
+import { getFxRate } from '../services/fx.js';
 
 const entryBody = z.object({
   type: z.enum(['income', 'expense']),
   amount: z.number().positive(),
   currency: z.string().length(3),
   date: z.string(),
-  categoryId: z.string().uuid().nullable().optional(),
-  subcategoryId: z.string().uuid().nullable().optional(),
-  projectId: z.string().uuid().nullable().optional(),
-  merchantId: z.string().uuid().nullable().optional(),
+  categoryId: z.uuid().nullable().optional(),
+  subcategoryId: z.uuid().nullable().optional(),
+  projectId: z.uuid().nullable().optional(),
+  merchantId: z.uuid().nullable().optional(),
   member: z.string().nullable().optional(),
   note: z.string().max(500).nullable().optional(),
   fxRate: z.number().optional()
@@ -21,13 +21,13 @@ const entryBody = z.object({
 const listQuery = z.object({
   startDate: z.string().optional(),
   endDate: z.string().optional(),
-  categoryId: z.string().uuid().optional(),
-  projectId: z.string().uuid().optional(),
-  merchantId: z.string().uuid().optional(),
+  categoryId: z.uuid().optional(),
+  projectId: z.uuid().optional(),
+  merchantId: z.uuid().optional(),
   type: z.enum(['income', 'expense']).optional(),
   status: z.enum(['normal', 'pending_review']).optional(),
   limit: z.coerce.number().min(1).max(200).optional(),
-  cursor: z.string().uuid().optional(),
+  cursor: z.uuid().optional(),
   sortBy: z.enum(['date', 'amount', 'createdAt']).optional(),
   sortOrder: z.enum(['asc', 'desc']).optional()
 });
@@ -37,7 +37,7 @@ export const entryRoutes: FastifyPluginAsyncZod = async (app) => {
 
   app.get('/', {
     schema: {
-      params: z.object({ ledgerId: z.string().uuid() }),
+      params: z.object({ ledgerId: z.uuid() }),
       querystring: listQuery
     }
   }, async (request, reply) => {
@@ -94,7 +94,7 @@ export const entryRoutes: FastifyPluginAsyncZod = async (app) => {
 
   app.post('/', {
     schema: {
-      params: z.object({ ledgerId: z.string().uuid() }),
+      params: z.object({ ledgerId: z.uuid() }),
       body: entryBody
     }
   }, async (request, reply) => {
@@ -151,7 +151,7 @@ export const entryRoutes: FastifyPluginAsyncZod = async (app) => {
 
   app.patch('/:entryId', {
     schema: {
-      params: z.object({ ledgerId: z.string().uuid(), entryId: z.string().uuid() }),
+      params: z.object({ ledgerId: z.uuid(), entryId: z.uuid() }),
       body: entryBody.partial()
     }
   }, async (request, reply) => {
@@ -174,7 +174,7 @@ export const entryRoutes: FastifyPluginAsyncZod = async (app) => {
 
   app.delete('/:entryId', {
     schema: {
-      params: z.object({ ledgerId: z.string().uuid(), entryId: z.string().uuid() })
+      params: z.object({ ledgerId: z.uuid(), entryId: z.uuid() })
     }
   }, async (request, reply) => {
     const { ledgerId, entryId } = request.params;

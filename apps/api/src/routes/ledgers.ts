@@ -1,7 +1,7 @@
 import { FastifyPluginAsyncZod } from 'fastify-type-provider-zod';
 import { z } from 'zod';
-import { prisma } from '../prisma';
-import { createDefaultCategories } from '../services/defaultCategories';
+import { prisma } from '../prisma.js';
+import { createDefaultCategories } from '../services/defaultCategories.js';
 
 const ledgerBody = z.object({
   name: z.string().min(1),
@@ -11,7 +11,7 @@ const ledgerBody = z.object({
 const categoryBody = z.object({
   name: z.string().min(1),
   type: z.enum(['income', 'expense']),
-  parentId: z.string().uuid().optional()
+  parentId: z.uuid().optional()
 });
 
 export const ledgerRoutes: FastifyPluginAsyncZod = async (app) => {
@@ -23,11 +23,11 @@ export const ledgerRoutes: FastifyPluginAsyncZod = async (app) => {
       where: { userId },
       include: { ledger: true }
     });
-    return memberships.map((m) => ({
+    return memberships.map((m: any) => ({
       id: m.ledger.id,
       name: m.ledger.name,
       description: m.ledger.description,
-      role: m.role
+      role: m.role,
     }));
   });
 
@@ -46,7 +46,7 @@ export const ledgerRoutes: FastifyPluginAsyncZod = async (app) => {
     return ledger;
   });
 
-  app.patch('/:ledgerId', { schema: { body: ledgerBody.partial(), params: z.object({ ledgerId: z.string().uuid() }) } }, async (request, reply) => {
+  app.patch('/:ledgerId', { schema: { body: ledgerBody.partial(), params: z.object({ ledgerId: z.uuid() }) } }, async (request, reply) => {
     const { ledgerId } = request.params;
     const { name, description } = request.body;
     const membership = await prisma.ledgerMember.findUnique({
@@ -62,7 +62,7 @@ export const ledgerRoutes: FastifyPluginAsyncZod = async (app) => {
     return ledger;
   });
 
-  app.get('/:ledgerId/categories', { schema: { params: z.object({ ledgerId: z.string().uuid() }) } }, async (request, reply) => {
+  app.get('/:ledgerId/categories', { schema: { params: z.object({ ledgerId: z.uuid() }) } }, async (request, reply) => {
     const { ledgerId } = request.params;
     const membership = await prisma.ledgerMember.findUnique({
       where: { ledgerId_userId: { ledgerId, userId: request.user.sub } }
@@ -77,7 +77,7 @@ export const ledgerRoutes: FastifyPluginAsyncZod = async (app) => {
 
   app.post('/:ledgerId/categories', {
     schema: {
-      params: z.object({ ledgerId: z.string().uuid() }),
+      params: z.object({ ledgerId: z.uuid() }),
       body: categoryBody
     }
   }, async (request, reply) => {

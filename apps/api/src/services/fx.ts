@@ -1,4 +1,4 @@
-import { prisma } from '../prisma';
+import { prisma } from '../prisma.js';
 
 export const getFxRate = async ({ base, quote, explicit }: { base: string; quote: string; explicit?: number }) => {
   if (typeof explicit === 'number') return explicit;

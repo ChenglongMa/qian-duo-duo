@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Link as RouterLink, useLocation, useNavigate } from 'react-router-dom';
 import { Box, Button, Link, Stack, TextField, Typography, Alert, Paper } from '@mui/material';
-import { useLogin } from '../api/hooks';
-import { useAuth } from '../hooks/useAuth';
+import { useLogin } from '../api/hooks.js';
+import { useAuth } from '../hooks/useAuth.js';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -37,8 +37,8 @@ const LoginPage = () => {
         {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
         <form onSubmit={handleSubmit}>
           <Stack spacing={2}>
-            <TextField label="邮箱" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-            <TextField label="密码" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+            <TextField label="邮箱" type="email" value={email} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)} required />
+            <TextField label="密码" type="password" value={password} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)} required />
             <Button type="submit" variant="contained" size="large" disabled={mutation.isPending}>
               {mutation.isPending ? '登录中...' : '登录'}
             </Button>

@@ -1,6 +1,6 @@
 import { FastifyPluginAsyncZod } from 'fastify-type-provider-zod';
 import { z } from 'zod';
-import { prisma } from '../prisma';
+import { prisma } from '../prisma.js';
 
 export const metaRoutes: FastifyPluginAsyncZod = async (app) => {
   app.get('/fx', {

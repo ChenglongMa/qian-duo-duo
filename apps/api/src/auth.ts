@@ -1,8 +1,7 @@
 import bcrypt from 'bcryptjs';
 import { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 import fastifyJwt from '@fastify/jwt';
-import { prisma } from './prisma';
-import { env } from './env';
+import { env } from './env.js';
 
 const SALT_ROUNDS = 12;
 
@@ -34,11 +33,8 @@ export const registerAuth = async (app: FastifyInstance) => {
   );
 };
 
-declare module 'fastify' {
-  interface FastifyInstance {
-    authenticate: (request: FastifyRequest, reply: FastifyReply) => Promise<void>;
-  }
-  interface FastifyRequest {
+declare module '@fastify/jwt' {
+  interface FastifyJWT {
     user: {
       sub: string;
       email: string;
@@ -47,5 +43,11 @@ declare module 'fastify' {
       iat: number;
       exp: number;
     };
+  }
+}
+
+declare module 'fastify' {
+  interface FastifyInstance {
+    authenticate: (request: FastifyRequest, reply: FastifyReply) => Promise<void>;
   }
 }

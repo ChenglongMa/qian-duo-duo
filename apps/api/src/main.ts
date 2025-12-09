@@ -3,12 +3,12 @@ import sensible from '@fastify/sensible';
 import cors from '@fastify/cors';
 import rateLimit from '@fastify/rate-limit';
 import { serializerCompiler, validatorCompiler, ZodTypeProvider } from 'fastify-type-provider-zod';
-import { env } from './env';
-import { registerAuth } from './auth';
-import { authRoutes } from './routes/auth';
-import { ledgerRoutes } from './routes/ledgers';
-import { entryRoutes } from './routes/entries';
-import { metaRoutes } from './routes/meta';
+import { env } from './env.js';
+import { registerAuth } from './auth.js';
+import { authRoutes } from './routes/auth.js';
+import { ledgerRoutes } from './routes/ledgers.js';
+import { entryRoutes } from './routes/entries.js';
+import { metaRoutes } from './routes/meta.js';
 
 const buildServer = () => {
   const app = Fastify({

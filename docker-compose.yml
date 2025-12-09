@@ -1,23 +1,26 @@
 
 services:
   db:
-    image: postgres:16
+    image: postgres:18-bookworm
+    container_name: qdd-db
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: qianduoduo
+      POSTGRES_DB: qdd
     ports:
       - "5432:5432"
     volumes:
       - db-data:/var/lib/postgresql/data
 
   redis:
-    image: redis:7
+    image: redis:8.4-bookworm
+    container_name: qdd-redis
     ports:
       - "6379:6379"
 
   minio:
-    image: minio/minio:latest
+    image: minio/minio:RELEASE.2025-09-07T16-13-09Z
+    container_name: qdd-minio
     environment:
       MINIO_ROOT_USER: minio
       MINIO_ROOT_PASSWORD: minio123
@@ -29,11 +32,13 @@ services:
       - minio-data:/data
 
   api:
+    container_name: qdd-api
     build:
       context: .
       dockerfile: apps/api/Dockerfile
     environment:
-      DATABASE_URL: postgres://postgres:postgres@db:5432/qianduoduo
+      DATABASE_URL: postgres://postgres:postgres@db:5432/qdd
+      REDIS_URL: redis://redis:6379
       JWT_SECRET: change-me
       FRONTEND_URL: http://localhost:5173
     depends_on:
@@ -43,6 +48,7 @@ services:
       - "4000:4000"
 
   web:
+    container_name: qdd-web
     build:
       context: .
       dockerfile: apps/web/Dockerfile

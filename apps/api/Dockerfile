@@ -1,12 +1,13 @@
-FROM node:20-alpine AS builder
+FROM node:lts-bullseye AS builder
 WORKDIR /app
 COPY package.json tsconfig.base.json ./
 COPY apps ./apps
 COPY packages ./packages
 RUN npm install
+RUN npm run generate:db
 RUN npm run build:api
 
-FROM node:20-alpine AS runner
+FROM node:lts-bullseye AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 COPY --from=builder /app/node_modules ./node_modules

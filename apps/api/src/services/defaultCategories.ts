@@ -1,5 +1,5 @@
-import { EntryType, Prisma } from '@prisma/client';
-import { prisma } from '../prisma';
+import { EntryType, Prisma } from '../generated/prisma/client.js';
+import { prisma } from '../prisma.js';
 
 const defaultCategorySeed: { name: string; type: EntryType; children?: string[] }[] = [
   { name: '餐饮', type: 'expense', children: ['早餐', '午餐', '晚餐', '饮料'] },

@@ -1,6 +1,6 @@
-import { MenuItem, TextField } from '@mui/material';
-import { useLedgers } from '../api/hooks';
-import { useAuth } from '../hooks/useAuth';
+import { MenuItem, TextField } from "@mui/material";
+import { useLedgers } from "../api/hooks.js";
+import { useAuth } from "../hooks/useAuth.js";
 
 const LedgerSelect = () => {
   const { data: ledgers } = useLedgers();
@@ -12,8 +12,10 @@ const LedgerSelect = () => {
       select
       size="small"
       label="账本"
-      value={ledgerId ?? ''}
-      onChange={(e) => setLedgerId(e.target.value)}
+      value={ledgerId ?? ""}
+      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+        setLedgerId(e.target.value)
+      }
       sx={{ minWidth: 160 }}
     >
       {(ledgers || []).map((ledger) => (

@@ -3,7 +3,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import CloudOffIcon from '@mui/icons-material/CloudOff';
 import SettingsIcon from '@mui/icons-material/Settings';
 import { useNavigate } from 'react-router-dom';
-import LedgerSelect from './LedgerSelect';
+import LedgerSelect from './LedgerSelect.js';
 
 interface Props {
   pendingOffline: number;

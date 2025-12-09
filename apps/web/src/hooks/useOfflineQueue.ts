@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { nanoid } from 'nanoid';
-import { db } from '../db/local';
-import { api } from '../api/client';
-import { useAuth } from './useAuth';
+import { db } from '../db/local.js';
+import { api } from '../api/client.js';
+import { useAuth } from './useAuth.js';
 
 export const useOfflineQueue = (ledgerId?: string | null) => {
   const [pending, setPending] = useState<number>(0);

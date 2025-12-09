@@ -42,7 +42,7 @@ export default defineConfig({
       workbox: {
         runtimeCaching: [
           {
-            urlPattern: /^https?:\\/\\/localhost:4000\\/api\\//,
+            urlPattern: /^https?:\/\/localhost:4000\/api\//,
             handler: 'NetworkFirst',
             options: {
               cacheName: 'api-cache',

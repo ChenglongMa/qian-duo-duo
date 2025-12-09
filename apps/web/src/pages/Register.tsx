@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { Alert, Box, Button, Link, MenuItem, Paper, Stack, TextField, Typography } from '@mui/material';
-import { useRegister } from '../api/hooks';
-import { useAuth } from '../hooks/useAuth';
+import { useRegister } from '../api/hooks.js';
+import { useAuth } from '../hooks/useAuth.js';
 
 const RegisterPage = () => {
   const [email, setEmail] = useState('');
@@ -38,10 +38,10 @@ const RegisterPage = () => {
         {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
         <form onSubmit={handleSubmit}>
           <Stack spacing={2}>
-            <TextField label="邮箱" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-            <TextField label="姓名" value={name} onChange={(e) => setName(e.target.value)} required />
-            <TextField label="密码" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required helperText="至少 8 位" />
-            <TextField select label="主币种" value={currency} onChange={(e) => setCurrency(e.target.value)}>
+            <TextField label="邮箱" type="email" value={email} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setEmail(e.target.value)} required />
+            <TextField label="姓名" value={name} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)} required />
+            <TextField label="密码" type="password" value={password} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)} required helperText="至少 8 位" />
+            <TextField select label="主币种" value={currency} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCurrency(e.target.value)}>
               {['CNY', 'USD', 'EUR', 'AUD', 'JPY', 'HKD', 'SGD'].map((code) => (
                 <MenuItem key={code} value={code}>
                   {code}

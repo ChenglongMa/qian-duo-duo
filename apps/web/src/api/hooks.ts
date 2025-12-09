@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { api } from './client';
-import { useAuth } from '../hooks/useAuth';
+import { api } from './client.js';
+import { useAuth } from '../hooks/useAuth.js';
 
 export const useRegister = () =>
   useMutation({
