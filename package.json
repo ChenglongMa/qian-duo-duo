@@ -13,7 +13,8 @@
     "build": "npm run build:api && npm run build:web",
     "build:web": "npm --workspace apps/web run build",
     "build:api": "npm --workspace apps/api run build",
-    "generate:db": " npm --workspace apps/api run prisma:generate",
+    "migrate:db": "npm --workspace apps/api run prisma:migrate",
+    "generate:db": "npm --workspace apps/api run prisma:generate",
     "lint": "npm --workspaces run lint",
     "format": "npm --workspaces run format"
   },
