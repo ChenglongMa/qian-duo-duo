@@ -8,7 +8,7 @@ const RegisterPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
-  const [currency, setCurrency] = useState('CNY');
+  const [currency, setCurrency] = useState('AUD');
   const [error, setError] = useState<string | null>(null);
   const mutation = useRegister();
   const setAuth = useAuth((s) => s.setAuth);
@@ -42,7 +42,7 @@ const RegisterPage = () => {
             <TextField label="姓名" value={name} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)} required />
             <TextField label="密码" type="password" value={password} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)} required helperText="至少 8 位" />
             <TextField select label="主币种" value={currency} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCurrency(e.target.value)}>
-              {['CNY', 'USD', 'EUR', 'AUD', 'JPY', 'HKD', 'SGD'].map((code) => (
+              {['AUD', 'CNY', 'USD', 'EUR', 'JPY', 'HKD', 'SGD'].map((code) => (
                 <MenuItem key={code} value={code}>
                   {code}
                 </MenuItem>

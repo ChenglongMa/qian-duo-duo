@@ -35,8 +35,8 @@ const EntryForm = ({ onSubmit }: Props) => {
     resolver: zodResolver(schema),
     defaultValues: {
       type: 'expense',
-      currency: 'CNY',
-      date: dayjs().format('YYYY-MM-DDTHH:mm')
+      currency: 'AUD',
+      date: dayjs().format('YYYY-MM-DD')
     }
   });
 
@@ -47,7 +47,7 @@ const EntryForm = ({ onSubmit }: Props) => {
     reset({
       type: 'expense',
       currency: values.currency,
-      date: dayjs().format('YYYY-MM-DDTHH:mm'),
+      date: dayjs().format('YYYY-MM-DD'),
       note: ''
     });
   };
@@ -83,11 +83,19 @@ const EntryForm = ({ onSubmit }: Props) => {
             />
           </Grid>
           <Grid size={{ xs: 12, md: 4 }}>
-            <TextField label="金额" type="number" fullWidth inputProps={{ step: '0.01' }} {...register('amount')} />
+            <TextField
+              label="金额"
+              type="number"
+              fullWidth
+              slotProps={{
+                htmlInput: { step: '0.01' }
+              }}
+              {...register('amount')}
+            />
           </Grid>
           <Grid size={{ xs: 12, md: 4 }}>
-            <TextField select label="币种" fullWidth defaultValue="CNY" {...register('currency')}>
-              {['CNY', 'USD', 'EUR', 'AUD', 'JPY', 'HKD', 'SGD'].map((code) => (
+            <TextField select label="币种" fullWidth defaultValue="AUD" {...register('currency')}>
+              {['AUD', 'CNY', 'USD', 'EUR', 'JPY', 'HKD', 'SGD'].map((code) => (
                 <MenuItem key={code} value={code}>
                   {code}
                 </MenuItem>
@@ -99,7 +107,10 @@ const EntryForm = ({ onSubmit }: Props) => {
               label="日期时间"
               type="datetime-local"
               fullWidth
-              InputLabelProps={{ shrink: true }}
+              // InputLabelProps={{ shrink: true }}
+              slotProps={{
+                inputLabel: { shrink: true }
+              }}
               {...register('date')}
             />
           </Grid>

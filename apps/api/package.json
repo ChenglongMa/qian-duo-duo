@@ -10,9 +10,9 @@
     "start": "node dist/main.js",
     "lint": "eslint \"src/**/*.{ts,tsx}\"",
     "format": "prettier -w \"src/**/*.{ts,tsx,json}\"",
-    "postinstall": "npx prisma generate",
-    "prisma:migrate": "npx prisma migrate dev",
-    "prisma:generate": "npx prisma generate",
+    "postinstall": "npx prisma generate --schema prisma/schema.prisma --config prisma.config.ts",
+    "prisma:migrate": "npx prisma migrate dev --schema prisma/schema.prisma --config prisma.config.ts",
+    "prisma:generate": "npx prisma generate --schema prisma/schema.prisma --config prisma.config.ts",
     "prisma:studio": "npx prisma studio"
   },
   "dependencies": {

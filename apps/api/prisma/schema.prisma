@@ -45,8 +45,8 @@ model User {
   email         String    @unique
   passwordHash  String
   name          String
-  mainCurrency  String    @default("CNY")
-  locale        String?   @default("zh-CN")
+  mainCurrency  String    @default("AUD")
+  locale        String?   @default("en-AU")
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   ownedLedgers  Ledger[]  @relation("OwnedLedgers")

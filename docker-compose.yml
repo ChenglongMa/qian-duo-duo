@@ -46,6 +46,7 @@ services:
     build:
       context: .
       dockerfile: apps/api/Dockerfile
+    image: qdd-api:latest
     environment:
       DATABASE_URL: postgresql://postgres:postgres@db:5432/qdd
       REDIS_URL: redis://redis:6379
@@ -64,6 +65,7 @@ services:
     build:
       context: .
       dockerfile: apps/web/Dockerfile
+    image: qdd-web:latest
     depends_on:
       api:
         condition: service_started

@@ -1,11 +1,11 @@
 export type CurrencyCode =
+  | 'AUD'
+  | 'CNY'  
   | 'USD'
   | 'EUR'
   | 'GBP'
-  | 'AUD'
   | 'NZD'
   | 'JPY'
-  | 'CNY'
   | 'HKD'
   | 'SGD'
   | 'CAD'
