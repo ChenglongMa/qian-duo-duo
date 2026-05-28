@@ -11,12 +11,22 @@ Canonical baseline:
 
 ## Current State
 
-Security implementation has not started. Milestone 0 creates safe foundations only:
+Milestone 1 implements the first security surface:
 
-- `.env.example` contains example development values and no real secrets.
-- Docker Compose can run without a committed `.env`.
-- Swagger/OpenAPI is not enabled yet, so there is no production `/docs` exposure.
-- Authentication, sessions, CSRF, rate limiting, and audit logging begin in later milestones.
+- A single admin account is created by `pnpm db:seed`.
+- Admin passwords are hashed with Argon2id and must pass the password policy.
+- Session cookies are opaque, HTTP-only, `SameSite=Lax`, and `Secure` in production.
+- Session token hashes are HMAC-SHA256 values keyed by `SESSION_SECRET`; raw session tokens are
+  only sent in cookies.
+- Unsafe authenticated methods require an `x-csrf-token` header matching the current session CSRF
+  token hash.
+- Login attempts are rate-limited in process by IP plus account identifier.
+- Generic login errors avoid account enumeration.
+- Standard API errors include `error.code`, safe message, details, and request ID.
+- Audit logging exists for login failure thresholds, ledger changes, category changes, YAML
+  import/export, and category rollback.
+- Swagger `/docs` is enabled only when `NODE_ENV !== production`.
+- Production Compose requires `SESSION_SECRET`.
 
 ## V1 Security Model
 
@@ -29,9 +39,9 @@ Security implementation has not started. Milestone 0 creates safe foundations on
 
 - Argon2id password hashing unless a documented alternative is approved.
 - Strong password policy and common password denial.
-- Secure HTTP-only cookie sessions.
-- CSRF protection for cookie-based authentication.
-- Login rate limiting by IP and account identifier.
+- Secure HTTP-only cookie sessions. Implemented for Milestone 1.
+- CSRF protection for cookie-based authentication. Implemented for unsafe authenticated routes.
+- Login rate limiting by IP and account identifier. Implemented in process for Milestone 1.
 - Generic login failure messages.
 - Request IDs in logs and error responses.
 - Swagger `/docs` disabled in production.
@@ -39,6 +49,13 @@ Security implementation has not started. Milestone 0 creates safe foundations on
 - Upload validation for size, extension, MIME type, and path safety.
 - Destructive actions require explicit confirmation and audit logging.
 - LLM features are disabled by default and require explicit user action.
+
+## Current Limitations
+
+- Login rate limiting is in-memory in Milestone 1. It protects a single API process and should move
+  to Redis before multi-process deployment or WAN hardening.
+- Login itself is public and does not require a prior CSRF token because no authenticated cookie
+  exists yet. All authenticated unsafe routes require CSRF.
 
 ## Sensitive Data
 

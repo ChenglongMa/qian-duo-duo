@@ -3,12 +3,14 @@ services:
     command: ["pnpm", "--filter", "@qdd/api", "start"]
     environment:
       NODE_ENV: production
+      SESSION_SECRET: ${SESSION_SECRET:?SESSION_SECRET is required in production}
     restart: unless-stopped
 
   worker:
     command: ["pnpm", "--filter", "@qdd/api", "worker:start"]
     environment:
       NODE_ENV: production
+      SESSION_SECRET: ${SESSION_SECRET:?SESSION_SECRET is required in production}
     restart: unless-stopped
 
   web:

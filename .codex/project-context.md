@@ -38,5 +38,7 @@ QDD is not a SaaS product. V1 has exactly one admin account. Household members a
 
 ## Active Milestone
 
-Milestone 0 is the next implementation target. It creates the monorepo foundation, Docker development environment, shared package, basic API/web apps, health checks, linting, formatting, CI, and docs skeleton.
-
+Milestone 2A is the next implementation target. It implements entry CRUD, money and FX validation,
+date-only entry behavior, member/category/merchant/project selection, clone entry, list/filter/sort,
+soft delete, audit logging for entries, recent-used chips, amount keypad validation, and Playwright
+E2E setup.

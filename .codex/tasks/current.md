@@ -2,57 +2,60 @@
 
 ## Last Completed Milestone
 
-Milestone 0: Bootstrap, Infrastructure, and CI.
+Milestone 1: Auth and Master Data.
 
-Completed on 2026-05-29 after passing the Milestone 0 gate.
+Completed on 2026-05-29 after passing the Milestone 1 gate.
 
 ## Next Active Milestone
 
-Milestone 1: Auth and Master Data.
+Milestone 2A: Entries CRUD, Money, Soft Delete.
 
-Do not begin Milestone 1 until explicitly requested.
+Do not begin Milestone 2A until explicitly requested.
 
 ## Completed Goal
 
-Create the monorepo foundation, Docker development environment, shared package, basic API/web apps, health checks, linting, formatting, CI, and initial docs skeleton.
+Implement secure single-admin authentication and CRUD foundations for ledgers, categories,
+members, projects, and merchants. Add category YAML import/export, category version snapshots,
+rollback, rule version placeholder tables, Prisma migrations, seed, and audit log foundation.
 
 ## Start With
 
-- `.codex/prompts/milestone-00-bootstrap.md`
+- `.codex/prompts/implement-next-milestone.md`
 - `.codex/workflows/milestone-workflow.md`
 - `.codex/checklists/milestone-gate.md`
 
 ## Explicitly Out of Scope
 
-- Authentication.
-- Domain CRUD.
 - Entry management.
-- Import pipeline.
+- Money and FX handling.
+- Entry soft delete/purge.
+- Import staging pipeline.
 - Offline sync.
+- Attachment storage.
 - LLM integration.
 
 ## Verified Completion Criteria
 
-Milestone 0 is complete only after:
+Milestone 1 is complete only after:
 
-- Required monorepo structure exists.
-- API health endpoint works.
-- Web root component renders and is tested.
-- Shared package exports a typed health schema/DTO.
-- Docker Compose starts Postgres, Redis, API, worker placeholder, and web.
-- CI runs install, lint, test, and build.
-- Docs skeleton is present.
-- No secrets are committed.
-- Milestone 0 gate passes.
+- Admin auth, password policy, Argon2id hashing, session cookies, CSRF, and login rate limiting exist.
+- Prisma schema, migration, and seed exist.
+- Ledger, category, member, project, and merchant master data endpoints exist.
+- Category YAML import/export and rollback work with snapshots.
+- Audit log foundation exists.
+- Backend and frontend tests cover the milestone behaviors.
+- Docs and CI are updated.
+- Milestone 1 gate passes.
 
-## Milestone 0 Gate Run
+## Milestone 1 Gate Run
 
 ```bash
 pnpm install
+pnpm db:migrate
+pnpm db:seed
 pnpm lint
 pnpm test
 pnpm build
-docker compose config
 docker compose up -d --build
 curl -f http://localhost:3000/health
 docker compose down

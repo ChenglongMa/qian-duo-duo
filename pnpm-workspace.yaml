@@ -2,10 +2,17 @@ packages:
   - "apps/*"
   - "packages/*"
 
-onlyBuiltDependencies:
-  - "@nestjs/core"
-  - "esbuild"
-
 allowBuilds:
   "@nestjs/core": true
+  "@prisma/engines": true
+  "@scarf/scarf": false
+  "argon2": true
   "esbuild": true
+  "prisma": true
+
+onlyBuiltDependencies:
+  - "@prisma/engines"
+  - "@nestjs/core"
+  - "argon2"
+  - "esbuild"
+  - "prisma"

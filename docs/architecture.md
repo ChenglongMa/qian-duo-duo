@@ -11,13 +11,22 @@ Canonical source documents:
 
 ## Current State
 
-Milestone 0 bootstraps the application foundation:
+Milestone 1 adds authentication, Prisma persistence, master-data CRUD, category YAML workflows,
+category snapshots, rollback, and audit logging foundations:
 
-- `packages/shared` exports the first Zod contract for API health responses.
-- `apps/api` is a NestJS service with a typed `/health` endpoint.
-- `apps/web` is a Vue 3 + Vite application with a tested root component.
-- Docker Compose defines PostgreSQL, Redis, API, worker placeholder, and web services.
-- GitHub Actions runs install, lint, test, and build.
+- `packages/shared` exports Zod contracts for health, auth, errors, ledgers, categories, members,
+  projects, merchants, category YAML, and audit DTOs.
+- `apps/api` is a NestJS REST service with `/health`, `/auth/*`, `/ledgers`, and ledger-scoped
+  master-data routes.
+- Prisma owns PostgreSQL schema and migrations for admin accounts, sessions, ledgers, categories,
+  category versions, members, projects, merchants, rule version placeholders, and audit logs.
+- Authentication uses one seeded admin account, Argon2id password hashing, hashed opaque cookie
+  sessions, CSRF tokens, and login rate limiting.
+- Category YAML import/export uses stable keys. Import and rollback create category version
+  snapshots and audit events.
+- `apps/web` has a tested admin login form and category tree component wired to shared types.
+- GitHub Actions runs install, database migration, seed, lint, test, and build against PostgreSQL
+  and Redis service containers.
 
 ## Target Shape
 
@@ -41,8 +50,9 @@ Target services:
 - Worker: background jobs for import, parsing, backup, cleanup, and sync work.
 - Reverse proxy: Caddy or Nginx for production WAN exposure.
 
-Milestone 0 includes only a worker placeholder. BullMQ queues, Prisma schema, migrations,
-authentication, and domain data are introduced by later milestones.
+Milestone 1 includes only rule version placeholder tables. BullMQ queues, entry management,
+offline sync, import staging, attachments, backup, and parsing work are introduced by later
+milestones.
 
 ## Architectural Invariants
 

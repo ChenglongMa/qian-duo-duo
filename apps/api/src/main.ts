@@ -4,6 +4,7 @@ import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 
 import { AppModule } from './app.module';
+import { setupApplication } from './app.setup';
 
 const DEFAULT_PORT = 3000;
 
@@ -18,6 +19,7 @@ function resolvePort(value: string | undefined): number {
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule, { bufferLogs: true });
+  setupApplication(app);
   const port = resolvePort(process.env.API_PORT ?? process.env.PORT);
 
   await app.listen(port, '0.0.0.0');

@@ -1,0 +1,183 @@
+generator client {
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model AdminAccount {
+  id           String         @id @default(uuid()) @db.Uuid
+  singletonKey String         @unique @default("single_admin") @map("singleton_key")
+  username     String         @unique
+  passwordHash String         @map("password_hash")
+  createdAt    DateTime       @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt    DateTime       @updatedAt @map("updated_at") @db.Timestamptz(3)
+  sessions     AdminSession[]
+
+  @@map("admin_accounts")
+}
+
+model AdminSession {
+  id            String       @id @default(uuid()) @db.Uuid
+  adminId       String       @map("admin_id") @db.Uuid
+  tokenHash     String       @unique @map("token_hash")
+  csrfTokenHash String       @map("csrf_token_hash")
+  userAgent     String?      @map("user_agent")
+  ipAddress     String?      @map("ip_address")
+  expiresAt     DateTime     @map("expires_at") @db.Timestamptz(3)
+  revokedAt     DateTime?    @map("revoked_at") @db.Timestamptz(3)
+  createdAt     DateTime     @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt     DateTime     @updatedAt @map("updated_at") @db.Timestamptz(3)
+  admin         AdminAccount @relation(fields: [adminId], references: [id], onDelete: Cascade)
+
+  @@index([adminId])
+  @@index([expiresAt])
+  @@map("admin_sessions")
+}
+
+model Ledger {
+  id               String            @id @default(uuid()) @db.Uuid
+  name             String
+  baseCurrency     String            @map("base_currency")
+  timezone         String
+  createdAt        DateTime          @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt        DateTime          @updatedAt @map("updated_at") @db.Timestamptz(3)
+  version          Int               @default(1)
+  deletedAt        DateTime?         @map("deleted_at") @db.Timestamptz(3)
+  categories       Category[]
+  categoryVersions CategoryVersion[]
+  members          Member[]
+  projects         Project[]
+  merchants        Merchant[]
+  ruleVersions     RuleVersion[]
+  auditLogs        AuditLog[]
+
+  @@index([deletedAt])
+  @@map("ledgers")
+}
+
+model Category {
+  id        String     @id @default(uuid()) @db.Uuid
+  ledgerId  String     @map("ledger_id") @db.Uuid
+  stableKey String     @map("stable_key")
+  parentId  String?    @map("parent_id") @db.Uuid
+  name      String
+  sortOrder Int        @default(0) @map("sort_order")
+  status    String     @default("active")
+  createdAt DateTime   @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime   @updatedAt @map("updated_at") @db.Timestamptz(3)
+  version   Int        @default(1)
+  deletedAt DateTime?  @map("deleted_at") @db.Timestamptz(3)
+  ledger    Ledger     @relation(fields: [ledgerId], references: [id], onDelete: Cascade)
+  parent    Category?  @relation("CategoryTree", fields: [parentId], references: [id], onDelete: SetNull)
+  children  Category[] @relation("CategoryTree")
+
+  @@unique([ledgerId, stableKey])
+  @@index([ledgerId, parentId])
+  @@index([ledgerId, deletedAt])
+  @@map("categories")
+}
+
+model CategoryVersion {
+  id            String   @id @default(uuid()) @db.Uuid
+  ledgerId      String   @map("ledger_id") @db.Uuid
+  versionNumber Int      @map("version_number")
+  reason        String
+  snapshot      Json
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  actorId       String?  @map("actor_id") @db.Uuid
+  actorLabel    String   @map("actor_label")
+  requestId     String   @map("request_id")
+  ledger        Ledger   @relation(fields: [ledgerId], references: [id], onDelete: Cascade)
+
+  @@unique([ledgerId, versionNumber])
+  @@index([ledgerId, createdAt])
+  @@map("category_versions")
+}
+
+model Member {
+  id        String    @id @default(uuid()) @db.Uuid
+  ledgerId  String    @map("ledger_id") @db.Uuid
+  name      String
+  sortOrder Int       @default(0) @map("sort_order")
+  status    String    @default("active")
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime  @updatedAt @map("updated_at") @db.Timestamptz(3)
+  version   Int       @default(1)
+  deletedAt DateTime? @map("deleted_at") @db.Timestamptz(3)
+  ledger    Ledger    @relation(fields: [ledgerId], references: [id], onDelete: Cascade)
+
+  @@unique([ledgerId, name])
+  @@index([ledgerId, deletedAt])
+  @@map("members")
+}
+
+model Project {
+  id        String    @id @default(uuid()) @db.Uuid
+  ledgerId  String    @map("ledger_id") @db.Uuid
+  name      String
+  sortOrder Int       @default(0) @map("sort_order")
+  status    String    @default("active")
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt DateTime  @updatedAt @map("updated_at") @db.Timestamptz(3)
+  version   Int       @default(1)
+  deletedAt DateTime? @map("deleted_at") @db.Timestamptz(3)
+  ledger    Ledger    @relation(fields: [ledgerId], references: [id], onDelete: Cascade)
+
+  @@unique([ledgerId, name])
+  @@index([ledgerId, deletedAt])
+  @@map("projects")
+}
+
+model Merchant {
+  id             String    @id @default(uuid()) @db.Uuid
+  ledgerId       String    @map("ledger_id") @db.Uuid
+  name           String
+  normalizedName String    @map("normalized_name")
+  status         String    @default("active")
+  createdAt      DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt      DateTime  @updatedAt @map("updated_at") @db.Timestamptz(3)
+  version        Int       @default(1)
+  deletedAt      DateTime? @map("deleted_at") @db.Timestamptz(3)
+  ledger         Ledger    @relation(fields: [ledgerId], references: [id], onDelete: Cascade)
+
+  @@unique([ledgerId, normalizedName])
+  @@index([ledgerId, deletedAt])
+  @@map("merchants")
+}
+
+model RuleVersion {
+  id            String   @id @default(uuid()) @db.Uuid
+  ledgerId      String   @map("ledger_id") @db.Uuid
+  ruleType      String   @map("rule_type")
+  versionNumber Int      @map("version_number")
+  active        Boolean  @default(false)
+  snapshot      Json
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  ledger        Ledger   @relation(fields: [ledgerId], references: [id], onDelete: Cascade)
+
+  @@unique([ledgerId, ruleType, versionNumber])
+  @@index([ledgerId, ruleType, active])
+  @@map("rule_versions")
+}
+
+model AuditLog {
+  id          String   @id @default(uuid()) @db.Uuid
+  actorId     String?  @map("actor_id") @db.Uuid
+  actorLabel  String   @map("actor_label")
+  action      String
+  entityType  String   @map("entity_type")
+  entityId    String?  @map("entity_id")
+  ledgerId    String?  @map("ledger_id") @db.Uuid
+  metadata    Json
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(3)
+  requestId   String   @map("request_id")
+  ledger      Ledger?  @relation(fields: [ledgerId], references: [id], onDelete: SetNull)
+
+  @@index([ledgerId, createdAt])
+  @@index([action, createdAt])
+  @@map("audit_logs")
+}
