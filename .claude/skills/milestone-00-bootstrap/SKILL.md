@@ -1,0 +1,1 @@
+../../../.codex/prompts/milestone-00-bootstrap.md

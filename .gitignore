@@ -17,3 +17,5 @@ coverage
 /apps/api/node_modules
 /packages/shared/node_modules
 /tmp
+CLAUDE.local.md
+.claude/settings.local.json
