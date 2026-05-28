@@ -1,0 +1,38 @@
+{
+  "name": "@qdd/api",
+  "version": "0.0.0",
+  "private": true,
+  "type": "commonjs",
+  "main": "dist/main.js",
+  "scripts": {
+    "dev": "pnpm --filter @qdd/shared build && tsx watch src/main.ts",
+    "start": "node dist/main.js",
+    "worker:dev": "pnpm --filter @qdd/shared build && tsx watch src/worker.ts",
+    "worker:start": "node dist/worker.js",
+    "build": "tsc -p tsconfig.build.json",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:unit": "vitest run",
+    "test:integration": "vitest run --passWithNoTests",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "format": "prettier --check .",
+    "db:migrate": "echo 'Prisma migrations start in Milestone 1'",
+    "db:seed": "echo 'Database seeding starts in Milestone 1'"
+  },
+  "dependencies": {
+    "@nestjs/common": "11.1.24",
+    "@nestjs/core": "11.1.24",
+    "@nestjs/platform-express": "11.1.24",
+    "@qdd/shared": "workspace:*",
+    "reflect-metadata": "0.2.2",
+    "rxjs": "7.8.2"
+  },
+  "devDependencies": {
+    "@nestjs/testing": "11.1.24",
+    "@types/node": "24.12.4",
+    "@types/supertest": "7.2.0",
+    "supertest": "7.2.2",
+    "tsx": "4.22.3",
+    "vitest": "4.1.7"
+  }
+}

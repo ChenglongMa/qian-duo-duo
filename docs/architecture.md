@@ -11,7 +11,13 @@ Canonical source documents:
 
 ## Current State
 
-The repository is ready for Milestone 0 implementation. Application code has not been bootstrapped yet.
+Milestone 0 bootstraps the application foundation:
+
+- `packages/shared` exports the first Zod contract for API health responses.
+- `apps/api` is a NestJS service with a typed `/health` endpoint.
+- `apps/web` is a Vue 3 + Vite application with a tested root component.
+- Docker Compose defines PostgreSQL, Redis, API, worker placeholder, and web services.
+- GitHub Actions runs install, lint, test, and build.
 
 ## Target Shape
 
@@ -35,6 +41,9 @@ Target services:
 - Worker: background jobs for import, parsing, backup, cleanup, and sync work.
 - Reverse proxy: Caddy or Nginx for production WAN exposure.
 
+Milestone 0 includes only a worker placeholder. BullMQ queues, Prisma schema, migrations,
+authentication, and domain data are introduced by later milestones.
+
 ## Architectural Invariants
 
 - QDD is self-hosted for one private household.
@@ -49,4 +58,3 @@ Target services:
 ## Update Rule
 
 Update this document whenever architecture, service boundaries, data ownership, deployment topology, or major libraries change.
-

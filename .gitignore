@@ -3,6 +3,7 @@ dist
 build
 .turbo
 .cache
+*.tsbuildinfo
 .env
 .env.local
 .env.production

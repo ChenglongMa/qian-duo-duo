@@ -1,0 +1,12 @@
+.git
+.codex
+.claude
+node_modules
+dist
+coverage
+*.tsbuildinfo
+.env
+.env.*
+!.env.example
+tmp
+.DS_Store

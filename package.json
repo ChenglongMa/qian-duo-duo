@@ -1,0 +1,33 @@
+{
+  "name": "qian-duo-duo",
+  "version": "0.0.0",
+  "private": true,
+  "packageManager": "pnpm@11.4.0",
+  "engines": {
+    "node": ">=24.0.0 <25",
+    "pnpm": ">=11.4.0 <12"
+  },
+  "scripts": {
+    "dev": "pnpm -r --parallel dev",
+    "build": "pnpm -r build",
+    "lint": "pnpm -r lint",
+    "test": "pnpm -r test",
+    "test:unit": "pnpm -r test:unit",
+    "test:integration": "pnpm -r test:integration",
+    "e2e": "pnpm --filter @qdd/e2e test",
+    "typecheck": "pnpm -r typecheck",
+    "format": "pnpm -r format",
+    "db:migrate": "pnpm --filter @qdd/api db:migrate",
+    "db:seed": "pnpm --filter @qdd/api db:seed"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "eslint": "10.4.0",
+    "eslint-plugin-vue": "10.9.1",
+    "globals": "17.6.0",
+    "prettier": "3.8.3",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.60.0",
+    "vue-eslint-parser": "10.4.0"
+  }
+}

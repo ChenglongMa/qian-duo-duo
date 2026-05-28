@@ -11,7 +11,12 @@ Canonical baseline:
 
 ## Current State
 
-Security implementation has not started. Milestone 0 should only create safe foundations and must not commit secrets.
+Security implementation has not started. Milestone 0 creates safe foundations only:
+
+- `.env.example` contains example development values and no real secrets.
+- Docker Compose can run without a committed `.env`.
+- Swagger/OpenAPI is not enabled yet, so there is no production `/docs` exposure.
+- Authentication, sessions, CSRF, rate limiting, and audit logging begin in later milestones.
 
 ## V1 Security Model
 
@@ -49,4 +54,3 @@ Never log:
 ## Update Rule
 
 Update this document whenever authentication, authorization, sessions, uploads, destructive actions, LLM handling, deployment security, or audit behavior changes.
-

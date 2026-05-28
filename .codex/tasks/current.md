@@ -1,10 +1,18 @@
 # Current Codex Task
 
-## Active Milestone
+## Last Completed Milestone
 
 Milestone 0: Bootstrap, Infrastructure, and CI.
 
-## Goal
+Completed on 2026-05-29 after passing the Milestone 0 gate.
+
+## Next Active Milestone
+
+Milestone 1: Auth and Master Data.
+
+Do not begin Milestone 1 until explicitly requested.
+
+## Completed Goal
 
 Create the monorepo foundation, Docker development environment, shared package, basic API/web apps, health checks, linting, formatting, CI, and initial docs skeleton.
 
@@ -23,7 +31,7 @@ Create the monorepo foundation, Docker development environment, shared package, 
 - Offline sync.
 - LLM integration.
 
-## Completion Criteria
+## Verified Completion Criteria
 
 Milestone 0 is complete only after:
 
@@ -37,3 +45,15 @@ Milestone 0 is complete only after:
 - No secrets are committed.
 - Milestone 0 gate passes.
 
+## Milestone 0 Gate Run
+
+```bash
+pnpm install
+pnpm lint
+pnpm test
+pnpm build
+docker compose config
+docker compose up -d --build
+curl -f http://localhost:3000/health
+docker compose down
+```

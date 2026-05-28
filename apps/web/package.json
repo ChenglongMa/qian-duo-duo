@@ -1,0 +1,29 @@
+{
+  "name": "@qdd/web",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "vue-tsc -p tsconfig.app.json --noEmit && vite build",
+    "preview": "vite preview --host 0.0.0.0",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:unit": "vitest run",
+    "test:integration": "vitest run --passWithNoTests",
+    "typecheck": "vue-tsc -p tsconfig.app.json --noEmit",
+    "format": "prettier --check ."
+  },
+  "dependencies": {
+    "@qdd/shared": "workspace:*",
+    "vue": "3.5.35"
+  },
+  "devDependencies": {
+    "@testing-library/vue": "8.1.0",
+    "@vitejs/plugin-vue": "6.0.7",
+    "jsdom": "29.1.1",
+    "vite": "8.0.14",
+    "vitest": "4.1.7",
+    "vue-tsc": "3.3.2"
+  }
+}

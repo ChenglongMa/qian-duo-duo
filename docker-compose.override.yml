@@ -1,0 +1,14 @@
+services:
+  api:
+    command: ["pnpm", "--filter", "@qdd/api", "dev"]
+    environment:
+      NODE_ENV: development
+
+  worker:
+    environment:
+      NODE_ENV: development
+
+  web:
+    command: ["pnpm", "--filter", "@qdd/web", "dev"]
+    environment:
+      NODE_ENV: development
