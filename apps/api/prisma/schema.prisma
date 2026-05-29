@@ -52,6 +52,7 @@ model Ledger {
   members          Member[]
   projects         Project[]
   merchants        Merchant[]
+  entries          Entry[]
   ruleVersions     RuleVersion[]
   auditLogs        AuditLog[]
 
@@ -74,6 +75,7 @@ model Category {
   ledger    Ledger     @relation(fields: [ledgerId], references: [id], onDelete: Cascade)
   parent    Category?  @relation("CategoryTree", fields: [parentId], references: [id], onDelete: SetNull)
   children  Category[] @relation("CategoryTree")
+  entries   Entry[]
 
   @@unique([ledgerId, stableKey])
   @@index([ledgerId, parentId])
@@ -109,6 +111,7 @@ model Member {
   version   Int       @default(1)
   deletedAt DateTime? @map("deleted_at") @db.Timestamptz(3)
   ledger    Ledger    @relation(fields: [ledgerId], references: [id], onDelete: Cascade)
+  entries   Entry[]
 
   @@unique([ledgerId, name])
   @@index([ledgerId, deletedAt])
@@ -126,6 +129,7 @@ model Project {
   version   Int       @default(1)
   deletedAt DateTime? @map("deleted_at") @db.Timestamptz(3)
   ledger    Ledger    @relation(fields: [ledgerId], references: [id], onDelete: Cascade)
+  entries   Entry[]
 
   @@unique([ledgerId, name])
   @@index([ledgerId, deletedAt])
@@ -143,10 +147,46 @@ model Merchant {
   version        Int       @default(1)
   deletedAt      DateTime? @map("deleted_at") @db.Timestamptz(3)
   ledger         Ledger    @relation(fields: [ledgerId], references: [id], onDelete: Cascade)
+  entries        Entry[]
 
   @@unique([ledgerId, normalizedName])
   @@index([ledgerId, deletedAt])
   @@map("merchants")
+}
+
+model Entry {
+  id               String    @id @default(uuid()) @db.Uuid
+  ledgerId         String    @map("ledger_id") @db.Uuid
+  type             String
+  occurredAt       DateTime  @default(now()) @map("occurred_at") @db.Timestamptz(3)
+  originalAmount   Decimal   @map("original_amount") @db.Decimal(18, 4)
+  originalCurrency String    @map("original_currency")
+  fxRate           Decimal   @map("fx_rate") @db.Decimal(18, 8)
+  baseAmount       Decimal   @map("base_amount") @db.Decimal(18, 4)
+  baseCurrency     String    @map("base_currency")
+  categoryId       String?   @map("category_id") @db.Uuid
+  memberId         String?   @map("member_id") @db.Uuid
+  merchantId       String?   @map("merchant_id") @db.Uuid
+  projectId        String?   @map("project_id") @db.Uuid
+  note             String    @default("")
+  createdAt        DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+  updatedAt        DateTime  @updatedAt @map("updated_at") @db.Timestamptz(3)
+  version          Int       @default(1)
+  deletedAt        DateTime? @map("deleted_at") @db.Timestamptz(3)
+  ledger           Ledger    @relation(fields: [ledgerId], references: [id], onDelete: Cascade)
+  category         Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  member           Member?   @relation(fields: [memberId], references: [id], onDelete: SetNull)
+  merchant         Merchant? @relation(fields: [merchantId], references: [id], onDelete: SetNull)
+  project          Project?  @relation(fields: [projectId], references: [id], onDelete: SetNull)
+
+  @@index([ledgerId, occurredAt])
+  @@index([ledgerId, deletedAt])
+  @@index([ledgerId, type])
+  @@index([ledgerId, categoryId])
+  @@index([ledgerId, memberId])
+  @@index([ledgerId, merchantId])
+  @@index([ledgerId, projectId])
+  @@map("entries")
 }
 
 model RuleVersion {

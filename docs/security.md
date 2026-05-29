@@ -11,7 +11,7 @@ Canonical baseline:
 
 ## Current State
 
-Milestone 1 implements the first security surface:
+Milestone 2A keeps the Milestone 1 security model and adds authenticated entry bookkeeping:
 
 - A single admin account is created by `pnpm db:seed`.
 - Admin passwords are hashed with Argon2id and must pass the password policy.
@@ -24,7 +24,11 @@ Milestone 1 implements the first security surface:
 - Generic login errors avoid account enumeration.
 - Standard API errors include `error.code`, safe message, details, and request ID.
 - Audit logging exists for login failure thresholds, ledger changes, category changes, YAML
-  import/export, and category rollback.
+  import/export, category rollback, and entry create/update/clone/soft-delete actions.
+- Entry routes are authenticated by default, require CSRF for unsafe methods, and enforce
+  server-side ledger scope for entries and referenced category/member/merchant/project records.
+- Development CORS allows the configured web origin with credentials so the Vue dev server can use
+  HTTP-only cookie sessions.
 - Swagger `/docs` is enabled only when `NODE_ENV !== production`.
 - Production Compose requires `SESSION_SECRET`.
 

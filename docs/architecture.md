@@ -11,22 +11,28 @@ Canonical source documents:
 
 ## Current State
 
-Milestone 1 adds authentication, Prisma persistence, master-data CRUD, category YAML workflows,
-category snapshots, rollback, and audit logging foundations:
+Milestone 2A adds daily entry bookkeeping on top of the Milestone 1 authentication and master-data
+foundation:
 
 - `packages/shared` exports Zod contracts for health, auth, errors, ledgers, categories, members,
-  projects, merchants, category YAML, and audit DTOs.
+  projects, merchants, category YAML, entries, money strings, and audit DTOs.
 - `apps/api` is a NestJS REST service with `/health`, `/auth/*`, `/ledgers`, and ledger-scoped
-  master-data routes.
+  master-data and entry routes.
 - Prisma owns PostgreSQL schema and migrations for admin accounts, sessions, ledgers, categories,
-  category versions, members, projects, merchants, rule version placeholders, and audit logs.
+  category versions, members, projects, merchants, entries, rule version placeholders, and audit
+  logs.
 - Authentication uses one seeded admin account, Argon2id password hashing, hashed opaque cookie
   sessions, CSRF tokens, and login rate limiting.
 - Category YAML import/export uses stable keys. Import and rollback create category version
   snapshots and audit events.
-- `apps/web` has a tested admin login form and category tree component wired to shared types.
-- GitHub Actions runs install, database migration, seed, lint, test, and build against PostgreSQL
-  and Redis service containers.
+- Entry create/update/list/get/clone/soft-delete routes enforce ledger scope, hide soft-deleted
+  rows from normal reads, persist `base_amount` and `base_currency`, and audit create/update/clone
+  and delete actions.
+- `apps/web` has a tested admin login flow, ledger/category setup, entry form, amount keypad,
+  recent-used chips, entry filters, sorting, editing, clone, and soft delete.
+- `apps/e2e` runs the critical login-to-soft-delete flow with Playwright.
+- GitHub Actions runs install, database migration, seed, lint, test, build, browser install, and
+  E2E against PostgreSQL and Redis service containers.
 
 ## Target Shape
 
@@ -50,8 +56,8 @@ Target services:
 - Worker: background jobs for import, parsing, backup, cleanup, and sync work.
 - Reverse proxy: Caddy or Nginx for production WAN exposure.
 
-Milestone 1 includes only rule version placeholder tables. BullMQ queues, entry management,
-offline sync, import staging, attachments, backup, and parsing work are introduced by later
+Milestone 2A includes only entry CRUD and soft delete. BullMQ queues, purge, saved views, advanced
+search, offline sync, import staging, attachments, backup, and parsing work are introduced by later
 milestones.
 
 ## Architectural Invariants

@@ -16,6 +16,8 @@ coverage
 /apps/web/dist
 /apps/api/dist
 /apps/api/src/generated
+/apps/e2e/test-results
+/apps/e2e/playwright-report
 /apps/api/node_modules
 /packages/shared/node_modules
 /tmp

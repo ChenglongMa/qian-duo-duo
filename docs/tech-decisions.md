@@ -10,7 +10,9 @@ Canonical baseline:
 
 ## Current Status
 
-No runtime or library versions have been selected yet. Milestone 0 should choose and lock the initial toolchain.
+Milestones 0, 1, and 2A have selected and locked the initial Node.js, pnpm, NestJS, Vue, Prisma,
+Zod, Vitest, and Playwright toolchain versions. Later milestones should continue recording new
+dependencies, compatibility constraints, and architecture trade-offs here.
 
 ## Decision Log
 
@@ -242,6 +244,77 @@ pnpm build
 docker compose up -d --build
 curl -f http://localhost:3000/health
 docker compose down
+```
+
+### 0006: Milestone 2A Entries, Money, and E2E
+
+Decision: implement entry CRUD, clone, soft delete, deterministic money calculation, the daily
+bookkeeping web workflow, and Playwright E2E coverage for the critical entry flow.
+
+Freshness checks performed with `pnpm info <pkg> version`:
+
+- `@playwright/test` and `playwright` 1.60.0.
+- `@types/node` latest is 25.9.1, but `@qdd/e2e` uses the existing documented Node 24-compatible
+  `@types/node` 24.12.4 because QDD targets Node.js 24 LTS.
+
+Official documentation checked during implementation:
+
+- Playwright web server configuration: https://playwright.dev/docs/test-webserver
+- Playwright test configuration and `baseURL`: https://playwright.dev/docs/test-configuration
+- Playwright `TestConfig.webServer`: https://playwright.dev/docs/api/class-testconfig
+
+Chosen approach:
+
+- Prisma adds an `entries` table with UUID primary keys, `ledger_id`, optional bookkeeping
+  dimension IDs, `version`, `updated_at`, `deleted_at`, `NUMERIC(18, 4)` money amounts, and
+  `NUMERIC(18, 8)` FX rates.
+- Shared entry DTOs use camelCase API fields and Zod validation. Amounts and FX rates are accepted
+  and returned as plain decimal strings only; exponent notation and floating-point numbers are not
+  accepted.
+- Money calculation uses `BigInt` decimal scaling, not JavaScript floating point. `base_amount` is
+  persisted as `original_amount * fx_rate`, rounded half-up to 4 decimal places.
+- If `original_currency` equals the current ledger base currency, the API stores an FX rate of
+  `1.00000000`. If currencies differ, an FX rate is required unless an update keeps the existing
+  foreign currency and existing FX rate.
+- `base_currency` is copied from the ledger and persisted on create and update. Historical entries
+  are not recalculated by list endpoints.
+- Date-only UI input resolves to 12:00 in the browser's local timezone. If the API create request
+  omits `occurredAt`, the service uses the current server time.
+- Category and member are required by the web form and create DTO. Merchant and project are optional
+  because daily entries commonly do not have both dimensions.
+- Entry list/get endpoints hide soft-deleted entries. Soft delete sets `deleted_at`, increments the
+  version, and writes an audit event.
+- Clone creates a new row with copied entry fields and a new UUID.
+- The Vue app now uses typed API clients for login, ledger/category setup, entries, recent-used
+  chips, keypad arithmetic, filters, sorting, edit, clone, and soft delete.
+- API development CORS permits the configured web origin with credentials so the Vite dev server can
+  use HTTP-only cookie sessions.
+- `apps/e2e` uses Playwright's multiple `webServer` configuration to start API and web dev servers,
+  runs migrations and seed before tests, and covers login -> ledger -> category -> entry create ->
+  edit -> soft delete.
+- The root `pnpm test` script excludes `@qdd/e2e` so unit/integration tests and E2E remain separate
+  gate stages. The root `pnpm e2e` script runs Playwright explicitly.
+- The E2E pretest installs Chromium if needed, then applies migrations and seeds the admin account.
+
+Trade-offs:
+
+- A decimal library was not added. The required arithmetic is narrow enough for a small BigInt
+  implementation, avoiding another production dependency.
+- Entry search, purge, saved views, attachment interactions, and offline sync are intentionally
+  deferred to later milestones.
+- Dimension foreign keys are nullable in the database with `ON DELETE SET NULL` for long-term
+  historical resilience, while current create/update validation requires active category/member
+  selections and validates optional merchant/project IDs when present.
+
+Verification: Milestone 2A gate is run with PostgreSQL/Redis available:
+
+```bash
+pnpm install
+pnpm db:migrate
+pnpm lint
+pnpm test
+pnpm build
+pnpm e2e
 ```
 
 ## Template

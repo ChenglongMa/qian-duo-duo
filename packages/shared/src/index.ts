@@ -32,6 +32,42 @@ export {
   type ApiErrorBody
 } from './common';
 export {
+  createEntryRequestSchema,
+  entryDateTimeSchema,
+  entryListQuerySchema,
+  entryListResponseSchema,
+  entryResponseSchema,
+  entrySchema,
+  entrySortBySchema,
+  entrySortDirectionSchema,
+  entryTypeSchema,
+  fxRateSchema,
+  moneyAmountSchema,
+  updateEntryRequestSchema,
+  type CreateEntryRequest,
+  type Entry,
+  type EntryListQuery,
+  type EntrySortBy,
+  type EntrySortDirection,
+  type EntryType,
+  type UpdateEntryRequest
+} from './entries';
+export {
+  FX_RATE_DECIMAL_PLACES,
+  FX_RATE_MAX_INTEGER_DIGITS,
+  MONEY_DECIMAL_PLACES,
+  MONEY_MAX_INTEGER_DIGITS,
+  calculateMoneyProduct,
+  formatScaledDecimal,
+  multiplyFixedDecimalStrings,
+  normalizeFxRate,
+  normalizeMoneyAmount,
+  parseFixedDecimalString,
+  roundScaledInteger,
+  type FixedDecimalParseOptions,
+  type FixedDecimalParseResult
+} from './money';
+export {
   auditLogSchema,
   categoryListResponseSchema,
   categoryResponseSchema,

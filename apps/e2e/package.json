@@ -1,0 +1,20 @@
+{
+  "name": "@qdd/e2e",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "pretest": "node scripts/prepare-e2e.mjs",
+    "test": "playwright test",
+    "test:unit": "playwright test",
+    "test:integration": "playwright test",
+    "build": "tsc -p tsconfig.json --noEmit",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint .",
+    "format": "prettier --check ."
+  },
+  "devDependencies": {
+    "@playwright/test": "1.60.0",
+    "@types/node": "24.12.4"
+  }
+}

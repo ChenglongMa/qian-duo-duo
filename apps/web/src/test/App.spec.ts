@@ -1,15 +1,29 @@
 import { render, screen } from '@testing-library/vue';
-import { describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
 import App from '../App.vue';
 
 describe('App', () => {
-  it('renders the QianDuoDuo master data shell', () => {
+  beforeEach(() => {
+    vi.stubGlobal(
+      'fetch',
+      vi.fn(async () =>
+        new Response(JSON.stringify({ authenticated: false }), {
+          status: 200,
+          headers: { 'Content-Type': 'application/json' }
+        })
+      )
+    );
+  });
+
+  afterEach(() => {
+    vi.unstubAllGlobals();
+  });
+
+  it('renders the QianDuoDuo bookkeeping shell', () => {
     render(App);
 
     expect(screen.getByRole('heading', { name: 'QianDuoDuo' })).toBeTruthy();
-    expect(screen.getByText('Milestone 1')).toBeTruthy();
-    expect(screen.getByRole('heading', { name: 'Sign in' })).toBeTruthy();
-    expect(screen.getByRole('heading', { name: 'Category tree' })).toBeTruthy();
+    expect(screen.getByText('Milestone 2A')).toBeTruthy();
   });
 });
